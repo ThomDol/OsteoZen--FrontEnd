@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../header/Header';
 import { useStorage } from '../StorageContext';
 import Antecedent from './sousmodulePatient/Antecedent';
-import Accouchement from './sousmodulePatient/Accouchement';
+import Accouchement from './sousmodulePatient/AccouchementDetail';
 import ProfilPatient from './sousmodulePatient/ProfilPatient';
 import Grossesse from './sousmodulePatient/Grossesse';
 import Consultation from './sousmodulePatient/Consutation';
