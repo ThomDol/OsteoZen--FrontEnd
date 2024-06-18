@@ -30,16 +30,25 @@ const {
     setDisplayGrossesse(false);
     setDisplayConsultation(false);}
 
+    
+
+  
+
+  
+
 
 
 
     return (
         <div>
-          <div className="header">
+          <div className="header col-5 mx-auto">
            <Header/>
+           
            </div>
+          
+           <br /><br />
           <div className="row ">
-            <div className="col-2" style={{backgroundColor:'gold', height:'100vh'}}>
+            <div className="col-2 lateral " style={{backgroundColor:'rgba(225, 173, 1,0.7)', height:'100vh'}}>
               <br /><br /><br />
             <ul className="flex-column ">
             <div className=" pb-5" onClick={()=>{resetDisplay(); setDisplayProfil(true);}} style={{fontWeight:'bold'}}>  <span>&#128100; {patient.prenomPatient} {patient.nomPatient}  </span></div>
@@ -50,9 +59,9 @@ const {
               <div className="pt-5" onClick={()=>{resetDisplay(); setDisplayConsultation(true);}}>&#11162;  Consultation</div>
             </ul>
             </div>
-            <div className="col-9" style={{backgroundColor:'lavender'}}>
+            <div className="col-9 patient-content" style={{backgroundColor:'rgba(255,255,255,0.7)'}}>
             
-              <div className="patient-content">
+              <div className="patient-content" >
               {displayProfil && <ProfilPatient/> }
               {displayAntecedent && <Antecedent/>}
               {displayAccouchement && <Accouchement/>}

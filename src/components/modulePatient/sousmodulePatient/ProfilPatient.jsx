@@ -13,6 +13,7 @@ const ProfilPatient = () => {
 
   return (
     <div>
+      <h3 style={{textAlign:'center',paddingTop:'10px'}}>Profil Patient</h3>
       <br /><br />
       <div className="col-6 patient Infos mx-auto">
         <div className="form-floating mb-3">

@@ -15,6 +15,7 @@ const [displayGrossesse,setDisplayGrossesse]=useState(false);
 const [displayConsultation,setDisplayConsultation]=useState(false);
 
 
+
 return(
     <StorageContext.Provider value={{
         idPraticien,setIdPraticien,
