@@ -41,7 +41,7 @@ const {
 
     return (
         <div>
-          <div className="header col-5 mx-auto">
+          <div className="header col-4 mx-auto">
            <Header/>
            
            </div>

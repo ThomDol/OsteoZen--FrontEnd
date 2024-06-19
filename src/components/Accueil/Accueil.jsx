@@ -3,8 +3,7 @@ import Header from '../header/Header';
 
 const Accueil = () => {
     return (
-        <div 
-        >
+        <div >
             <Header/>
         </div>
     );
