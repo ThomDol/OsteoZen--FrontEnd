@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Consutation = () => {
+const Consutation = ({idPatient}) => {
     return (
         <div>
             <h1>Consultation works</h1>

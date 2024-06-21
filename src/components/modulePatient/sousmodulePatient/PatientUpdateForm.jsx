@@ -3,7 +3,7 @@ import axios from "axios";
 import { useStorage } from "../../StorageContext";
 
 
-const PatientUpdateForm = () => {
+const PatientUpdateForm = ({idPatient}) => {
   const { patient } = useStorage();
   const [dateNaissance, setDateNaissance] = useState("");
   const [nomGenre, setNomGenre] = useState("");
@@ -23,7 +23,7 @@ const PatientUpdateForm = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/patient/1/${patient.idPatient}`
+          `http://localhost:5000/api/patient/1/${idPatient}`
         );
         const data = response.data;
         setDateNaissance(data.dateNaissance);
@@ -45,7 +45,7 @@ const PatientUpdateForm = () => {
     };
 
     fetchData();
-  }, [patient.idPatient]);
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -72,7 +72,7 @@ const PatientUpdateForm = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/patient/1/${patient.idPatient}`,
+        `http://localhost:5000/api/patient/1/${idPatient}`,
         formData
       );
       console.log(response.data);

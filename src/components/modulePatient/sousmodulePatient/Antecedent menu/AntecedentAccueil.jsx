@@ -1,12 +1,17 @@
 import React from 'react';
 import Antecedent from './Antecedent';
+import AntecedentForm from './AntecedentForm';
 import { useState,useEffect } from 'react';
 import axios from 'axios';
+
 
 
 const AntecedentAccueil = ({idPatient}) => {
 
     const [antecedentRes,setAntecedentRes]=useState();
+    const [displayAccouchementForm,setDisplayAccouchementForm]=useState(false);
+    
+
     
 
 
@@ -18,6 +23,9 @@ const AntecedentAccueil = ({idPatient}) => {
             );
             const data = response.data;
             setAntecedentRes(data);
+            if (!data){setDisplayAccouchementForm(true);}
+            alert(displayAccouchementForm);
+           
           } catch (error) {
               console.error(error);
             }
@@ -28,7 +36,10 @@ const AntecedentAccueil = ({idPatient}) => {
 
     return (
         <div>
-            {antecedentRes ? <Antecedent/> : <div className='btn btn-primary'>Creer Antecedent</div>}
+            {antecedentRes && <Antecedent idAntecedent={antecedentRes.idAntecedentClassique} idPatient={idPatient} /> }
+            {displayAccouchementForm && <AntecedentForm idPatient={idPatient}/> }
+           
+            
             
         </div>
     );

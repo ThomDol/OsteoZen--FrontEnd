@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../header/Header";
 import { useStorage } from "../StorageContext";
 import AntecedentAccueil from "./sousmodulePatient/Antecedent menu/AntecedentAccueil";
@@ -7,13 +7,16 @@ import Grossesse from "./sousmodulePatient/Grossesse";
 import Consultation from "./sousmodulePatient/Consutation";
 import "../../style/Patient.css";
 import PatientUpdateForm from "./sousmodulePatient/PatientUpdateForm";
+import { useParams } from "react-router-dom";
+import axios from 'axios';
 
 
 const Patient = () => {
+  const {id} = useParams();
+  const [patient,setPatient]=useState();
 
   
   const {
-    patient,
     displayProfil,
     setDisplayProfil,
     displayAntecedent,
@@ -34,14 +37,27 @@ const Patient = () => {
     setDisplayConsultation(false);
   };
 
-
+  useEffect(()=>{
+      const fetchPatient = async () => {
+        try {
+          const response = await axios.get(
+          `http://localhost:5000/api/patient/1/${parseInt(id)}`
+          );
+          const data = response.data;
+          setPatient(data);
+          
+        } catch (error) {
+          console.error(error);
+        }
+      };
   
- 
-
-  
+      fetchPatient();
+    }, []);
+    
 
   return (
     <div>
+     { patient && <div>
       <div className="header col-4 mx-auto">
         <Header />
       </div>
@@ -61,9 +77,8 @@ const Patient = () => {
               className=" pb-5"
               style={{ fontWeight: "bold" }}
             >
-              {" "}
               <span>
-                &#128100; {patient.prenomPatient} {patient.nomPatient}{" "}
+                &#128100; {patient.prenomPatient} {patient.nomPatient}
               </span>
             </div>
             <div
@@ -119,17 +134,17 @@ const Patient = () => {
         >
           <div className="patient-content col-8 mx-auto">
             {displayProfil && (
-              <PatientUpdateForm
-                
-              />
+              <PatientUpdateForm idPatient={patient.idPatient}  />
             )}
-            {displayAntecedent && <AntecedentAccueil idPatient={patient.idPatient}  />}
-            {displayAccouchement && <Accouchement />}
-            {displayGrossesse && <Grossesse />}
-            {displayConsultation && <Consultation />}
+            {displayAntecedent && <AntecedentAccueil idPatient={patient.idPatient} />}
+            {displayAccouchement && <Accouchement idPatient={patient.idPatient}  />}
+            {displayGrossesse && <Grossesse idPatient={patient.idPatient}/>}
+            {displayConsultation && <Consultation idPatient={patient.idPatient}/>}
           </div>
         </div>
+        
       </div>
+      </div>}
     </div>
   );
 };

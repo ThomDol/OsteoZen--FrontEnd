@@ -31,9 +31,7 @@ const ListPatient = () => {
   }, [count]);
 
   const selectPatient = (elem) => {
-    setPatient(elem);
-
-    navigate("/patient");
+    navigate("/patient/"+elem.idPatient);
   };
 
   useEffect(() => {

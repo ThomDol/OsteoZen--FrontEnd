@@ -1,10 +1,9 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
-
-const Antecedent = ({idAntecedent,idPatient}) => {
-
+const AntecedentForm = () => {
+ 
   const [dateCreation, setDateCreation] = useState("");
   const [dateUpdate, setDateUpdate] = useState("");
   const [grossesse, setGrossesse] = useState("");
@@ -20,42 +19,10 @@ const Antecedent = ({idAntecedent,idPatient}) => {
   const [antUroGynecaux, setAntUroGynecaux] = useState("");
   const [antPsy, setAntPsy] = useState("");
   const [antNotesDiverses, setAntNotesDiverses] = useState("");
-  const urlGetAnt = `http://localhost:5000/api/antecedent/${idPatient}`;
+  
 
-  const assign = (elem) => {
-    if (elem !== null) {
-      
-      setDateCreation(elem.dateCreation);
-      setDateUpdate(elem.dateUpdate);
-      setGrossesse(elem.grossesse);
-      setFumeur(elem.fumeur);
-      setAllergie(elem.allergie);
-      setTraitement(elem.traitement);
-      setAntTraumatique(elem.antTraumatique);
-      setAntChirurgicaux(elem.antChirurgicaux);
-      setAntFamilliaux(elem.antFamilliaux);
-      setAntUroGynecaux(elem.antUroGynecaux);
-      setAntOrl(elem.antOrl);
-      setAntVisceral(elem.antVisceral);
-      setAntCardioPulmonaire(elem.antCardioPulmonaire);
-      setAntPsy(elem.antPsy);
-      setAntNotesDiverses(elem.antNotesDiverses);
-    }
-  };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(urlGetAnt);
-        assign(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, [urlGetAnt]);
-
+    
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -306,4 +273,4 @@ const Antecedent = ({idAntecedent,idPatient}) => {
   );
 };
 
-export default Antecedent;
+export default AntecedentForm;
