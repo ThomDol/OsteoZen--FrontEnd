@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../header/Header";
 import { useStorage } from "../StorageContext";
 import AntecedentAccueil from "./sousmodulePatient/Antecedent menu/AntecedentAccueil";
@@ -7,14 +7,10 @@ import Grossesse from "./sousmodulePatient/Grossesse";
 import Consultation from "./sousmodulePatient/Consutation";
 import "../../style/Patient.css";
 import PatientUpdateForm from "./sousmodulePatient/PatientUpdateForm";
-import { useState, useEffect } from "react";
-import axios from "axios";
+
 
 const Patient = () => {
-  const [listMedecin, setListMedecin] = useState([]);
- 
-  const [listProfession, setLisProfession] = useState([]);
-  const [antecedentRes,setAntecedentRes]=useState();
+
   
   const {
     patient,
@@ -38,6 +34,10 @@ const Patient = () => {
     setDisplayConsultation(false);
   };
 
+
+  
+ 
+
   
 
   return (
@@ -59,10 +59,6 @@ const Patient = () => {
           <ul className="flex-column ">
             <div
               className=" pb-5"
-              onClick={() => {
-                resetDisplay();
-                setDisplayProfil(true);
-              }}
               style={{ fontWeight: "bold" }}
             >
               {" "}
@@ -127,7 +123,7 @@ const Patient = () => {
                 
               />
             )}
-            {displayAntecedent && <AntecedentAccueil antecedentRes={antecedentRes} />}
+            {displayAntecedent && <AntecedentAccueil idPatient={patient.idPatient}  />}
             {displayAccouchement && <Accouchement />}
             {displayGrossesse && <Grossesse />}
             {displayConsultation && <Consultation />}

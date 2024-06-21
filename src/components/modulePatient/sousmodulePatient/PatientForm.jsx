@@ -4,7 +4,7 @@ import { useStorage } from "../../StorageContext";
 import { Modal } from "bootstrap";
 
 const PatientForm = ({ idModal, count, setCount }) => {
-  const { patient } = useStorage();
+
   const [dateNaissance, setDateNaissance] = useState("");
   const [nomGenre, setNomGenre] = useState("");
   const [nomProfession, setNomProfession] = useState("");
@@ -14,7 +14,8 @@ const PatientForm = ({ idModal, count, setCount }) => {
   const [email, setEmail] = useState("");
   const [tel, setTel] = useState("");
   const [medecinTraitantComplet, setMedecinTraitantComplet] = useState("");
-  const [villeComplet, setVilleComplet] = useState("");
+  const [nomVille, setNomVille] = useState("");
+  const [codePostal,setCodePostal]=useState("");
 
   const modalRef = useRef();
 
@@ -24,8 +25,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
     const [medecinNom, medecinPrenom, medecinVille] =
       medecinTraitantComplet.split(" ");
     // Diviser la valeur combinée de la ville
-    const [codePostal, nomVille] = villeComplet.split(" ");
-
+    
     const formData = {
       dateNaissance,
       nomVille,
@@ -234,37 +234,41 @@ const PatientForm = ({ idModal, count, setCount }) => {
                 </button>
               </div>
               <div className="mb-3">
-                <label htmlFor="nomVille" className="form-label">
-                  Ville
-                </label>
-                <select
-                  className="form-select"
-                  id="nomVille"
-                  value={villeComplet}
-                  onChange={(e) => setVilleComplet(e.target.value)}
-                >
-                  {/* Options à remplir dynamiquement */}
-                </select>
-                <button type="button" className="btn btn-link">
-                  Ajouter Ville
-                </button>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="nomProfession" className="form-label">
-                  Profession
-                </label>
-                <select
-                  className="form-select"
-                  id="nomProfession"
-                  value={nomProfession}
-                  onChange={(e) => setNomProfession(e.target.value)}
-                >
-                  {/* Ajoutez les options ici */}
-                </select>
-                <button type="button" className="btn btn-link mt-2">
-                  Ajouter une profession
-                </button>
-              </div>
+          <label htmlFor="nomVille" className="form-label">
+           Ville
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="nomVille"
+            value={nomVille}
+            onChange={(e) => setNomVille(e.target.value)}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="codePostal" className="form-label">
+            Code Postal
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="codePostal"
+            value={codePostal}
+            onChange={(e) => setCodePostal(e.target.value)}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="libelleProfession" className="form-label">
+            Profession
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="nomProfession"
+            value={nomProfession}
+            onChange={(e) => setNomProfession(e.target.value)}
+          />
+        </div>
 
               <div className="mb-3">
                 <label htmlFor="email" className="form-label">

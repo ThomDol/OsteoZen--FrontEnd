@@ -14,25 +14,10 @@ const PatientUpdateForm = () => {
   const [email, setEmail] = useState("");
   const [tel, setTel] = useState("");
   const [medecinTraitantComplet, setMedecinTraitantComplet] = useState("");
-  const [villeComplet, setVilleComplet] = useState("");
+  const [nomVille, setNomVille] = useState("");
+  const [codePostal,setCodePostal]=useState("");
 
-  const [listVille, setListVille] = useState([]);
-  const[resetListVille,setResetListVille]=useState(0);
- 
 
-  useEffect(()=>{
-    const fetchDataVille = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/api/lieu`);
-        const data = response.data;
-        setListVille(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchDataVille();
-  },[resetListVille])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,9 +35,10 @@ const PatientUpdateForm = () => {
         setEmail(data.email);
         setTel(data.tel);
         setMedecinTraitantComplet(
-          `${data.MedecinTraitant.nom} ${data.MedecinTraitant.prenom} ${data.MedecinTraitant.ville}`
+          `${data.nomMedecinTraitant} ${data.prenomMedecinTraitant} ${data.villeMedecinTraitant}`
         );
-        setVilleComplet(`${data.codePostal}-${data.nomville}`);
+        setNomVille(data.nomVille);
+        setCodePostal(data.codePostal);
       } catch (error) {
         console.error(error);
       }
@@ -65,11 +51,10 @@ const PatientUpdateForm = () => {
     event.preventDefault();
     const [medecinNom, medecinPrenom, medecinVille] =
       medecinTraitantComplet.split(" ");
-    const [codePostal, nomville] = villeComplet.split(" ");
-
+   
     const formData = {
       dateNaissance,
-      nomville,
+      nomVille,
       codePostal,
       nomGenre,
       nomProfession,
@@ -255,43 +240,39 @@ const PatientUpdateForm = () => {
         </div>
         <div className="mb-3">
           <label htmlFor="nomVille" className="form-label">
-            Ville
+           Ville
           </label>
-          <select
-            className="form-select"
+          <input
+            type="text"
+            className="form-control"
             id="nomVille"
-            value={villeComplet}
-            onChange={(e) => setVilleComplet(e.target.value)}
-          >
-            {listVille.map((ville) => (
-              <option
-                key={ville.idVille}
-                value={`${ville.codePostal} ${ville.nomville}`}
-              >
-                {`${ville.codePostal} ${ville.nomville}`}
-              </option>
-            ))}
-          </select>
-          <button type="button" 
-        className="btn btn-link">
-        Ajouter Ville
-      </button>
+            value={nomVille}
+            onChange={(e) => setNomVille(e.target.value)}
+          />
         </div>
         <div className="mb-3">
-          <label htmlFor="nomProfession" className="form-label">
+          <label htmlFor="codePostal" className="form-label">
+            Code Postal
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="codePostal"
+            value={codePostal}
+            onChange={(e) => setCodePostal(e.target.value)}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="libelleProfession" className="form-label">
             Profession
           </label>
-          <select
-            className="form-select"
+          <input
+            type="text"
+            className="form-control"
             id="nomProfession"
             value={nomProfession}
             onChange={(e) => setNomProfession(e.target.value)}
-          >
-            {/* Ajoutez les options ici */}
-          </select>
-          <button type="button" className="btn btn-link mt-2">
-            Ajouter une profession
-          </button>
+          />
         </div>
 
         <div className="mb-3">
@@ -319,7 +300,7 @@ const PatientUpdateForm = () => {
           />
         </div>
         <button type="submit" className="btn btn-primary">
-          Soumettre
+          Mettre à jour
         </button>
       </form>
     </div>
