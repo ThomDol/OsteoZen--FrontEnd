@@ -43,7 +43,7 @@ const ListPatient = () => {
 
   return (
     <div className="container ">
-      <div className="col-10 mx-auto">
+      <div className="col-11 mx-auto">
         <Header />
       </div>
 
@@ -53,7 +53,7 @@ const ListPatient = () => {
       <div className=" col-3 mx-auto">
         <div className="input-group mb-3">
           <span className="input-group-text" id="basic-addon1">
-            @
+            &#128269;
           </span>
           <input
             type="text"

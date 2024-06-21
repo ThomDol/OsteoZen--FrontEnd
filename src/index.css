@@ -1,4 +1,5 @@
 body{
-    background:url('./assets/plage.avif');
+    /*background:url('./assets/plage.avif');*/
+    background-color: burlywood;
     background-size: cover;
 }

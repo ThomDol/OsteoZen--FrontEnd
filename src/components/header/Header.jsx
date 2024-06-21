@@ -2,7 +2,7 @@ import React from 'react';
 
 const Header = () => {
     return (
-        <div className='col-5 mx-auto'>
+        <div className='col-6'>
             <ul className="nav">
   <li className="nav-item">
     <a className="nav-link" href="/Profil">Profil</a>

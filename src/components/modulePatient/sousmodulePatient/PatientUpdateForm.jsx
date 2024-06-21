@@ -83,9 +83,9 @@ const PatientUpdateForm = ({idPatient}) => {
 
   return (
     <div>
-      <h5 style={{ textAlign: "center" }}>
+      <h3 style={{ textAlign: "center" }}>
         <b>Profil</b>
-      </h5>
+      </h3>
       <br />
       <br />
       <form onSubmit={handleSubmit}>

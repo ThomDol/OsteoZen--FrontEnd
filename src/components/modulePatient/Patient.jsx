@@ -67,7 +67,7 @@ const Patient = () => {
       <div className="row ">
         <div
           className="col-2 lateral "
-          style={{ backgroundColor: "rgba(225, 173, 1,0.7)", height: "100vh" }}
+          style={{ backgroundColor: "rgba(200,152,3,0.7)", height: "100vh" }}
         >
           <br />
           <br />
@@ -129,8 +129,8 @@ const Patient = () => {
           </ul>
         </div>
         <div
-          className="col-9 patient-content"
-          style={{ backgroundColor: "rgba(255,255,255,0.7)" }}
+          className="patient-content-wrapper"
+          
         >
           <div className="patient-content col-8 mx-auto">
             {displayProfil && (
