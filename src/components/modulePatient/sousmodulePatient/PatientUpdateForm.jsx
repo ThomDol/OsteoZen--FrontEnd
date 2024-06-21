@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useStorage } from "../../StorageContext";
 
-const PatientUpdateForm = ({ listMedecin, listVille, listProfession }) => {
+
+const PatientUpdateForm = () => {
   const { patient } = useStorage();
   const [dateNaissance, setDateNaissance] = useState("");
   const [nomGenre, setNomGenre] = useState("");
@@ -15,11 +16,29 @@ const PatientUpdateForm = ({ listMedecin, listVille, listProfession }) => {
   const [medecinTraitantComplet, setMedecinTraitantComplet] = useState("");
   const [villeComplet, setVilleComplet] = useState("");
 
+  const [listVille, setListVille] = useState([]);
+  const[resetListVille,setResetListVille]=useState(0);
+ 
+
+  useEffect(()=>{
+    const fetchDataVille = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/lieu`);
+        const data = response.data;
+        setListVille(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchDataVille();
+  },[resetListVille])
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/patient/${patient.idPatient}`
+          `http://localhost:5000/api/patient/1/${patient.idPatient}`
         );
         const data = response.data;
         setDateNaissance(data.dateNaissance);
@@ -68,7 +87,7 @@ const PatientUpdateForm = ({ listMedecin, listVille, listProfession }) => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/patient/${patient.idPatient}`,
+        `http://localhost:5000/api/patient/1/${patient.idPatient}`,
         formData
       );
       console.log(response.data);
@@ -178,8 +197,8 @@ const PatientUpdateForm = ({ listMedecin, listVille, listProfession }) => {
                 type="radio"
                 name="nomTypePatient"
                 id="typeAdulte"
-                value="adulte"
-                checked={nomTypePatient === "adulte"}
+                value="Adulte"
+                checked={nomTypePatient === "Adulte"}
                 onChange={(e) => setNomTypePatient(e.target.value)}
               />
               <label className="form-check-label" htmlFor="typeAdulte">
@@ -192,8 +211,8 @@ const PatientUpdateForm = ({ listMedecin, listVille, listProfession }) => {
                 type="radio"
                 name="nomTypePatient"
                 id="typeEnfant"
-                value="enfant"
-                checked={nomTypePatient === "enfant"}
+                value="Enfant"
+                checked={nomTypePatient === "Enfant"}
                 onChange={(e) => setNomTypePatient(e.target.value)}
               />
               <label className="form-check-label" htmlFor="typeEnfant">
@@ -206,12 +225,12 @@ const PatientUpdateForm = ({ listMedecin, listVille, listProfession }) => {
                 type="radio"
                 name="nomTypePatient"
                 id="typeBebe"
-                value="bebe"
-                checked={nomTypePatient === "bebe"}
+                value="Bebe"
+                checked={nomTypePatient === "Bebe"}
                 onChange={(e) => setNomTypePatient(e.target.value)}
               />
               <label className="form-check-label" htmlFor="typeBebe">
-                Bébé
+                Bebe
               </label>
             </div>
           </div>
@@ -229,7 +248,8 @@ const PatientUpdateForm = ({ listMedecin, listVille, listProfession }) => {
           >
             {/* Options à remplir dynamiquement */}
           </select>
-          <button type="button" className="btn btn-link">
+          <button 
+          type="button" className="btn btn-link">
             Ajouter Médecin
           </button>
         </div>
@@ -252,9 +272,10 @@ const PatientUpdateForm = ({ listMedecin, listVille, listProfession }) => {
               </option>
             ))}
           </select>
-          <button type="button" className="btn btn-link">
-            Ajouter Ville
-          </button>
+          <button type="button" 
+        className="btn btn-link">
+        Ajouter Ville
+      </button>
         </div>
         <div className="mb-3">
           <label htmlFor="nomProfession" className="form-label">

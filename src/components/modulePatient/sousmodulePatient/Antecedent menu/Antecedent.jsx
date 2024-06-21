@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useStorage } from "../../StorageContext";
+import { useStorage } from "../../../StorageContext";
 
 const Antecedent = () => {
   const { patient } = useStorage();

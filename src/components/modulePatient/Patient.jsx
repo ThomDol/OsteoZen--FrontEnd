@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../header/Header";
 import { useStorage } from "../StorageContext";
-import Antecedent from "./sousmodulePatient/Antecedent";
+import AntecedentAccueil from "./sousmodulePatient/Antecedent menu/AntecedentAccueil";
 import Accouchement from "./sousmodulePatient/Accouchement";
 import Grossesse from "./sousmodulePatient/Grossesse";
 import Consultation from "./sousmodulePatient/Consutation";
@@ -12,9 +12,10 @@ import axios from "axios";
 
 const Patient = () => {
   const [listMedecin, setListMedecin] = useState([]);
-  const [listVille, setListVille] = useState([]);
+ 
   const [listProfession, setLisProfession] = useState([]);
-
+  const [antecedentRes,setAntecedentRes]=useState();
+  
   const {
     patient,
     displayProfil,
@@ -37,47 +38,7 @@ const Patient = () => {
     setDisplayConsultation(false);
   };
 
-  useEffect(() => {
-    const fetchDataMedecin = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:5000/api/medecintraitant/all`
-        );
-        const data = response.data;
-        setListMedecin(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchDataMedecin();
-
-    const fetchDataVille = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/api/lieu`);
-        const data = response.data;
-        setListVille(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchDataVille();
-
-    const fetchDataProfession = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:5000/api/profession`
-        );
-        const data = response.data;
-        setLisProfession(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchDataProfession();
-  }, []);
+  
 
   return (
     <div>
@@ -163,12 +124,10 @@ const Patient = () => {
           <div className="patient-content col-8 mx-auto">
             {displayProfil && (
               <PatientUpdateForm
-                listMedecin={listMedecin}
-                listVille={listVille}
-                listProfession={listProfession}
+                
               />
             )}
-            {displayAntecedent && <Antecedent />}
+            {displayAntecedent && <AntecedentAccueil antecedentRes={antecedentRes} />}
             {displayAccouchement && <Accouchement />}
             {displayGrossesse && <Grossesse />}
             {displayConsultation && <Consultation />}
