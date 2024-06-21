@@ -25,21 +25,21 @@ const Antecedent = ({idAntecedent,idPatient}) => {
   const assign = (elem) => {
     if (elem !== null) {
       
-      setDateCreation(elem.dateCreation);
-      setDateUpdate(elem.dateUpdate);
-      setGrossesse(elem.grossesse);
-      setFumeur(elem.fumeur);
-      setAllergie(elem.allergie);
-      setTraitement(elem.traitement);
-      setAntTraumatique(elem.antTraumatique);
-      setAntChirurgicaux(elem.antChirurgicaux);
-      setAntFamilliaux(elem.antFamilliaux);
-      setAntUroGynecaux(elem.antUroGynecaux);
-      setAntOrl(elem.antOrl);
-      setAntVisceral(elem.antVisceral);
-      setAntCardioPulmonaire(elem.antCardioPulmonaire);
-      setAntPsy(elem.antPsy);
-      setAntNotesDiverses(elem.antNotesDiverses);
+      setDateCreation(elem.dateCreation || "");
+      setDateUpdate(elem.dateUpdate || "");
+      setGrossesse(elem.grossesse || "");
+      setFumeur(elem.fumeur !== null ? elem.fumeur : "");
+      setAllergie(elem.allergie || "");
+      setTraitement(elem.traitement || "");
+      setAntTraumatique(elem.antTraumatique || "");
+      setAntChirurgicaux(elem.antChirurgicaux || "");
+      setAntFamilliaux(elem.antFamilliaux || "");
+      setAntOrl(elem.antOrl || "");
+      setAntVisceral(elem.antVisceral || "");
+      setAntCardioPulmonaire(elem.antCardioPulmonaire || "");
+      setAntUroGynecaux(elem.antUroGynecaux || "");
+      setAntPsy(elem.antPsy || "");
+      setAntNotesDiverses(elem.antNotesDiverses || "");
     }
   };
 
@@ -92,7 +92,9 @@ const Antecedent = ({idAntecedent,idPatient}) => {
 
   return (
     <div className="col-9 mx-auto">
-      <h3 style={{ textAlign: "center", paddingTop: "10px" }}>Antecedent</h3>
+      <h3 style={{ textAlign: "center", paddingTop: "10px" }}>
+        <b>Antecedent</b>
+      </h3>
       <br />
       <br />
       <form onSubmit={handleSubmit}>

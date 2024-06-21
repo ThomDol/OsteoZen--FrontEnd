@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useStorage } from "../StorageContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Header from "../header/Header";
@@ -13,9 +12,7 @@ const ListPatient = () => {
   const navigate = useNavigate();
   const [searchItem, setSearchItem] = useState("");
   const [filteredList, setFilteredList] = useState([]);
-
-  const { setPatient } = useStorage();
-  const [count,setCount]=useState(0);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +28,7 @@ const ListPatient = () => {
   }, [count]);
 
   const selectPatient = (elem) => {
-    navigate("/patient/"+elem.idPatient);
+    navigate("/patient/" + elem.idPatient);
   };
 
   useEffect(() => {

@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 
-const AntecedentForm = () => {
+const AntecedentForm = ({idPatient}) => {
  
   const [dateCreation, setDateCreation] = useState("");
   const [dateUpdate, setDateUpdate] = useState("");
@@ -45,8 +45,8 @@ const AntecedentForm = () => {
     };
 
     try {
-      const response = await axios.put(
-        `http://localhost:5000/api/antecedent/${idPatient}/${idAntecedent}`,
+      const response = await axios.post(
+        `http://localhost:5000/api/antecedent/${idPatient}`,
         formData
       );
       console.log(response.data);
@@ -59,7 +59,9 @@ const AntecedentForm = () => {
 
   return (
     <div className="col-9 mx-auto">
-      <h3 style={{ textAlign: "center", paddingTop: "10px" }}>Antecedent</h3>
+      <h3 style={{ textAlign: "center", paddingTop: "10px" }}>
+        <b>Créer Antecedent</b>
+      </h3>
       <br />
       <br />
       <form onSubmit={handleSubmit}>

@@ -26,19 +26,19 @@ const PatientUpdateForm = ({idPatient}) => {
           `http://localhost:5000/api/patient/1/${idPatient}`
         );
         const data = response.data;
-        setDateNaissance(data.dateNaissance);
-        setNomGenre(data.nomGenre);
-        setNomProfession(data.nomProfession);
-        setNomTypePatient(data.nomTypePatient);
-        setNomPatient(data.nomPatient);
-        setPrenomPatient(data.prenomPatient);
-        setEmail(data.email);
-        setTel(data.tel);
+        setDateNaissance(data.dateNaissance || "");
+        setNomGenre(data.nomGenre || "");
+        setNomProfession(data.nomProfession || "");
+        setNomTypePatient(data.nomTypePatient || "");
+        setNomPatient(data.nomPatient || "");
+        setPrenomPatient(data.prenomPatient || "");
+        setEmail(data.email || "");
+        setTel(data.tel || "");
         setMedecinTraitantComplet(
-          `${data.nomMedecinTraitant} ${data.prenomMedecinTraitant} ${data.villeMedecinTraitant}`
+          `${data.nomMedecinTraitant || ""} ${data.prenomMedecinTraitant || ""} ${data.villeMedecinTraitant || ""}`
         );
-        setNomVille(data.nomVille);
-        setCodePostal(data.codePostal);
+        setNomVille(data.nomVille || "");
+        setCodePostal(data.codePostal || "");
       } catch (error) {
         console.error(error);
       }
@@ -83,8 +83,11 @@ const PatientUpdateForm = ({idPatient}) => {
 
   return (
     <div>
-      <h5 style={{textAlign:'center'}}>Profil</h5>
-      <br /><br />
+      <h5 style={{ textAlign: "center" }}>
+        <b>Profil</b>
+      </h5>
+      <br />
+      <br />
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="nomPatient" className="form-label">
@@ -233,14 +236,13 @@ const PatientUpdateForm = ({idPatient}) => {
           >
             {/* Options à remplir dynamiquement */}
           </select>
-          <button 
-          type="button" className="btn btn-link">
+          <button type="button" className="btn btn-link">
             Ajouter Médecin
           </button>
         </div>
         <div className="mb-3">
           <label htmlFor="nomVille" className="form-label">
-           Ville
+            Ville
           </label>
           <input
             type="text"

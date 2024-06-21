@@ -24,7 +24,8 @@ const AntecedentAccueil = ({idPatient}) => {
             const data = response.data;
             setAntecedentRes(data);
             if (!data){setDisplayAccouchementForm(true);}
-            alert(displayAccouchementForm);
+            else{setDisplayAccouchementForm(false);}
+            
            
           } catch (error) {
               console.error(error);
