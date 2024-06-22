@@ -2,9 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-
-const Antecedent = ({idAntecedent,idPatient}) => {
-
+const Antecedent = ({ idAntecedent, idPatient }) => {
   const [dateCreation, setDateCreation] = useState("");
   const [dateUpdate, setDateUpdate] = useState("");
   const [grossesse, setGrossesse] = useState("");
@@ -24,7 +22,6 @@ const Antecedent = ({idAntecedent,idPatient}) => {
 
   const assign = (elem) => {
     if (elem !== null) {
-      
       setDateCreation(elem.dateCreation || "");
       setDateUpdate(elem.dateUpdate || "");
       setGrossesse(elem.grossesse || "");
@@ -79,7 +76,7 @@ const Antecedent = ({idAntecedent,idPatient}) => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/antecedent/${idPatient}/${idAntecedent}`,
+        `http://localhost:5000/api/antecedent/${idAntecedent}`,
         formData
       );
       console.log(response.data);

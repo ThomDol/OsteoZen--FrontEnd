@@ -4,7 +4,6 @@ import { useStorage } from "../../StorageContext";
 import { useEffect, useState } from "react";
 
 const Accouchement = ({ idPatient }) => {
-  const { patient } = useStorage();
   const accouchementListUrl =
     "http://localhost:5000/api/accouchement/patient/" + idPatient;
   const [accouchementList, setAccouchementList] = useState([]);

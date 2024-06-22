@@ -80,7 +80,7 @@ const AccouchementDetail = () => {
     };
 
     console.log(formData);
-    // Envoyer les données du formulaire à votre backend ici
+    
   };
 
   return (
