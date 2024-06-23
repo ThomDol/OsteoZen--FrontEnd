@@ -117,6 +117,7 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
             className="form-control"
             id="dateUpdate"
             value={dateUpdate}
+            required
             onChange={(e) => setDateUpdate(e.target.value)}
           />
         </div>

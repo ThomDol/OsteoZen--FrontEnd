@@ -40,6 +40,11 @@ const Accouchement = ({ idPatient }) => {
               </a>
             ))}
         </div>
+        <br />
+        <br />
+        <div>
+          <div className="btn btn-primary">Creer accouchement</div>
+        </div>
       </div>
     </div>
   );
