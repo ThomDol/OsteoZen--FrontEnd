@@ -14,6 +14,8 @@ import axios from 'axios';
 const Patient = () => {
   const {id} = useParams();
   const [patient,setPatient]=useState();
+  const idPraticien = localStorage.getItem('idPraticien');
+  const token = localStorage.getItem('token');
 
   
   const {
@@ -41,8 +43,13 @@ const Patient = () => {
       const fetchPatient = async () => {
         try {
           const response = await axios.get(
-          `http://localhost:5000/api/patient/1/${parseInt(id)}`
-          );
+          `http://localhost:5000/api/patient/${idPraticien}/${parseInt(id)}`, {
+            headers: {
+              Authorization: 'Bearer ' + token 
+              
+            }
+           })
+          
           const data = response.data;
           setPatient(data);
           

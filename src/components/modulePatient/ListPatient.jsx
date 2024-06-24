@@ -6,8 +6,9 @@ import Header from "../header/Header";
 import PatientForm from "./sousmodulePatient/PatientForm";
 
 const ListPatient = () => {
-  const praticien = 1;
-  const urlList = "http://localhost:5000/api/patient/all/1";
+  const idPraticien = localStorage.getItem('idPraticien');
+  const token = localStorage.getItem('token');
+  const urlList = `http://localhost:5000/api/patient/all/${idPraticien}`;
   const [list, setList] = useState([]);
   const navigate = useNavigate();
   const [searchItem, setSearchItem] = useState("");
@@ -17,10 +18,17 @@ const ListPatient = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(urlList);
+        const response = await axios.get(urlList, {
+          headers: {
+            Authorization: 'Bearer ' + token 
+            
+          }
+         });
         setList(response.data);
       } catch (error) {
         console.error(error);
+        localStorage.clear();
+        navigate('/login');
       }
     };
 
@@ -69,7 +77,7 @@ const ListPatient = () => {
       </div>
       <br />
       <div className="col-8 mx-auto">
-        <table className="table table-striped-columns">
+        <table className="table  table-hover">
           <thead>
             <tr>
               <th scope="col">Nom</th>
@@ -94,12 +102,12 @@ const ListPatient = () => {
       <div className="col-2 mx-auto">
         <button
           data-bs-toggle="modal"
-          data-bs-target={`#Modal-${praticien}`}
+          data-bs-target={`#Modal-${idPraticien}`}
           className="btn btn-primary "
         >
           Creer un nouveau patient
         </button>
-        <PatientForm idModal={praticien} setCount={setCount} count={count} />
+        <PatientForm idModal={idPraticien} setCount={setCount} count={count} />
       </div>
     </div>
   );
