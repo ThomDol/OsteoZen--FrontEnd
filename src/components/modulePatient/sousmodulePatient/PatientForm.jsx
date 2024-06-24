@@ -4,7 +4,8 @@ import { useStorage } from "../../StorageContext";
 import { Modal } from "bootstrap";
 
 const PatientForm = ({ idModal, count, setCount }) => {
-
+  const token = localStorage.getItem('token');
+  const idPraticien = localStorage.getItem('idPraticien');
   const [dateNaissance, setDateNaissance] = useState("");
   const [nomGenre, setNomGenre] = useState("");
   const [nomProfession, setNomProfession] = useState("");
@@ -46,8 +47,13 @@ const PatientForm = ({ idModal, count, setCount }) => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/patient/1`,
-        formData
+        `http://localhost:5000/api/patient/${idPraticien}`, 
+        formData,
+        {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        }
       );
       console.log(response.data);
       setCount(count + 1); //pour que liste s'actualise

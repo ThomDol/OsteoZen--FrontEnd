@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useStorage } from "../../StorageContext";
+
 
 
 const PatientUpdateForm = ({idPatient}) => {
-  const { patient } = useStorage();
+  const token = localStorage.getItem('token');
   const [dateNaissance, setDateNaissance] = useState("");
   const [nomGenre, setNomGenre] = useState("");
   const [nomProfession, setNomProfession] = useState("");
@@ -23,8 +23,12 @@ const PatientUpdateForm = ({idPatient}) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/patient/1/${idPatient}`
-        );
+          `http://localhost:5000/api/patient/1/${idPatient}`, {
+            headers: {
+              Authorization: 'Bearer ' + token  
+            }
+           });
+        
         const data = response.data;
         setDateNaissance(data.dateNaissance || "");
         setNomGenre(data.nomGenre || "");
@@ -73,8 +77,13 @@ const PatientUpdateForm = ({idPatient}) => {
     try {
       const response = await axios.put(
         `http://localhost:5000/api/patient/1/${idPatient}`,
-        formData
-      );
+        formData, {
+          headers: {
+            Authorization: 'Bearer ' + token 
+            
+          }
+         });
+      
       console.log(response.data);
     } catch (error) {
       console.error(error);

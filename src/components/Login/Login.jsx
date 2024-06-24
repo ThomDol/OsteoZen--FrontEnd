@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Login = () => {
-    const [email,setEmail] =useState();
-    const [password,setPassword]=useState();
+    const [email,setEmail] =useState('');
+    const [password,setPassword]=useState('');
     const navigate = useNavigate();
 
 
@@ -21,7 +21,7 @@ const connect=async ()=>{
     {
         email:email,
         password:password
-    });
+    }, { timeout: 5000 });
     const data = response.data;  
     console.log(data); 
     localStorage.setItem('token',data.accessToken);
@@ -66,7 +66,7 @@ const connect=async ()=>{
                         <div className="input-group mb-3 d-flex justify-content-between">
                             <div className="form-check">
                                 <input type="checkbox" className="form-check-input" id="formCheck"/>
-                                <label for="formCheck" classNAme="form-check-label text-secondary"><small>Remember Me</small></label>
+                                <label htmlFor="formCheck" className="form-check-label text-secondary"><small>Remember Me</small></label>
                             </div>
                             <div>
                                 <small><a href="#">Forgot Password?</a></small>
