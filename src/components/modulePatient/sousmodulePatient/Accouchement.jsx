@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const Accouchement = ({ idPatient }) => {
   const accouchementListUrl =
-    "http://localhost:5000/api/accouchement/patient/" + idPatient;
+    "http://localhost:5000/api/accouchement/all" + idPatient;
   const [accouchementList, setAccouchementList] = useState([]);
 
   useEffect(() => {

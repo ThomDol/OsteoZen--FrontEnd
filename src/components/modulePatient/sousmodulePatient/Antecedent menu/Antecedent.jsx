@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const Antecedent = ({ idAntecedent, idPatient }) => {
+  const token = localStorage.getItem("token");
+  const idPraticien = localStorage.getItem("idPraticien");
   const [dateCreation, setDateCreation] = useState("");
   const [dateUpdate, setDateUpdate] = useState("");
   const [grossesse, setGrossesse] = useState("");
@@ -18,7 +20,7 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
   const [antUroGynecaux, setAntUroGynecaux] = useState("");
   const [antPsy, setAntPsy] = useState("");
   const [antNotesDiverses, setAntNotesDiverses] = useState("");
-  const urlGetAnt = `http://localhost:5000/api/antecedent/${idPatient}`;
+  const urlGetAnt = `http://localhost:5000/api/antecedent/${idPraticien}/${idPatient}`;
 
   const assign = (elem) => {
     if (elem !== null) {
@@ -43,7 +45,11 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(urlGetAnt);
+        const response = await axios.get(urlGetAnt, {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
         assign(response.data);
       } catch (error) {
         console.error(error);
@@ -77,13 +83,16 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
     try {
       const response = await axios.put(
         `http://localhost:5000/api/antecedent/${idAntecedent}`,
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
       );
       console.log(response.data);
-      // Handle success response
     } catch (error) {
       console.error(error);
-      // Handle error response
     }
   };
 

@@ -1,11 +1,11 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useStorage } from "../../StorageContext";
 import { Modal } from "bootstrap";
 
 const PatientForm = ({ idModal, count, setCount }) => {
-  const token = localStorage.getItem('token');
-  const idPraticien = localStorage.getItem('idPraticien');
+  const token = localStorage.getItem("token");
+  const idPraticien = localStorage.getItem("idPraticien");
   const [dateNaissance, setDateNaissance] = useState("");
   const [nomGenre, setNomGenre] = useState("");
   const [nomProfession, setNomProfession] = useState("");
@@ -16,7 +16,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
   const [tel, setTel] = useState("");
   const [medecinTraitantComplet, setMedecinTraitantComplet] = useState("");
   const [nomVille, setNomVille] = useState("");
-  const [codePostal,setCodePostal]=useState("");
+  const [codePostal, setCodePostal] = useState("");
 
   const modalRef = useRef();
 
@@ -26,7 +26,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
     const [medecinNom, medecinPrenom, medecinVille] =
       medecinTraitantComplet.split(" ");
     // Diviser la valeur combinée de la ville
-    
+
     const formData = {
       dateNaissance,
       nomVille,
@@ -47,12 +47,12 @@ const PatientForm = ({ idModal, count, setCount }) => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/patient/${idPraticien}`, 
+        `http://localhost:5000/api/patient/${idPraticien}`,
         formData,
         {
           headers: {
-            Authorization: 'Bearer ' + token
-          }
+            Authorization: "Bearer " + token,
+          },
         }
       );
       console.log(response.data);
@@ -138,6 +138,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
                       name="nomGenre"
                       id="genreHomme"
                       value="Homme"
+                      required
                       checked={nomGenre === "Homme"}
                       onChange={(e) => setNomGenre(e.target.value)}
                     />
@@ -152,6 +153,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
                       name="nomGenre"
                       id="genreFemme"
                       value="Femme"
+                      required
                       checked={nomGenre === "Femme"}
                       onChange={(e) => setNomGenre(e.target.value)}
                     />
@@ -166,6 +168,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
                       name="nomGenre"
                       id="genreSans"
                       value="Sans"
+                      required
                       checked={nomGenre === "Sans"}
                       onChange={(e) => setNomGenre(e.target.value)}
                     />
@@ -185,6 +188,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
                       name="nomTypePatient"
                       id="typeAdulte"
                       value="adulte"
+                      required
                       checked={nomTypePatient === "adulte"}
                       onChange={(e) => setNomTypePatient(e.target.value)}
                     />
@@ -199,6 +203,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
                       name="nomTypePatient"
                       id="typeEnfant"
                       value="enfant"
+                      required
                       checked={nomTypePatient === "enfant"}
                       onChange={(e) => setNomTypePatient(e.target.value)}
                     />
@@ -213,6 +218,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
                       name="nomTypePatient"
                       id="typeBebe"
                       value="bebe"
+                      required
                       checked={nomTypePatient === "bebe"}
                       onChange={(e) => setNomTypePatient(e.target.value)}
                     />
@@ -240,41 +246,41 @@ const PatientForm = ({ idModal, count, setCount }) => {
                 </button>
               </div>
               <div className="mb-3">
-          <label htmlFor="nomVille" className="form-label">
-           Ville
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="nomVille"
-            value={nomVille}
-            onChange={(e) => setNomVille(e.target.value)}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="codePostal" className="form-label">
-            Code Postal
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="codePostal"
-            value={codePostal}
-            onChange={(e) => setCodePostal(e.target.value)}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="libelleProfession" className="form-label">
-            Profession
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="nomProfession"
-            value={nomProfession}
-            onChange={(e) => setNomProfession(e.target.value)}
-          />
-        </div>
+                <label htmlFor="nomVille" className="form-label">
+                  Ville
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="nomVille"
+                  value={nomVille}
+                  onChange={(e) => setNomVille(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="codePostal" className="form-label">
+                  Code Postal
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="codePostal"
+                  value={codePostal}
+                  onChange={(e) => setCodePostal(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="libelleProfession" className="form-label">
+                  Profession
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="nomProfession"
+                  value={nomProfession}
+                  onChange={(e) => setNomProfession(e.target.value)}
+                />
+              </div>
 
               <div className="mb-3">
                 <label htmlFor="email" className="form-label">
@@ -296,6 +302,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
                   type="tel"
                   className="form-control"
                   id="tel"
+                  required
                   value={tel}
                   onChange={(e) => setTel(e.target.value)}
                 />

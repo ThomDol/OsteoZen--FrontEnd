@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 
 const AntecedentForm = ({idPatient}) => {
- 
+  const token = localStorage.getItem("token");
   const [dateCreation, setDateCreation] = useState("");
   const [dateUpdate, setDateUpdate] = useState("");
   const [grossesse, setGrossesse] = useState("");
@@ -47,8 +47,13 @@ const AntecedentForm = ({idPatient}) => {
     try {
       const response = await axios.post(
         `http://localhost:5000/api/antecedent/${idPatient}`,
-        formData
+        formData,{
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
       );
+      
       console.log(response.data);
       // Handle success response
     } catch (error) {
