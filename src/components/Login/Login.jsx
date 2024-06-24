@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import "../../style/Login.css";
 import logosd from "../../assets/logosd.png";
-import logoMassage from '../../assets/logoMassage.png';
+import logoMassage from "../../assets/logoMassage.png";
 import userregular24 from "../../assets/userregular24.png";
 import user24 from "../../assets/user24.png";
 import lock from "../../assets/lock.png";
@@ -13,6 +13,11 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
+
   const connect = async () => {
     try {
       const response = await axios.post(
@@ -46,7 +51,7 @@ const Login = () => {
         <div className="row align-items-center justify-content-center h-100 g-0 px-4 px-sm-0">
           <div className="col col-sm-6 col-lg-7 col-xl-6">
             <a href="#" className="d-flex justify-content-center">
-              <img src={logoMassage} alt="Logo" style={{width:"150px"}} />
+              <img src={logoMassage} alt="Logo" style={{ width: "150px" }} />
             </a>
 
             <div className="text-center mt-5 mb-4">
@@ -91,6 +96,7 @@ const Login = () => {
               </div>
               <div>
                 <button
+                  type="button"
                   className="btn btn-info btn-lg text-white w-100"
                   onClick={connect}
                 >

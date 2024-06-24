@@ -119,7 +119,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
                   Date de Naissance
                 </label>
                 <input
-                  type="text"
+                  type="date"
                   className="form-control"
                   id="dateNaissance"
                   required

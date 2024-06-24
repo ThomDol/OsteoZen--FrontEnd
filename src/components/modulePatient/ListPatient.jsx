@@ -6,8 +6,8 @@ import Header from "../header/Header";
 import PatientForm from "./sousmodulePatient/PatientForm";
 
 const ListPatient = () => {
-  const idPraticien = localStorage.getItem('idPraticien');
-  const token = localStorage.getItem('token');
+  const idPraticien = localStorage.getItem("idPraticien");
+  const token = localStorage.getItem("token");
   const urlList = `http://localhost:5000/api/patient/all/${idPraticien}`;
   const [list, setList] = useState([]);
   const navigate = useNavigate();
@@ -20,15 +20,14 @@ const ListPatient = () => {
       try {
         const response = await axios.get(urlList, {
           headers: {
-            Authorization: 'Bearer ' + token 
-            
-          }
-         });
+            Authorization: "Bearer " + token,
+          },
+        });
         setList(response.data);
       } catch (error) {
         console.error(error);
         localStorage.clear();
-        navigate('/login');
+        navigate("/login");
       }
     };
 
@@ -77,7 +76,7 @@ const ListPatient = () => {
       </div>
       <br />
       <div className="col-8 mx-auto">
-        <table className="table  table-hover">
+        <table className="table  table-hover table-bordered">
           <thead>
             <tr>
               <th scope="col">Nom</th>
