@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect ,useState} from 'react';
 import Header from '../header/Header';
 import axios from'axios';
 import { useNavigate } from 'react-router-dom';
@@ -7,10 +7,11 @@ import { useNavigate } from 'react-router-dom';
 const Accueil = () => {
     const token = localStorage.getItem('token');
     const navigate =useNavigate();
+    const [praticien,setPraticien]=useState();
 
     useEffect(()=>{
         loadUser();
-    })
+    },[])
 
     const loadUser = async()=>{
         try{
@@ -21,6 +22,7 @@ const Accueil = () => {
             }
            })
            const data= await response.data;
+           setPraticien(data);
            console.log(data);
            localStorage.setItem('idPraticien',data.idPraticien);
           
@@ -35,6 +37,7 @@ const Accueil = () => {
     return (
         <div >
             <Header/>
+           {praticien &&  <h1>Bienvenue {praticien.nomPraticienConnecte} {praticien.prenomPraticienConnecte} </h1>}
         </div>
     );
 };

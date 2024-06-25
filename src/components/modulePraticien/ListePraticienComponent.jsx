@@ -41,7 +41,7 @@ const ListePraticienComponent = () => {
       <br /><br />
       <h2 className="text-center">LISTE DES PRATICIENS</h2>
       <br /><br />
-      <table className="table table-hover">
+      <table className="table table-hover table table-bordered text-center">
         <thead>
           <tr>
             <th>Nom</th>
