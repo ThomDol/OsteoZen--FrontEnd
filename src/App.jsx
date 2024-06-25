@@ -26,6 +26,10 @@ function App() {
               path="/modifier-praticien"
               element={<PraticienComponent />}
             />
+            <Route
+              path="/error"
+              element={<Error />}
+            />
             <Route path="/*" element={<Login />} />
           </Routes>
         </Router>

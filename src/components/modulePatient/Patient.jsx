@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../header/Header";
 import { useStorage } from "../StorageContext";
+import { useNavigate } from "react-router-dom";
 import AntecedentAccueil from "./sousmodulePatient/Antecedent menu/AntecedentAccueil";
 import Accouchement from "./sousmodulePatient/Accouchement";
 import Grossesse from "./sousmodulePatient/Grossesse";
@@ -16,6 +17,7 @@ const Patient = () => {
   const [patient,setPatient]=useState();
   const idPraticien = localStorage.getItem('idPraticien');
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
 
   
   const {
@@ -55,6 +57,7 @@ const Patient = () => {
           
         } catch (error) {
           console.error(error);
+          navigate('/error')
         }
       };
   
