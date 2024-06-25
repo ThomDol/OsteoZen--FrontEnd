@@ -3,7 +3,7 @@ import Header from "../header/Header";
 import { useStorage } from "../StorageContext";
 import { useNavigate } from "react-router-dom";
 import AntecedentAccueil from "./sousmodulePatient/Antecedent menu/AntecedentAccueil";
-import Accouchement from "./sousmodulePatient/Accouchement";
+import Accouchement from "./sousmodulePatient/Accouchement/Accouchement";
 import Grossesse from "./sousmodulePatient/Grossesse";
 import Consultation from "./sousmodulePatient/Consutation";
 import "../../style/Patient.css";
@@ -50,7 +50,7 @@ const Patient = () => {
               Authorization: 'Bearer ' + token 
               
             }
-           })
+          });
           
           const data = response.data;
           setPatient(data);

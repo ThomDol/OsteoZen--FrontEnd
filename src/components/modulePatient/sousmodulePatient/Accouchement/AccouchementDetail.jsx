@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useStorage } from '../../StorageContext';
+import { useStorage } from '../../../StorageContext';
 
-const AccouchementDetail = () => {
-  const { patient } = useStorage();
-  const [accouchement, setAccouchement] = useState();
+const AccouchementDetail = ({idAccouchementSelected}) => {
+  const token =localStorage.getItem("token");
   const [dateAccouchement, setDateAccouchement] = useState();
   const [dureeTravail, setDureeTravail] = useState();
   const [difficulteTravail, setDifficulteTravail] = useState();
@@ -21,11 +20,11 @@ const AccouchementDetail = () => {
   const [reeducationPerinee, setReeducationPerinee] = useState();
   const [presentationAAccouchement, setPresentationAAccouchement] = useState();
   const [ageDateAccouchement, setAgeDateAccouchement] = useState();
-  const urlGetAccouchement = `http://localhost:5000/api/accouchement/${patient.idPatient}`;
+  const urlAccouchement = `http://localhost:5000/api/accouchement/${idAccouchementSelected}`;
 
   const assign = (elem) => {
     if (elem !== null) {
-      setAccouchement(elem);
+      
       setDateAccouchement(elem.dateAccouchement);
       setDureeTravail(elem.dureeTravail);
       setDifficulteTravail(elem.difficulteTravail);
@@ -48,7 +47,11 @@ const AccouchementDetail = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(urlGetAccouchement);
+        const response = await axios.get(urlAccouchement,{
+          headers: {
+            Authorization: 'Bearer ' + token 
+          }
+        });
         assign(response.data);
       } catch (error) {
         console.error(error);
@@ -79,9 +82,23 @@ const AccouchementDetail = () => {
       ageDateAccouchement,
     };
 
+    const putData = async () => {
+      try {
+        const response = await axios.put(urlAccouchement, formData, {
+          headers: {
+            Authorization: 'Bearer ' + token 
+          }
+        });
+        assign(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    putData();
+
     console.log(formData);
     
   };
+}
 
   return (
     <div className="col-9 mx-auto">
@@ -439,10 +456,12 @@ const AccouchementDetail = () => {
             onChange={(e) => setAgeDateAccouchement(e.target.value)} 
           />
         </div>
-        <button type="submit" className="btn btn-primary">Soumettre</button>
+        <button type="button" className="btn btn-primary" onClick={handleSubmit}>Soumettre</button>
       </form>
     </div>
   );
 };
+
+
 
 export default AccouchementDetail;

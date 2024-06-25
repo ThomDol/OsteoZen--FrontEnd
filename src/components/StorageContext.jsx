@@ -13,6 +13,8 @@ const [displayAntecedent,setDisplayAntecedent]=useState(false);
 const [displayAccouchement,setDisplayAccouchement]=useState(false);
 const [displayGrossesse,setDisplayGrossesse]=useState(false);
 const [displayConsultation,setDisplayConsultation]=useState(false);
+const[displayAccouchementDetail,setDisplayAccouchementDetail]=useState(false);
+const [displayAccouchementNew,setDisplayAccouchementNew]=useState(false);
 
 
 
@@ -25,7 +27,9 @@ return(
         displayAccouchement,setDisplayAccouchement,
         displayGrossesse,setDisplayGrossesse,
         displayConsultation,setDisplayConsultation,
-        displayAntecedent,setDisplayAntecedent
+        displayAntecedent,setDisplayAntecedent,
+        displayAccouchementDetail,setDisplayAccouchementDetail,
+        displayAccouchementNew,setDisplayAccouchementNew
 
 
     }}>{children}</StorageContext.Provider>
