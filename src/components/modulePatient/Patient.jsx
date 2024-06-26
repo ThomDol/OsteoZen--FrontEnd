@@ -5,6 +5,7 @@ import CryptoJS from "crypto-js";
 import { useStorage } from "../StorageContext";
 import { useNavigate } from "react-router-dom";
 import AntecedentAccueil from "./sousmodulePatient/Antecedent menu/AntecedentAccueil";
+import AntecedentBebeAccueil from "./sousmodulePatient/AntecedentBebe Menu/AntecedentBebeAccueil";
 import Accouchement from "./sousmodulePatient/Accouchement/Accouchement";
 import Grossesse from "./sousmodulePatient/Grossesse";
 import Consultation from "./sousmodulePatient/Consutation";
@@ -47,6 +48,8 @@ const Patient = () => {
     setDisplayGrossesse,
     displayConsultation,
     setDisplayConsultation,
+    displayAntecedentBebe,
+    setDisplayAntecedentBebe
   } = useStorage();
 
   const resetDisplay = () => {
@@ -55,6 +58,7 @@ const Patient = () => {
     setDisplayAccouchement(false);
     setDisplayGrossesse(false);
     setDisplayConsultation(false);
+    setDisplayAntecedentBebe(false);
   };
 
   useEffect(() => {
@@ -143,6 +147,15 @@ const Patient = () => {
                   className="pt-5"
                   onClick={() => {
                     resetDisplay();
+                    setDisplayAntecedentBebe(true);
+                  }}
+                >
+                  &#11162; Antecedent Bébé
+                </div>
+                <div
+                  className="pt-5"
+                  onClick={() => {
+                    resetDisplay();
                     setDisplayAccouchement(true);
                   }}
                 >
@@ -175,6 +188,9 @@ const Patient = () => {
                 )}
                 {displayAntecedent && (
                   <AntecedentAccueil idPatient={patient.idPatient} />
+                )}
+                {displayAntecedentBebe && (
+                  <AntecedentBebeAccueil idPatient={patient.idPatient} />
                 )}
                 {displayAccouchement && (
                   <Accouchement idPatient={patient.idPatient} />
