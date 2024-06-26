@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { useStorage } from "../../StorageContext";
 import { Modal } from "bootstrap";
 
 const PatientForm = ({ idModal, count, setCount }) => {
@@ -17,8 +16,11 @@ const PatientForm = ({ idModal, count, setCount }) => {
   const [medecinTraitantComplet, setMedecinTraitantComplet] = useState("");
   const [nomVille, setNomVille] = useState("");
   const [codePostal, setCodePostal] = useState("");
+  const [displaySuccessMessage,setDisplaySuccessMessage]=useState(false);
 
   const modalRef = useRef();
+
+  useEffect(()=>{setDisplaySuccessMessage(false);},[])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -55,6 +57,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
           },
         }
       );
+      setDisplaySuccessMessage(true);
       console.log(response.data);
       setCount(count + 1); //pour que liste s'actualise
 
@@ -311,6 +314,12 @@ const PatientForm = ({ idModal, count, setCount }) => {
                 Soumettre
               </button>
             </form>
+            <br />
+            {displaySuccessMessage && (<div className="text-center">
+              <span style={{ fontWeight: "bold", color: "green" }}>
+                Patient crée
+              </span></div>
+            )}
             <div className="modal-footer">
               <button
                 type="button"

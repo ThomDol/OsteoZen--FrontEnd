@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import axios from "axios";
 
 const AntecedentForm = ({idPatient}) => {
@@ -19,8 +19,9 @@ const AntecedentForm = ({idPatient}) => {
   const [antUroGynecaux, setAntUroGynecaux] = useState("");
   const [antPsy, setAntPsy] = useState("");
   const [antNotesDiverses, setAntNotesDiverses] = useState("");
+  const [displayCreationSuccessMessage,setDisplayCreationSuccessMessage]=useState(false);
   
-
+  useEffect(()=>{setDisplayCreationSuccessMessage(false);},[]);
 
     
   const handleSubmit = async (event) => {
@@ -53,7 +54,7 @@ const AntecedentForm = ({idPatient}) => {
           },
         }
       );
-      
+      setDisplayCreationSuccessMessage(true);
       console.log(response.data);
       // Handle success response
     } catch (error) {
@@ -75,7 +76,7 @@ const AntecedentForm = ({idPatient}) => {
             Date de Création
           </label>
           <input
-            type="text"
+            type="date"
             className="form-control"
             id="dateCreation"
             required
@@ -276,6 +277,12 @@ const AntecedentForm = ({idPatient}) => {
           Soumettre
         </button>
       </form>
+      {displayCreationSuccessMessage && 
+        <div className="text-center">
+          <span style={{ fontWeight: "bold", color: "green" }}>
+            Creation faite
+          </span>
+        </div>}
     </div>
   );
 };

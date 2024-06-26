@@ -16,10 +16,13 @@ const PatientUpdateForm = ({idPatient}) => {
   const [medecinTraitantComplet, setMedecinTraitantComplet] = useState("");
   const [nomVille, setNomVille] = useState("");
   const [codePostal,setCodePostal]=useState("");
+  const [displayUpdateMessageSuccess,setDisplayUpdateMessageSuccess]=useState(false);
 
 
 
   useEffect(() => {
+    setDisplayUpdateMessageSuccess(false);
+
     const fetchData = async () => {
       try {
         const response = await axios.get(
@@ -83,7 +86,7 @@ const PatientUpdateForm = ({idPatient}) => {
             
           }
          });
-      
+      setDisplayUpdateMessageSuccess(true);
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -313,6 +316,7 @@ const PatientUpdateForm = ({idPatient}) => {
         <button type="submit" className="btn btn-primary">
           Mettre à jour
         </button>
+        {displayUpdateMessageSuccess && <div className="text-center"><span style={{fontWeight:'bold',color:'green'}}>Mise à jour faite</span></div>}
       </form>
     </div>
   );

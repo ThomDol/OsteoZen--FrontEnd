@@ -21,6 +21,7 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
   const [antPsy, setAntPsy] = useState("");
   const [antNotesDiverses, setAntNotesDiverses] = useState("");
   const urlGetAnt = `http://localhost:5000/api/antecedent/${idPraticien}/${idPatient}`;
+  const[displayUpdateSuccessMessage, setDisplayUpdateSuccessMessage] = useState(false);
 
   const assign = (elem) => {
     if (elem !== null) {
@@ -43,6 +44,7 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
   };
 
   useEffect(() => {
+    setDisplayUpdateSuccessMessage(false);
     const fetchData = async () => {
       try {
         const response = await axios.get(urlGetAnt, {
@@ -90,6 +92,7 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
           },
         }
       );
+      setDisplayUpdateSuccessMessage(true);
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -122,7 +125,7 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
             Date de Mise à Jour
           </label>
           <input
-            type="text"
+            type="date"
             className="form-control"
             id="dateUpdate"
             value={dateUpdate}
@@ -311,6 +314,13 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
           Soumettre
         </button>
       </form>
+      {displayUpdateSuccessMessage && (
+        <div className="text-center">
+          <span style={{ fontWeight: "bold", color: "green" }}>
+            Mise à jour faite
+          </span>
+        </div>
+      )}
     </div>
   );
 };
