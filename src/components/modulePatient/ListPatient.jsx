@@ -1,6 +1,7 @@
 import React from "react";
 import { jwtDecode } from "jwt-decode";
 import CryptoJS from "crypto-js";
+import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -27,6 +28,7 @@ const ListPatient = () => {
   const [idPraticien, setIdPraticien] = useState(null);
   const token = localStorage.getItem("token");
   const urlList = `http://localhost:5000/api/patient/all/${idPraticien}`;
+  const urlDelete = `http://localhost:5000/api/patient/${idPraticien}`;
   const [list, setList] = useState([]);
   const navigate = useNavigate();
   const [searchItem, setSearchItem] = useState("");
@@ -76,6 +78,38 @@ const ListPatient = () => {
     );
   }, [searchItem, list]);
 
+  const deletePatient = (id) => {
+    if (idPraticien) {
+      //Message de confirmation de suppression
+      Swal.fire({
+        title: "Etes vous sûr de vouloir supprimer ce patient ?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Oui",
+        denyButtonText: `Non`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const deleteData = async () => {
+            try {
+              const response = await axios.delete(urlDelete + "/" + id, {
+                headers: {
+                  Authorization: "Bearer " + token,
+                },
+              });
+              setCount(count + 1);
+            } catch (error) {
+              console.error(error);
+            }
+          };
+          deleteData();
+          Swal.fire("Supprimé", "", "success");
+        } else if (result.isDenied) {
+          Swal.fire("Suppression annulée", "", "info");
+        }
+      });
+    }
+  };
+
   return (
     <div className="container ">
       <div className="col-11 mx-auto">
@@ -110,6 +144,7 @@ const ListPatient = () => {
               <th scope="col">Nom</th>
               <th scope="col">Prenom</th>
               <th scope="col">Date Naissance</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -121,6 +156,15 @@ const ListPatient = () => {
                   </td>
                   <td>{patient.prenomPatient}</td>
                   <td>{patient.dateNaissance}</td>
+                  <td>
+                    <span
+                      onClick={() => {
+                        deletePatient(patient.idPatient);
+                      }}
+                    >
+                      &#10060;
+                    </span>
+                  </td>
                 </tr>
               ))}
           </tbody>

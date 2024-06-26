@@ -92,8 +92,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
         console.log(response.data);
         setCount(count + 1); //pour que liste s'actualise
 
-        const modalInstance = Modal.getInstance(modalRef.current);
-        modalInstance.hide();
+        
       }
     } catch (error) {
       console.error(error);
@@ -107,6 +106,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
       tabIndex="-1"
       aria-labelledby={`ModalLabel-${idModal}`}
       aria-hidden="true"
+      ref={modalRef}
     >
       <div className="modal-dialog modal-lg">
         <div className="modal-content">
@@ -343,7 +343,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
                 />
               </div>
               <button type="submit" className="btn btn-primary">
-                Soumettre
+                Créer
               </button>
             </form>
             <br />

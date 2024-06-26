@@ -274,7 +274,7 @@ const AntecedentForm = ({idPatient}) => {
           ></textarea>
         </div>
         <button type="submit" className="btn btn-primary">
-          Soumettre
+          Créer
         </button>
       </form>
       {displayCreationSuccessMessage && 
