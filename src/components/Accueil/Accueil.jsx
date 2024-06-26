@@ -24,7 +24,7 @@ const Accueil = () => {
            const data= await response.data;
            setPraticien(data);
            console.log(data);
-           localStorage.setItem('idPraticien',data.idPraticien);
+           
           
         }
         catch(error){

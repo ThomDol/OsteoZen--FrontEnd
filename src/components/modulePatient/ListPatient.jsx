@@ -1,38 +1,68 @@
 import React from "react";
+import { jwtDecode } from "jwt-decode";
+import CryptoJS from "crypto-js";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Header from "../header/Header";
 import PatientForm from "./sousmodulePatient/PatientForm";
 
+const SECRET_KEY = "q#4puta9!am4$fcl";
+const INIT_VECTOR = "1zp6@y#ect4?5krx";
+
+const decryptToken = (encryptedToken) => {
+  const key = CryptoJS.enc.Utf8.parse(SECRET_KEY);
+  const iv = CryptoJS.enc.Utf8.parse(INIT_VECTOR);
+
+  const decrypted = CryptoJS.AES.decrypt(encryptedToken, key, {
+    iv: iv,
+    padding: CryptoJS.pad.Pkcs7,
+    mode: CryptoJS.mode.CBC,
+  });
+
+  return decrypted.toString(CryptoJS.enc.Utf8);
+};
+
 const ListPatient = () => {
-  const idPraticien = localStorage.getItem("idPraticien");
+  const [idPraticien, setIdPraticien] = useState(null);
   const token = localStorage.getItem("token");
   const urlList = `http://localhost:5000/api/patient/all/${idPraticien}`;
   const [list, setList] = useState([]);
   const navigate = useNavigate();
   const [searchItem, setSearchItem] = useState("");
   const [filteredList, setFilteredList] = useState([]);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0); //pour reinitialiser liste de patient qd fenetre modal de creation se ferme
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(urlList, {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
-        setList(response.data);
-      } catch (error) {
-        console.error(error);
-        //localStorage.clear();
-        //navigate("/login");
-      }
-    };
+    try {
+      const decryptedToken = decryptToken(token);
+      const decodedToken = jwtDecode(decryptedToken);
+      setIdPraticien(decodedToken.id);
+    } catch (error) {
+      console.error("Erreur de décryptage ou de décodage du token:", error);
+    }
+  }, []);
 
-    fetchData();
-  }, [count]);
+  useEffect(() => {
+    if (idPraticien) {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(urlList, {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          });
+          setList(response.data);
+        } catch (error) {
+          console.error(error);
+          //localStorage.clear();
+          //navigate("/login");
+        }
+      };
+
+      fetchData();
+    }
+  }, [count, idPraticien]);
 
   const selectPatient = (elem) => {
     navigate("/patient/" + elem.idPatient);
