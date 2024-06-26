@@ -4,7 +4,6 @@ import axios from "axios";
 
 const Antecedent = ({ idAntecedent, idPatient }) => {
   const token = localStorage.getItem("token");
-  const idPraticien = localStorage.getItem("idPraticien");
   const [dateCreation, setDateCreation] = useState("");
   const [dateUpdate, setDateUpdate] = useState("");
   const [grossesse, setGrossesse] = useState("");
@@ -20,7 +19,7 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
   const [antUroGynecaux, setAntUroGynecaux] = useState("");
   const [antPsy, setAntPsy] = useState("");
   const [antNotesDiverses, setAntNotesDiverses] = useState("");
-  const urlGetAnt = `http://localhost:5000/api/antecedent/${idPraticien}/${idPatient}`;
+  const urlGetAnt = `http://localhost:5000/api/antecedent/${idPatient}`;
   const[displayUpdateSuccessMessage, setDisplayUpdateSuccessMessage] = useState(false);
 
   const assign = (elem) => {

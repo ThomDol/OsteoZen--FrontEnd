@@ -5,16 +5,15 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const AntecedentAccueil = ({ idPatient }) => {
-  const idPraticien = localStorage.getItem("idPraticien");
   const token = localStorage.getItem("token");
   const [antecedentRes, setAntecedentRes] = useState();
-  const [displayAccouchementForm, setDisplayAccouchementForm] = useState(false);
+  const [displayAntecedentForm, setDisplayAntecedentForm] = useState(false);
 
   useEffect(() => {
     const fetchAntecedent = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/antecedent/${idPraticien}/${idPatient}`,
+          `http://localhost:5000/api/antecedent/${idPatient}`,
           {
             headers: {
               Authorization: "Bearer " + token,
@@ -25,9 +24,9 @@ const AntecedentAccueil = ({ idPatient }) => {
         const data = response.data;
         setAntecedentRes(data);
         if (!data) {
-          setDisplayAccouchementForm(true);
+          setDisplayAntecedentForm(true);
         } else {
-          setDisplayAccouchementForm(false);
+          setDisplayAntecedentForm(false);
         }
       } catch (error) {
         console.error(error);
@@ -45,7 +44,7 @@ const AntecedentAccueil = ({ idPatient }) => {
           idPatient={idPatient}
         />
       )}
-      {displayAccouchementForm && <AntecedentForm idPatient={idPatient} />}
+      {displayAntecedentForm && <AntecedentForm idPatient={idPatient} />}
     </div>
   );
 };

@@ -1,10 +1,28 @@
 import React, { useState, useEffect, useRef } from "react";
+import { jwtDecode } from "jwt-decode";
+import CryptoJS from "crypto-js";
 import axios from "axios";
 import { Modal } from "bootstrap";
 
+const SECRET_KEY = "q#4puta9!am4$fcl";
+const INIT_VECTOR = "1zp6@y#ect4?5krx";
+
+const decryptToken = (encryptedToken) => {
+  const key = CryptoJS.enc.Utf8.parse(SECRET_KEY);
+  const iv = CryptoJS.enc.Utf8.parse(INIT_VECTOR);
+
+  const decrypted = CryptoJS.AES.decrypt(encryptedToken, key, {
+    iv: iv,
+    padding: CryptoJS.pad.Pkcs7,
+    mode: CryptoJS.mode.CBC,
+  });
+
+  return decrypted.toString(CryptoJS.enc.Utf8);
+};
+
 const PatientForm = ({ idModal, count, setCount }) => {
   const token = localStorage.getItem("token");
-  const idPraticien = localStorage.getItem("idPraticien");
+  const [idPraticien, setIdPraticien] = useState(null);
   const [dateNaissance, setDateNaissance] = useState("");
   const [nomGenre, setNomGenre] = useState("");
   const [nomProfession, setNomProfession] = useState("");
@@ -16,11 +34,23 @@ const PatientForm = ({ idModal, count, setCount }) => {
   const [medecinTraitantComplet, setMedecinTraitantComplet] = useState("");
   const [nomVille, setNomVille] = useState("");
   const [codePostal, setCodePostal] = useState("");
-  const [displaySuccessMessage,setDisplaySuccessMessage]=useState(false);
+  const [displaySuccessMessage, setDisplaySuccessMessage] = useState(false);
 
   const modalRef = useRef();
 
-  useEffect(()=>{setDisplaySuccessMessage(false);},[])
+  useEffect(() => {
+    setDisplaySuccessMessage(false);
+  }, []);
+
+  useEffect(() => {
+    try {
+      const decryptedToken = decryptToken(token);
+      const decodedToken = jwtDecode(decryptedToken);
+      setIdPraticien(decodedToken.id);
+    } catch (error) {
+      console.error("Erreur de décryptage ou de décodage du token:", error);
+    }
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -48,21 +78,23 @@ const PatientForm = ({ idModal, count, setCount }) => {
     };
 
     try {
-      const response = await axios.post(
-        `http://localhost:5000/api/patient/${idPraticien}`,
-        formData,
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
-      setDisplaySuccessMessage(true);
-      console.log(response.data);
-      setCount(count + 1); //pour que liste s'actualise
+      if (idPraticien) {
+        const response = await axios.post(
+          `http://localhost:5000/api/patient/${idPraticien}`,
+          formData,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        setDisplaySuccessMessage(true);
+        console.log(response.data);
+        setCount(count + 1); //pour que liste s'actualise
 
-      const modalInstance = Modal.getInstance(modalRef.current);
-      modalInstance.hide();
+        const modalInstance = Modal.getInstance(modalRef.current);
+        modalInstance.hide();
+      }
     } catch (error) {
       console.error(error);
     }
@@ -315,10 +347,12 @@ const PatientForm = ({ idModal, count, setCount }) => {
               </button>
             </form>
             <br />
-            {displaySuccessMessage && (<div className="text-center">
-              <span style={{ fontWeight: "bold", color: "green" }}>
-                Patient crée
-              </span></div>
+            {displaySuccessMessage && (
+              <div className="text-center">
+                <span style={{ fontWeight: "bold", color: "green" }}>
+                  Patient crée
+                </span>
+              </div>
             )}
             <div className="modal-footer">
               <button
