@@ -1,9 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Antecedent = ({ idAntecedent, idPatient }) => {
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
   const [dateCreation, setDateCreation] = useState("");
   const [dateUpdate, setDateUpdate] = useState("");
   const [grossesse, setGrossesse] = useState("");
@@ -54,6 +56,8 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
         assign(response.data);
       } catch (error) {
         console.error(error);
+        localStorage.clear();
+        navigate('/login');
       }
     };
 
@@ -95,6 +99,8 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
       console.log(response.data);
     } catch (error) {
       console.error(error);
+      localStorage.clear();
+      navigate('/login');
     }
   };
 

@@ -55,8 +55,6 @@ const ListPatient = () => {
           setList(response.data);
         } catch (error) {
           console.error(error);
-          //localStorage.clear();
-          //navigate("/login");
         }
       };
 

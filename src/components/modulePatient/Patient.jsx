@@ -84,7 +84,9 @@ const Patient = () => {
           setPatient(data);
         } catch (error) {
           console.error(error);
-          navigate("/error");
+          localStorage.clear();
+          navigate("/login");
+
         }
       };
 

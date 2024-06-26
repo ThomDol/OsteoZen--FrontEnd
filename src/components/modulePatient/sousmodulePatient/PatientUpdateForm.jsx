@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
 
 const PatientUpdateForm = ({idPatient}) => {
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
   const [dateNaissance, setDateNaissance] = useState("");
   const [nomGenre, setNomGenre] = useState("");
   const [nomProfession, setNomProfession] = useState("");
@@ -48,6 +50,8 @@ const PatientUpdateForm = ({idPatient}) => {
         setCodePostal(data.codePostal || "");
       } catch (error) {
         console.error(error);
+        localStorage.clear();
+        navigate('/login');
       }
     };
 
@@ -90,6 +94,8 @@ const PatientUpdateForm = ({idPatient}) => {
       console.log(response.data);
     } catch (error) {
       console.error(error);
+      localStorage.clear();
+      navigate("/login");
     }
   };
 
