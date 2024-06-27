@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useStorage } from "../../../StorageContext";
 
 const Antecedent = ({ idAntecedent, idPatient }) => {
   const token = localStorage.getItem("token");
@@ -23,6 +24,8 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
   const [antNotesDiverses, setAntNotesDiverses] = useState("");
   const urlGetAnt = `http://localhost:5000/api/antecedent/${idPatient}`;
   const[displayUpdateSuccessMessage, setDisplayUpdateSuccessMessage] = useState(false);
+
+  const{setDisplayAntecedent} = useStorage();
 
   const assign = (elem) => {
     if (elem !== null) {
@@ -104,11 +107,37 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
     }
   };
 
+  const deleteAnt =async(id)=>{
+    try{
+    const response = await axios.delete(
+      `http://localhost:5000/api/antecedent/${id}`,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    alert("suppression ok !");
+    setDisplayAntecedent(false);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
   return (
     <div className="col-9 mx-auto">
+      <div className="row">
+        <div className="col-11">
       <h3 style={{ textAlign: "center", paddingTop: "10px" }}>
         <b>Antecedent</b>
       </h3>
+      </div>
+      <div className="col-1">
+      <span onClick={() => {
+                        deleteAnt(idAntecedent);
+                      }}> &#10060;</span>
+      </div>
+      </div>
       <br />
       <br />
       <form onSubmit={handleSubmit}>
@@ -120,7 +149,7 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
             type="text"
             className="form-control"
             id="dateCreation"
-            required
+            readOnly
             value={dateCreation}
             onChange={(e) => setDateCreation(e.target.value)}
           />
@@ -130,9 +159,11 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
             Date de Mise à Jour
           </label>
           <input
-            type="date"
+            type="text"
             className="form-control"
             id="dateUpdate"
+            placeholder="jj/mm/aaaa"
+            pattern="\d{2}/\d{2}/\d{4}"
             value={dateUpdate}
             required
             onChange={(e) => setDateUpdate(e.target.value)}

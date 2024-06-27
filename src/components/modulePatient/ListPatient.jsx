@@ -7,6 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Header from "../header/Header";
 import PatientForm from "./sousmodulePatient/PatientForm";
+import NavBar from "../header/NavBar";
 
 const SECRET_KEY = "q#4puta9!am4$fcl";
 const INIT_VECTOR = "1zp6@y#ect4?5krx";
@@ -113,10 +114,10 @@ const ListPatient = () => {
   return (
     <div className="container ">
       <div className="col-11 mx-auto">
-        <Header />
+        <NavBar />
       </div>
 
-      <br />
+      <br /><br /><br /><br />
       <br />
       <br />
       <div className=" col-3 mx-auto">

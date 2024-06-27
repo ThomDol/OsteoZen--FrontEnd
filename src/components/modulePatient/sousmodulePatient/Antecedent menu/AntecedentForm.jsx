@@ -76,9 +76,11 @@ const AntecedentForm = ({idPatient}) => {
             Date de Création
           </label>
           <input
-            type="date"
+            type="text"
             className="form-control"
             id="dateCreation"
+            placeholder="jj/mm/aaaa"
+            pattern="\d{2}/\d{2}/\d{4}"
             required
             value={dateCreation}
             onChange={(e) => setDateCreation(e.target.value)}
@@ -93,6 +95,9 @@ const AntecedentForm = ({idPatient}) => {
             className="form-control"
             id="dateUpdate"
             value={dateUpdate}
+            placeholder="jj/mm/aaaa"
+            pattern="\d{2}/\d{2}/\d{4}"
+            readOnly
             onChange={(e) => setDateUpdate(e.target.value)}
           />
         </div>

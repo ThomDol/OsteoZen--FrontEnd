@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../header/Header";
+import NavBar from "../header/NavBar";
 import { jwtDecode } from "jwt-decode";
 import CryptoJS from "crypto-js";
 import { useStorage } from "../StorageContext";
@@ -103,7 +103,7 @@ const Patient = () => {
       {patient && (
         <div>
           <div className="header col-4 mx-auto">
-            <Header />
+            <NavBar />
           </div>
 
           <br />
@@ -112,7 +112,7 @@ const Patient = () => {
             <div
               className="col-2 lateral "
               style={{
-                backgroundColor: "rgba(200,152,3,0.7)",
+                backgroundColor: "rgba(49, 210, 242, 0.7)",
                 height: "100vh",
               }}
             >

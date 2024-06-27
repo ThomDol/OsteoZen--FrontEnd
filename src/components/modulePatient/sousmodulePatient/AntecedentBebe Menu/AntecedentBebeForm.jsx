@@ -105,6 +105,8 @@ const AntecedentBebeForm = ({ idPatient }) => {
             className="form-control"
             id="dateCreation"
             required
+            placeholder="jj/mm/aaaa"
+            pattern="\d{2}/\d{2}/\d{4}"
             value={dateCreation}
             onChange={(e) => setDateCreation(e.target.value)}
           />
@@ -114,9 +116,10 @@ const AntecedentBebeForm = ({ idPatient }) => {
             Date de Mise à Jour
           </label>
           <input
-            type="date"
+            type="text"
             className="form-control"
             id="dateUpdate"
+            readOnly
             value={dateUpdate}
             onChange={(e) => setDateUpdate(e.target.value)}
           />

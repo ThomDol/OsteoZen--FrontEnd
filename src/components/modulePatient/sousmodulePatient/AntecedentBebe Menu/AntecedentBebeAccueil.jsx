@@ -40,7 +40,7 @@ const AntecedentBebeAccueil = ({ idPatient }) => {
     <div>
       {antecedentBebeRes && (
         <AntecedentBebe
-          idAntecedent={antecedentBebeRes.idAntecedentBebe}
+          idAntecedentBebe={antecedentBebeRes.idAntecedentBebe}
           idPatient={idPatient}
         />
       )}

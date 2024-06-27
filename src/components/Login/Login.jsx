@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import "../../style/Login.css";
-import logosd from "../../assets/logosd.png";
 import logoMassage from "../../assets/logoMassage.png";
 import userregular24 from "../../assets/userregular24.png";
 import user24 from "../../assets/user24.png";

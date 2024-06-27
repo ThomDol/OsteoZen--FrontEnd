@@ -1,5 +1,6 @@
 import React, { useEffect ,useState} from 'react';
 import Header from '../header/Header';
+import NavBar from '../header/NavBar';
 import axios from'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -36,8 +37,12 @@ const Accueil = () => {
 
     return (
         <div >
-            <Header/>
-           {praticien &&  <h1>Bienvenue {praticien.nomPraticienConnecte} {praticien.prenomPraticienConnecte} </h1>}
+            <div>
+            <NavBar/>
+            </div>
+            <br /><br /><br />
+
+           
         </div>
     );
 };
