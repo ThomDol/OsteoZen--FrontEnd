@@ -1,28 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { jwtDecode } from "jwt-decode";
-import CryptoJS from "crypto-js";
 import axios from "axios";
-import { Modal } from "bootstrap";
 
-const SECRET_KEY = "q#4puta9!am4$fcl";
-const INIT_VECTOR = "1zp6@y#ect4?5krx";
-
-const decryptToken = (encryptedToken) => {
-  const key = CryptoJS.enc.Utf8.parse(SECRET_KEY);
-  const iv = CryptoJS.enc.Utf8.parse(INIT_VECTOR);
-
-  const decrypted = CryptoJS.AES.decrypt(encryptedToken, key, {
-    iv: iv,
-    padding: CryptoJS.pad.Pkcs7,
-    mode: CryptoJS.mode.CBC,
-  });
-
-  return decrypted.toString(CryptoJS.enc.Utf8);
-};
 
 const PatientForm = ({ idModal, count, setCount }) => {
   const token = localStorage.getItem("token");
-  const [user, setUser] = useState(null);
   const [dateNaissance, setDateNaissance] = useState("");
   const [nomGenre, setNomGenre] = useState("");
   const [nomProfession, setNomProfession] = useState("");
@@ -42,15 +23,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
     setDisplaySuccessMessage(false);
   }, []);
 
-  useEffect(() => {
-    try {
-      const decryptedToken = decryptToken(token);
-      const decodedToken = jwtDecode(decryptedToken);
-      setUser(decodedToken.id);
-    } catch (error) {
-      console.error("Erreur de décryptage ou de décodage du token:", error);
-    }
-  }, []);
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -78,9 +51,9 @@ const PatientForm = ({ idModal, count, setCount }) => {
     };
 
     try {
-      if (user) {
+      
         const response = await axios.post(
-          `http://localhost:5000/api/patient/${user}`,
+          `http://localhost:5000/api/patient/${idModal}`,
           formData,
           {
             headers: {
@@ -92,8 +65,6 @@ const PatientForm = ({ idModal, count, setCount }) => {
         console.log(response.data);
         setCount(count + 1); //pour que liste s'actualise
 
-        
-      }
     } catch (error) {
       console.error(error);
     }

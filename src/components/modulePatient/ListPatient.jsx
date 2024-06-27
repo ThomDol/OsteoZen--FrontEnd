@@ -25,9 +25,9 @@ const decryptToken = (encryptedToken) => {
 };
 
 const ListPatient = () => {
-  const [user, setUser] = useState(null);
+  const [userId, setUserId] = useState(null);
   const token = localStorage.getItem("token");
-  const urlList = `http://localhost:5000/api/patient/all/${user}`;
+  const urlList = `http://localhost:5000/api/patient/all/${userId}`;
   const urlDelete = `http://localhost:5000/api/patient`;
   const [list, setList] = useState([]);
   const navigate = useNavigate();
@@ -39,14 +39,14 @@ const ListPatient = () => {
     try {
       const decryptedToken = decryptToken(token);
       const decodedToken = jwtDecode(decryptedToken);
-      setUser(decodedToken.id);
+      setUserId(decodedToken.id);
     } catch (error) {
       console.error("Erreur de décryptage ou de décodage du token:", error);
     }
   }, []);
 
   useEffect(() => {
-    if (user) {
+    if (userId) {
       const fetchData = async () => {
         try {
           const response = await axios.get(urlList, {
@@ -62,7 +62,7 @@ const ListPatient = () => {
 
       fetchData();
     }
-  }, [count, user]);
+  }, [count, userId]);
 
   const selectPatient = (elem) => {
     navigate("/patient/" + elem.idPatient);
@@ -79,7 +79,7 @@ const ListPatient = () => {
   }, [searchItem, list]);
 
   const deletePatient = (id) => {
-    if (user) {
+    if (userId) {
       //Message de confirmation de suppression
       Swal.fire({
         title: "Etes vous sûr de vouloir supprimer ce patient ?",
@@ -176,12 +176,12 @@ const ListPatient = () => {
       <div className="col-2 mx-auto">
         <button
           data-bs-toggle="modal"
-          data-bs-target={`#Modal-${user}`}
+          data-bs-target={`#Modal-${userId}`}
           className="btn btn-primary "
         >
           Creer un nouveau patient
         </button>
-        <PatientForm idModal={user} setCount={setCount} count={count} />
+        <PatientForm idModal={userId} setCount={setCount} count={count} />
       </div>
     </div>
   );
