@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ListePraticien, deletePraticien } from './PraticienService';
-import Header from '../header/Header';
+import NavBar from '../header/NavBar';
 import { useNavigate } from 'react-router-dom';
 
 const ListePraticienComponent = () => {
@@ -37,10 +37,13 @@ const ListePraticienComponent = () => {
 
   return (
     <div>
-      <Header />
-      <br /><br />
+      <NavBar />
+      <br />
+      <br />
+      <br /><br /><br />
       <h2 className="text-center">LISTE DES PRATICIENS</h2>
-      <br /><br />
+      <br />
+      <br />
       <table className="table table-hover table table-bordered text-center">
         <thead>
           <tr>
@@ -48,7 +51,6 @@ const ListePraticienComponent = () => {
             <th>Prénom</th>
             <th>Email</th>
             <th>Téléphone</th>
-            <th>Siret</th>
             <th>Numéro Adeli</th>
             <th>Ville</th>
             <th>Code Postal</th>
@@ -57,29 +59,41 @@ const ListePraticienComponent = () => {
           </tr>
         </thead>
         <tbody>
-          {praticiens.map(praticien => (
+          {praticiens.map((praticien) => (
             <tr key={praticien.id}>
-              <td>{praticien.nomPraticienConnecte}</td>
-              <td>{praticien.prenomPraticienConnecte}</td>
+              <td>{praticien.nomAppUser}</td>
+              <td>{praticien.prenomAppUser}</td>
               <td>{praticien.email}</td>
               <td>{praticien.tel}</td>
-              <td>{praticien.numSiret}</td>
               <td>{praticien.numAdeli}</td>
               <td>{praticien.nomVille}</td>
               <td>{praticien.codePostal}</td>
               <td>
-                <button className="btn btn-info" onClick={() => updatePraticien(praticien.id)}>MODIFIER</button>
+                <button
+                  className="btn btn-info"
+                  onClick={() => updatePraticien(praticien.id)}
+                >
+                  MODIFIER
+                </button>
               </td>
               <td>
-                <button className="btn btn-danger" onClick={() => removePraticien(praticien.id)}>BLOQUER</button>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => removePraticien(praticien.id)}
+                >
+                  BLOQUER
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <br /><br />
+      <br />
+      <br />
       <div className="col-2 mx-auto">
-        <button className="btn btn-primary" onClick={addNewPraticien}>AJOUTER</button>
+        <button className="btn btn-primary" onClick={addNewPraticien}>
+          AJOUTER
+        </button>
       </div>
     </div>
   );

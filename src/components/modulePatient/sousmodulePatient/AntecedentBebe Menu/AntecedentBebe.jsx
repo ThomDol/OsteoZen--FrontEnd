@@ -989,6 +989,13 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
           Soumettre
         </button>
       </form>
+      {displayUpdateSuccessMessage && (
+        <div className="text-center">
+          <span style={{ fontWeight: "bold", color: "green" }}>
+            Mise à jour faite
+          </span>
+        </div>
+      )}
     </div>
   );
 };

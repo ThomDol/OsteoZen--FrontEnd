@@ -10,7 +10,6 @@ const PraticienComponent = () => {
   const [nomVille, setNomVille] = useState('');
   const [codePostal, setCodePostal] = useState('');
   const [numAdeli, setNumAdeli] = useState('');
-  const [numSiret, setNumSiret] = useState('');
   const [email, setEmail] = useState('');
   const [tel, setTel] = useState('');
   const { id } = useParams();
@@ -27,7 +26,6 @@ const PraticienComponent = () => {
         setNomRole(data.nomRole);
         setNomVille(data.nomVille);
         setNumAdeli(data.numAdeli);
-        setNumSiret(data.numSiret);
         setPassword(data.password);
       }).catch(error => {
         console.error("Erreur lors de la récupération du praticien :", error);
@@ -46,7 +44,6 @@ const PraticienComponent = () => {
       nomVille,
       codePostal,
       numAdeli,
-      numSiret,
       email,
       tel,
     };
@@ -141,15 +138,6 @@ const PraticienComponent = () => {
                 className="form-control"
                 value={numAdeli}
                 onChange={(e) => setNumAdeli(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label>Numéro Siret</label>
-              <input
-                type="text"
-                className="form-control"
-                value={numSiret}
-                onChange={(e) => setNumSiret(e.target.value)}
               />
             </div>
             <div className="form-group">
