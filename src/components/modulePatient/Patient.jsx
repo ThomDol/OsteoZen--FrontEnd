@@ -33,7 +33,7 @@ const decryptToken = (encryptedToken) => {
 const Patient = () => {
   const { id } = useParams();
   const [patient, setPatient] = useState();
-  const [idPraticien, setIdPraticien] = useState(null);
+  const [user, setUser] = useState(null);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
@@ -65,18 +65,18 @@ const Patient = () => {
     try {
       const decryptedToken = decryptToken(token);
       const decodedToken = jwtDecode(decryptedToken);
-      setIdPraticien(decodedToken.id);
+      setUser(decodedToken.id);
     } catch (error) {
       console.error("Erreur de décryptage ou de décodage du token:", error);
     }
   }, []);
 
   useEffect(() => {
-    if (idPraticien) {
+    if (user) {
       const fetchPatient = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/patient/${idPraticien}/${parseInt(id)}`,
+            `http://localhost:5000/api/patient/${user}/${parseInt(id)}`,
             {
               headers: {
                 Authorization: "Bearer " + token,
@@ -96,7 +96,7 @@ const Patient = () => {
 
       fetchPatient();
     }
-  }, [idPraticien]);
+  }, [user]);
 
   return (
     <div>
@@ -184,7 +184,7 @@ const Patient = () => {
             <div className="patient-content-wrapper">
               <div className="patient-content col-8 mx-auto">
                 {displayProfil && (
-                  <PatientUpdateForm idPraticien={idPraticien} idPatient={patient.idPatient} />
+                  <PatientUpdateForm idPatient={patient.idPatient} />
                 )}
                 {displayAntecedent && (
                   <AntecedentAccueil idPatient={patient.idPatient} />

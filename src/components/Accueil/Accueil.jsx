@@ -8,7 +8,7 @@ import logoMassage from '../../assets/logoMassage.png';
 const Accueil = () => {
     const token = localStorage.getItem('token');
     const navigate =useNavigate();
-    const [praticien,setPraticien]=useState();
+    const [user,setUser]=useState();
 
     useEffect(()=>{
         loadUser();
@@ -23,7 +23,7 @@ const Accueil = () => {
             }
            })
            const data= await response.data;
-           setPraticien(data);
+           setUser(data);
            console.log(data);
            
           
@@ -36,20 +36,31 @@ const Accueil = () => {
     }
 
     return (
-        <div >
-            <div>
-            <NavBar/>
-            </div>
-           
-            <div className='col-5 mx-auto'>
-            <br /><br /><br /><br /><br /><br /><br />
-                <img src={logoMassage} alt="" style={{width:"90%",height:"90%"}}/>
-                {praticien && <h1 style={{textAlign:'center'}}>{praticien.prenomPraticienConnecte} {praticien.nomPraticienConnecte}</h1>}
-            </div>
-            </div>
-           
+      <div>
+        <div>
+          <NavBar />
+        </div>
 
-        
+        <div className="col-5 mx-auto">
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <img
+            src={logoMassage}
+            alt=""
+            style={{ width: "90%", height: "90%" }}
+          />
+          {user && (
+            <h1 style={{ textAlign: "center" }}>
+              {user.prenomAppUser} {user.nomAppUser}
+            </h1>
+          )}
+        </div>
+      </div>
     );
 };
 

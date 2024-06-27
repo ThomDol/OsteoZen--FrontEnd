@@ -22,7 +22,7 @@ const decryptToken = (encryptedToken) => {
 
 const PatientForm = ({ idModal, count, setCount }) => {
   const token = localStorage.getItem("token");
-  const [idPraticien, setIdPraticien] = useState(null);
+  const [user, setUser] = useState(null);
   const [dateNaissance, setDateNaissance] = useState("");
   const [nomGenre, setNomGenre] = useState("");
   const [nomProfession, setNomProfession] = useState("");
@@ -46,7 +46,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
     try {
       const decryptedToken = decryptToken(token);
       const decodedToken = jwtDecode(decryptedToken);
-      setIdPraticien(decodedToken.id);
+      setUser(decodedToken.id);
     } catch (error) {
       console.error("Erreur de décryptage ou de décodage du token:", error);
     }
@@ -78,9 +78,9 @@ const PatientForm = ({ idModal, count, setCount }) => {
     };
 
     try {
-      if (idPraticien) {
+      if (user) {
         const response = await axios.post(
-          `http://localhost:5000/api/patient/${idPraticien}`,
+          `http://localhost:5000/api/patient/${user}`,
           formData,
           {
             headers: {
@@ -154,9 +154,11 @@ const PatientForm = ({ idModal, count, setCount }) => {
                   Date de Naissance
                 </label>
                 <input
-                  type="date"
+                  type="text"
                   className="form-control"
                   id="dateNaissance"
+                  placeholder="jj/mm/aaaa"
+                  pattern="\d{2}/\d{2}/\d{4}"
                   required
                   value={dateNaissance}
                   onChange={(e) => setDateNaissance(e.target.value)}

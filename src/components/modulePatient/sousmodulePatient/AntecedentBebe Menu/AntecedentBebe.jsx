@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useStorage } from "../../../StorageContext";
+import Swal from "sweetalert2";
 
 const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
   const token = localStorage.getItem("token");
@@ -16,7 +17,10 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
   const [deformationDuCrane, setDeformationDuCrane] = useState(null);
   const [bosseSeroSanguine, setBosseSeroSanguine] = useState(null);
   const [cephalhematome, setCephalhematome] = useState(null);
-  const [paralysieObstetricaleDuPlexusBrachial, setParalysieObstetricaleDuPlexusBrachial] = useState(null);
+  const [
+    paralysieObstetricaleDuPlexusBrachial,
+    setParalysieObstetricaleDuPlexusBrachial,
+  ] = useState(null);
   const [paralysieFaciale, setParalysieFaciale] = useState(null);
   const [fractureClavicule, setFractureClavicule] = useState(null);
   const [dysplasieHanche, setDysplasieHanche] = useState(null);
@@ -29,11 +33,13 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
   const [sucagePouce, setSucagePouce] = useState(null);
   const [tetine, setTetine] = useState(null);
   const [typeRespiration, setTypeRespiration] = useState("");
-  const [presenceBruitsArticulaires, setPresenceBruitsArticulaires] = useState(null);
+  const [presenceBruitsArticulaires, setPresenceBruitsArticulaires] =
+    useState(null);
   const [tics, setTics] = useState(null);
   const urlGetAnt = `http://localhost:5000/api/antecedentbebe/${idPatient}`;
-  const [displayUpdateSuccessMessage, setDisplayUpdateSuccessMessage] = useState(false);
-  const{setDisplayAntecedentBebe} = useStorage();
+  const [displayUpdateSuccessMessage, setDisplayUpdateSuccessMessage] =
+    useState(false);
+  const { setDisplayAntecedentBebe } = useStorage();
 
   const assign = (elem) => {
     if (elem !== null) {
@@ -42,25 +48,55 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
       setMaternite(elem.maternite || "");
       setPerimetreCranien(elem.perimetreCranien || "");
       setApgar(elem.apgar || "");
-      setDepassementDeTerme(elem.depassementDeTerme !== null ? elem.depassementDeTerme : null);
+      setDepassementDeTerme(
+        elem.depassementDeTerme !== null ? elem.depassementDeTerme : null
+      );
       setPrematurite(elem.prematurite !== null ? elem.prematurite : null);
-      setDeformationDuCrane(elem.deformationDuCrane !== null ? elem.deformationDuCrane : null);
-      setBosseSeroSanguine(elem.bosseSeroSanguine !== null ? elem.bosseSeroSanguine : null);
-      setCephalhematome(elem.cephalhematome !== null ? elem.cephalhematome : null);
-      setParalysieObstetricaleDuPlexusBrachial(elem.paralysieObstetricaleDuPlexusBrachial !== null ? elem.paralysieObstetricaleDuPlexusBrachial : null);
-      setParalysieFaciale(elem.paralysieFaciale !== null ? elem.paralysieFaciale : null);
-      setFractureClavicule(elem.fractureClavicule !== null ? elem.fractureClavicule : null);
-      setDysplasieHanche(elem.dysplasieHanche !== null ? elem.dysplasieHanche : null);
-      setPlagiocephalie(elem.plagiocephalie !== null ? elem.plagiocephalie : null);
+      setDeformationDuCrane(
+        elem.deformationDuCrane !== null ? elem.deformationDuCrane : null
+      );
+      setBosseSeroSanguine(
+        elem.bosseSeroSanguine !== null ? elem.bosseSeroSanguine : null
+      );
+      setCephalhematome(
+        elem.cephalhematome !== null ? elem.cephalhematome : null
+      );
+      setParalysieObstetricaleDuPlexusBrachial(
+        elem.paralysieObstetricaleDuPlexusBrachial !== null
+          ? elem.paralysieObstetricaleDuPlexusBrachial
+          : null
+      );
+      setParalysieFaciale(
+        elem.paralysieFaciale !== null ? elem.paralysieFaciale : null
+      );
+      setFractureClavicule(
+        elem.fractureClavicule !== null ? elem.fractureClavicule : null
+      );
+      setDysplasieHanche(
+        elem.dysplasieHanche !== null ? elem.dysplasieHanche : null
+      );
+      setPlagiocephalie(
+        elem.plagiocephalie !== null ? elem.plagiocephalie : null
+      );
       setTorticolis(elem.torticolis !== null ? elem.torticolis : null);
-      setRefluxGastroOesophagien(elem.refluxGastroOesophagien !== null ? elem.refluxGastroOesophagien : null);
+      setRefluxGastroOesophagien(
+        elem.refluxGastroOesophagien !== null
+          ? elem.refluxGastroOesophagien
+          : null
+      );
       setColiques(elem.coliques !== null ? elem.coliques : null);
-      setAllaitementMaternelle(elem.allaitementMaternelle !== null ? elem.allaitementMaternelle : null);
+      setAllaitementMaternelle(
+        elem.allaitementMaternelle !== null ? elem.allaitementMaternelle : null
+      );
       setEfficaciteSuccion(elem.efficaciteSuccion || null);
       setSucagePouce(elem.sucagePouce !== null ? elem.sucagePouce : null);
       setTetine(elem.tetine !== null ? elem.tetine : null);
       setTypeRespiration(elem.typeRespiration || "");
-      setPresenceBruitsArticulaires(elem.presenceBruitsArticulaires !== null ? elem.presenceBruitsArticulaires : null);
+      setPresenceBruitsArticulaires(
+        elem.presenceBruitsArticulaires !== null
+          ? elem.presenceBruitsArticulaires
+          : null
+      );
       setTics(elem.tics !== null ? elem.tics : null);
     }
   };
@@ -78,7 +114,7 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
       } catch (error) {
         console.error(error);
         localStorage.clear();
-        navigate('/login');
+        navigate("/login");
       }
     };
 
@@ -131,40 +167,62 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
     } catch (error) {
       console.error(error);
       localStorage.clear();
-      navigate('/login');
+      navigate("/login");
     }
   };
 
-  const deleteAntBebe =async(id)=>{
-    try{
-    const response = await axios.delete(
-      `http://localhost:5000/api/antecedentbebe/${id}`,
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
+  const deleteAntBebe = (id) => {
+    //Message de confirmation de suppression
+    Swal.fire({
+      title: "Etes vous sûr de vouloir supprimer ce document ?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Oui",
+      denyButtonText: `Non`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const deleteData = async () => {
+          try {
+            const response = await axios.delete(
+              `http://localhost:5000/api/antecedentbebe/${id}`,
+              {
+                headers: {
+                  Authorization: "Bearer " + token,
+                },
+              }
+            );
+            setCount(count + 1);
+          } catch (error) {
+            console.error(error);
+          }
+        };
+        deleteData();
+        Swal.fire("Supprimé", "", "success");
+        setDisplayAntecedentBebe(false);
+      } else if (result.isDenied) {
+        Swal.fire("Suppression annulée", "", "info");
       }
-    );
-    alert("suppression ok !");
-    setDisplayAntecedentBebe(false);
-  } catch (error) {
-    console.error(error);
-  }
-};
+    });
+  };
 
   return (
     <div className="col-9 mx-auto">
       <div className="row">
-      <div className="col-11">
-      <h3 style={{ textAlign: "center", paddingTop: "10px" }}>
-        <b>Antecedent Bébé</b>
-      </h3>
-      </div>
-      <div className="col-1">
-      <span onClick={() => {
-                        deleteAntBebe(idAntecedentBebe);
-                      }}> &#10060;</span>
-      </div>
+        <div className="col-11">
+          <h3 style={{ textAlign: "center", paddingTop: "10px" }}>
+            <b>Antecedent Bébé</b>
+          </h3>
+        </div>
+        <div className="col-1">
+          <span
+            onClick={() => {
+              deleteAntBebe(idAntecedentBebe);
+            }}
+          >
+            {" "}
+            &#10060;
+          </span>
+        </div>
       </div>
       <br />
       <br />
@@ -178,7 +236,6 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
             className="form-control"
             id="dateCreation"
             required
-            
             value={dateCreation}
           />
         </div>
@@ -246,7 +303,10 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
                 checked={depassementDeTerme === true}
                 onChange={() => setDepassementDeTerme(true)}
               />
-              <label className="form-check-label" htmlFor="depassementDeTermeOui">
+              <label
+                className="form-check-label"
+                htmlFor="depassementDeTermeOui"
+              >
                 Oui
               </label>
             </div>
@@ -260,7 +320,10 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
                 checked={depassementDeTerme === false}
                 onChange={() => setDepassementDeTerme(false)}
               />
-              <label className="form-check-label" htmlFor="depassementDeTermeNon">
+              <label
+                className="form-check-label"
+                htmlFor="depassementDeTermeNon"
+              >
                 Non
               </label>
             </div>
@@ -312,7 +375,10 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
                 checked={deformationDuCrane === true}
                 onChange={() => setDeformationDuCrane(true)}
               />
-              <label className="form-check-label" htmlFor="deformationDuCraneOui">
+              <label
+                className="form-check-label"
+                htmlFor="deformationDuCraneOui"
+              >
                 Oui
               </label>
             </div>
@@ -326,7 +392,10 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
                 checked={deformationDuCrane === false}
                 onChange={() => setDeformationDuCrane(false)}
               />
-              <label className="form-check-label" htmlFor="deformationDuCraneNon">
+              <label
+                className="form-check-label"
+                htmlFor="deformationDuCraneNon"
+              >
                 Non
               </label>
             </div>
@@ -345,7 +414,10 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
                 checked={bosseSeroSanguine === true}
                 onChange={() => setBosseSeroSanguine(true)}
               />
-              <label className="form-check-label" htmlFor="bosseSeroSanguineOui">
+              <label
+                className="form-check-label"
+                htmlFor="bosseSeroSanguineOui"
+              >
                 Oui
               </label>
             </div>
@@ -359,7 +431,10 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
                 checked={bosseSeroSanguine === false}
                 onChange={() => setBosseSeroSanguine(false)}
               />
-              <label className="form-check-label" htmlFor="bosseSeroSanguineNon">
+              <label
+                className="form-check-label"
+                htmlFor="bosseSeroSanguineNon"
+              >
                 Non
               </label>
             </div>
@@ -399,7 +474,9 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
           </div>
         </div>
         <div className="mb-3">
-          <label className="form-label">Paralysie Obstétricale du Plexus Brachial</label>
+          <label className="form-label">
+            Paralysie Obstétricale du Plexus Brachial
+          </label>
           <div>
             <div className="form-check form-check-inline">
               <input
@@ -411,7 +488,10 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
                 checked={paralysieObstetricaleDuPlexusBrachial === true}
                 onChange={() => setParalysieObstetricaleDuPlexusBrachial(true)}
               />
-              <label className="form-check-label" htmlFor="paralysieObstetricaleDuPlexusBrachialOui">
+              <label
+                className="form-check-label"
+                htmlFor="paralysieObstetricaleDuPlexusBrachialOui"
+              >
                 Oui
               </label>
             </div>
@@ -425,7 +505,10 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
                 checked={paralysieObstetricaleDuPlexusBrachial === false}
                 onChange={() => setParalysieObstetricaleDuPlexusBrachial(false)}
               />
-              <label className="form-check-label" htmlFor="paralysieObstetricaleDuPlexusBrachialNon">
+              <label
+                className="form-check-label"
+                htmlFor="paralysieObstetricaleDuPlexusBrachialNon"
+              >
                 Non
               </label>
             </div>
@@ -477,7 +560,10 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
                 checked={fractureClavicule === true}
                 onChange={() => setFractureClavicule(true)}
               />
-              <label className="form-check-label" htmlFor="fractureClaviculeOui">
+              <label
+                className="form-check-label"
+                htmlFor="fractureClaviculeOui"
+              >
                 Oui
               </label>
             </div>
@@ -491,7 +577,10 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
                 checked={fractureClavicule === false}
                 onChange={() => setFractureClavicule(false)}
               />
-              <label className="form-check-label" htmlFor="fractureClaviculeNon">
+              <label
+                className="form-check-label"
+                htmlFor="fractureClaviculeNon"
+              >
                 Non
               </label>
             </div>
@@ -609,7 +698,10 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
                 checked={refluxGastroOesophagien === true}
                 onChange={() => setRefluxGastroOesophagien(true)}
               />
-              <label className="form-check-label" htmlFor="refluxGastroOesophagienOui">
+              <label
+                className="form-check-label"
+                htmlFor="refluxGastroOesophagienOui"
+              >
                 Oui
               </label>
             </div>
@@ -623,7 +715,10 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
                 checked={refluxGastroOesophagien === false}
                 onChange={() => setRefluxGastroOesophagien(false)}
               />
-              <label className="form-check-label" htmlFor="refluxGastroOesophagienNon">
+              <label
+                className="form-check-label"
+                htmlFor="refluxGastroOesophagienNon"
+              >
                 Non
               </label>
             </div>
@@ -675,7 +770,10 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
                 checked={allaitementMaternelle === true}
                 onChange={() => setAllaitementMaternelle(true)}
               />
-              <label className="form-check-label" htmlFor="allaitementMaternelleOui">
+              <label
+                className="form-check-label"
+                htmlFor="allaitementMaternelleOui"
+              >
                 Oui
               </label>
             </div>
@@ -689,7 +787,10 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
                 checked={allaitementMaternelle === false}
                 onChange={() => setAllaitementMaternelle(false)}
               />
-              <label className="form-check-label" htmlFor="allaitementMaternelleNon">
+              <label
+                className="form-check-label"
+                htmlFor="allaitementMaternelleNon"
+              >
                 Non
               </label>
             </div>
@@ -708,7 +809,10 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
                 checked={efficaciteSuccion === true}
                 onChange={() => setEfficaciteSuccion(true)}
               />
-              <label className="form-check-label" htmlFor="efficaciteSuccionOui">
+              <label
+                className="form-check-label"
+                htmlFor="efficaciteSuccionOui"
+              >
                 Oui
               </label>
             </div>
@@ -722,158 +826,169 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
                 checked={efficaciteSuccion === false}
                 onChange={() => setEfficaciteSuccion(false)}
               />
-              <label className="form-check-label" htmlFor="efficaciteSuccionNon">
+              <label
+                className="form-check-label"
+                htmlFor="efficaciteSuccionNon"
+              >
                 Non
               </label>
             </div>
           </div>
         </div>
         <div className="mb-3">
-    <label className="form-label">Sucage Pouce</label>
-    <div>
-      <div className="form-check form-check-inline">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="sucagePouce"
-          id="sucagePouceOui"
-          value="true"
-          checked={sucagePouce === true}
-          onChange={() => setSucagePouce(true)}
-        />
-        <label className="form-check-label" htmlFor="sucagePouceOui">
-          Oui
-        </label>
-      </div>
-      <div className="form-check form-check-inline">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="sucagePouce"
-          id="sucagePouceNon"
-          value="false"
-          checked={sucagePouce === false}
-          onChange={() => setSucagePouce(false)}
-        />
-        <label className="form-check-label" htmlFor="sucagePouceNon">
-          Non
-        </label>
-      </div>
-    </div>
-  </div>
-  <div className="mb-3">
-    <label className="form-label">Tétine</label>
-    <div>
-      <div className="form-check form-check-inline">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="tetine"
-          id="tetineOui"
-          value="true"
-          checked={tetine === true}
-          onChange={() => setTetine(true)}
-        />
-        <label className="form-check-label" htmlFor="tetineOui">
-          Oui
-        </label>
-      </div>
-      <div className="form-check form-check-inline">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="tetine"
-          id="tetineNon"
-          value="false"
-          checked={tetine === false}
-          onChange={() => setTetine(false)}
-        />
-        <label className="form-check-label" htmlFor="tetineNon">
-          Non
-        </label>
-      </div>
-    </div>
-  </div>
-  <div className="mb-3">
-    <label htmlFor="typeRespiration" className="form-label">Type de Respiration</label>
-    <input
-      type="text"
-      className="form-control"
-      id="typeRespiration"
-      value={typeRespiration}
-      onChange={(e) => setTypeRespiration(e.target.value)}
-    />
-  </div>
-  <div className="mb-3">
-    <label className="form-label">Présence de Bruits Articulaires</label>
-    <div>
-      <div className="form-check form-check-inline">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="presenceBruitsArticulaires"
-          id="presenceBruitsArticulairesOui"
-          value="true"
-          checked={presenceBruitsArticulaires === true}
-          onChange={() => setPresenceBruitsArticulaires(true)}
-        />
-        <label className="form-check-label" htmlFor="presenceBruitsArticulairesOui">
-          Oui
-        </label>
-      </div>
-      <div className="form-check form-check-inline">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="presenceBruitsArticulaires"
-          id="presenceBruitsArticulairesNon"
-          value="false"
-          checked={presenceBruitsArticulaires === false}
-          onChange={() => setPresenceBruitsArticulaires(false)}
-        />
-        <label className="form-check-label" htmlFor="presenceBruitsArticulairesNon">
-          Non
-        </label>
-      </div>
-    </div>
-  </div>
-  <div className="mb-3">
-    <label className="form-label">Tics</label>
-    <div>
-      <div className="form-check form-check-inline">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="tics"
-          id="ticsOui"
-          value="true"
-          checked={tics === true}
-          onChange={() => setTics(true)}
-        />
-        <label className="form-check-label" htmlFor="ticsOui">
-          Oui
-        </label>
-      </div>
-      <div className="form-check form-check-inline">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="tics"
-          id="ticsNon"
-          value="false"
-          checked={tics === false}
-          onChange={() => setTics(false)}
-        />
-        <label className="form-check-label" htmlFor="ticsNon">
-          Non
-        </label>
-      </div>
-    </div>
-  </div>
-  <button type="submit" className="btn btn-primary">
-    Soumettre
-  </button>
-</form>
+          <label className="form-label">Sucage Pouce</label>
+          <div>
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="sucagePouce"
+                id="sucagePouceOui"
+                value="true"
+                checked={sucagePouce === true}
+                onChange={() => setSucagePouce(true)}
+              />
+              <label className="form-check-label" htmlFor="sucagePouceOui">
+                Oui
+              </label>
+            </div>
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="sucagePouce"
+                id="sucagePouceNon"
+                value="false"
+                checked={sucagePouce === false}
+                onChange={() => setSucagePouce(false)}
+              />
+              <label className="form-check-label" htmlFor="sucagePouceNon">
+                Non
+              </label>
+            </div>
+          </div>
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Tétine</label>
+          <div>
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="tetine"
+                id="tetineOui"
+                value="true"
+                checked={tetine === true}
+                onChange={() => setTetine(true)}
+              />
+              <label className="form-check-label" htmlFor="tetineOui">
+                Oui
+              </label>
+            </div>
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="tetine"
+                id="tetineNon"
+                value="false"
+                checked={tetine === false}
+                onChange={() => setTetine(false)}
+              />
+              <label className="form-check-label" htmlFor="tetineNon">
+                Non
+              </label>
+            </div>
+          </div>
+        </div>
+        <div className="mb-3">
+          <label htmlFor="typeRespiration" className="form-label">
+            Type de Respiration
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="typeRespiration"
+            value={typeRespiration}
+            onChange={(e) => setTypeRespiration(e.target.value)}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Présence de Bruits Articulaires</label>
+          <div>
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="presenceBruitsArticulaires"
+                id="presenceBruitsArticulairesOui"
+                value="true"
+                checked={presenceBruitsArticulaires === true}
+                onChange={() => setPresenceBruitsArticulaires(true)}
+              />
+              <label
+                className="form-check-label"
+                htmlFor="presenceBruitsArticulairesOui"
+              >
+                Oui
+              </label>
+            </div>
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="presenceBruitsArticulaires"
+                id="presenceBruitsArticulairesNon"
+                value="false"
+                checked={presenceBruitsArticulaires === false}
+                onChange={() => setPresenceBruitsArticulaires(false)}
+              />
+              <label
+                className="form-check-label"
+                htmlFor="presenceBruitsArticulairesNon"
+              >
+                Non
+              </label>
+            </div>
+          </div>
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Tics</label>
+          <div>
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="tics"
+                id="ticsOui"
+                value="true"
+                checked={tics === true}
+                onChange={() => setTics(true)}
+              />
+              <label className="form-check-label" htmlFor="ticsOui">
+                Oui
+              </label>
+            </div>
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="tics"
+                id="ticsNon"
+                value="false"
+                checked={tics === false}
+                onChange={() => setTics(false)}
+              />
+              <label className="form-check-label" htmlFor="ticsNon">
+                Non
+              </label>
+            </div>
+          </div>
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Soumettre
+        </button>
+      </form>
     </div>
   );
 };

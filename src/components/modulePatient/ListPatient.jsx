@@ -25,10 +25,10 @@ const decryptToken = (encryptedToken) => {
 };
 
 const ListPatient = () => {
-  const [idPraticien, setIdPraticien] = useState(null);
+  const [user, setUser] = useState(null);
   const token = localStorage.getItem("token");
-  const urlList = `http://localhost:5000/api/patient/all/${idPraticien}`;
-  const urlDelete = `http://localhost:5000/api/patient/${idPraticien}`;
+  const urlList = `http://localhost:5000/api/patient/all/${user}`;
+  const urlDelete = `http://localhost:5000/api/patient`;
   const [list, setList] = useState([]);
   const navigate = useNavigate();
   const [searchItem, setSearchItem] = useState("");
@@ -39,14 +39,14 @@ const ListPatient = () => {
     try {
       const decryptedToken = decryptToken(token);
       const decodedToken = jwtDecode(decryptedToken);
-      setIdPraticien(decodedToken.id);
+      setUser(decodedToken.id);
     } catch (error) {
       console.error("Erreur de décryptage ou de décodage du token:", error);
     }
   }, []);
 
   useEffect(() => {
-    if (idPraticien) {
+    if (user) {
       const fetchData = async () => {
         try {
           const response = await axios.get(urlList, {
@@ -62,7 +62,7 @@ const ListPatient = () => {
 
       fetchData();
     }
-  }, [count, idPraticien]);
+  }, [count, user]);
 
   const selectPatient = (elem) => {
     navigate("/patient/" + elem.idPatient);
@@ -79,7 +79,7 @@ const ListPatient = () => {
   }, [searchItem, list]);
 
   const deletePatient = (id) => {
-    if (idPraticien) {
+    if (user) {
       //Message de confirmation de suppression
       Swal.fire({
         title: "Etes vous sûr de vouloir supprimer ce patient ?",
@@ -116,7 +116,10 @@ const ListPatient = () => {
         <NavBar />
       </div>
 
-      <br /><br /><br /><br />
+      <br />
+      <br />
+      <br />
+      <br />
       <br />
       <br />
       <div className=" col-3 mx-auto">
@@ -173,12 +176,12 @@ const ListPatient = () => {
       <div className="col-2 mx-auto">
         <button
           data-bs-toggle="modal"
-          data-bs-target={`#Modal-${idPraticien}`}
+          data-bs-target={`#Modal-${user}`}
           className="btn btn-primary "
         >
           Creer un nouveau patient
         </button>
-        <PatientForm idModal={idPraticien} setCount={setCount} count={count} />
+        <PatientForm idModal={user} setCount={setCount} count={count} />
       </div>
     </div>
   );

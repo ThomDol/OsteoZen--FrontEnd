@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
-
-const PatientUpdateForm = ({idPatient}) => {
-  const token = localStorage.getItem('token');
+const PatientUpdateForm = ({ idPatient }) => {
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [dateNaissance, setDateNaissance] = useState("");
   const [nomGenre, setNomGenre] = useState("");
@@ -17,10 +15,9 @@ const PatientUpdateForm = ({idPatient}) => {
   const [tel, setTel] = useState("");
   const [medecinTraitantComplet, setMedecinTraitantComplet] = useState("");
   const [nomVille, setNomVille] = useState("");
-  const [codePostal,setCodePostal]=useState("");
-  const [displayUpdateMessageSuccess,setDisplayUpdateMessageSuccess]=useState(false);
-
-
+  const [codePostal, setCodePostal] = useState("");
+  const [displayUpdateMessageSuccess, setDisplayUpdateMessageSuccess] =
+    useState(false);
 
   useEffect(() => {
     setDisplayUpdateMessageSuccess(false);
@@ -28,12 +25,14 @@ const PatientUpdateForm = ({idPatient}) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/patient/${idPatient}`, {
+          `http://localhost:5000/api/patient/${idPatient}`,
+          {
             headers: {
-              Authorization: 'Bearer ' + token  
-            }
-           });
-        
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+
         const data = response.data;
         setDateNaissance(data.dateNaissance || "");
         setNomGenre(data.nomGenre || "");
@@ -44,14 +43,16 @@ const PatientUpdateForm = ({idPatient}) => {
         setEmail(data.email || "");
         setTel(data.tel || "");
         setMedecinTraitantComplet(
-          `${data.nomMedecinTraitant || ""} ${data.prenomMedecinTraitant || ""} ${data.villeMedecinTraitant || ""}`
+          `${data.nomMedecinTraitant || ""} ${
+            data.prenomMedecinTraitant || ""
+          } ${data.villeMedecinTraitant || ""}`
         );
         setNomVille(data.nomVille || "");
         setCodePostal(data.codePostal || "");
       } catch (error) {
         console.error(error);
         localStorage.clear();
-        navigate('/login');
+        navigate("/login");
       }
     };
 
@@ -62,7 +63,7 @@ const PatientUpdateForm = ({idPatient}) => {
     event.preventDefault();
     const [medecinNom, medecinPrenom, medecinVille] =
       medecinTraitantComplet.split(" ");
-   
+
     const formData = {
       dateNaissance,
       nomVille,
@@ -83,13 +84,14 @@ const PatientUpdateForm = ({idPatient}) => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/patient/1/${idPatient}`,
-        formData, {
+        `http://localhost:5000/api/patient/${idPatient}`,
+        formData,
+        {
           headers: {
-            Authorization: 'Bearer ' + token 
-            
-          }
-         });
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
       setDisplayUpdateMessageSuccess(true);
       console.log(response.data);
     } catch (error) {
@@ -322,7 +324,13 @@ const PatientUpdateForm = ({idPatient}) => {
         <button type="submit" className="btn btn-primary">
           Mettre à jour
         </button>
-        {displayUpdateMessageSuccess && <div className="text-center"><span style={{fontWeight:'bold',color:'green'}}>Mise à jour faite</span></div>}
+        {displayUpdateMessageSuccess && (
+          <div className="text-center">
+            <span style={{ fontWeight: "bold", color: "green" }}>
+              Mise à jour faite
+            </span>
+          </div>
+        )}
       </form>
     </div>
   );
