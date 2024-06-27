@@ -184,7 +184,7 @@ const Patient = () => {
             <div className="patient-content-wrapper">
               <div className="patient-content col-8 mx-auto">
                 {displayProfil && (
-                  <PatientUpdateForm idPatient={patient.idPatient} />
+                  <PatientUpdateForm idPraticien={idPraticien} idPatient={patient.idPatient} />
                 )}
                 {displayAntecedent && (
                   <AntecedentAccueil idPatient={patient.idPatient} />

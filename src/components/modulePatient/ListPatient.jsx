@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Header from "../header/Header";
 import PatientForm from "./sousmodulePatient/PatientForm";
 import NavBar from "../header/NavBar";
 

@@ -15,6 +15,7 @@
   width: 15%;
   height: calc(100vh - 60px); /* Adjust based on the height of the header */
   overflow-y: auto;
+  overflow-x:auto;
   z-index: 999;
 }
 

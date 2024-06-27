@@ -28,7 +28,7 @@ const PatientUpdateForm = ({idPatient}) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/patient/1/${idPatient}`, {
+          `http://localhost:5000/api/patient/${idPatient}`, {
             headers: {
               Authorization: 'Bearer ' + token  
             }
