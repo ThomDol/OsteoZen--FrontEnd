@@ -1,8 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import CryptoJS from "crypto-js";
 import axios from "axios";
+import NavBar from "../header/NavBar";
 
-const Profil = ({ idAppUser }) => {
+const SECRET_KEY = "q#4puta9!am4$fcl";
+const INIT_VECTOR = "1zp6@y#ect4?5krx";
+
+const decryptToken = (encryptedToken) => {
+  const key = CryptoJS.enc.Utf8.parse(SECRET_KEY);
+  const iv = CryptoJS.enc.Utf8.parse(INIT_VECTOR);
+
+  const decrypted = CryptoJS.AES.decrypt(encryptedToken, key, {
+    iv: iv,
+    padding: CryptoJS.pad.Pkcs7,
+    mode: CryptoJS.mode.CBC,
+  });
+
+  return decrypted.toString(CryptoJS.enc.Utf8);
+};
+
+
+const Profil = () => {
+  const [userId, setUserId] = useState(null);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [nomAppUser, setNomAppUser] = useState("");
@@ -15,13 +36,24 @@ const Profil = ({ idAppUser }) => {
   const [displayUpdateMessageSuccess, setDisplayUpdateMessageSuccess] =
     useState(false);
 
+    useEffect(() => {
+      try {
+        const decryptedToken = decryptToken(token);
+        const decodedToken = jwtDecode(decryptedToken);
+        setUserId(decodedToken.id);
+      } catch (error) {
+        console.error("Erreur de décryptage ou de décodage du token:", error);
+      }
+    }, []);
+
   useEffect(() => {
+    if(userId){
     setDisplayUpdateMessageSuccess(false);
 
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/appuser/${idAppUser}`,
+          `http://localhost:5000/api/praticien/${userId}`,
           {
             headers: {
               Authorization: "Bearer " + token,
@@ -45,7 +77,7 @@ const Profil = ({ idAppUser }) => {
     };
 
     fetchData();
-  }, [idAppUser, navigate, token]);
+  }}, [userId]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -62,7 +94,7 @@ const Profil = ({ idAppUser }) => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/appuser/${idAppUser}`,
+        `http://localhost:5000/api/praticien/${userId}`,
         formData,
         {
           headers: {
@@ -72,15 +104,34 @@ const Profil = ({ idAppUser }) => {
       );
       setDisplayUpdateMessageSuccess(true);
       console.log(response.data);
-    } catch (error) {
-      console.error(error);
-      localStorage.clear();
-      navigate("/login");
-    }
+    } catch (error) { 
+      if (error.response) {
+      // Le serveur a répondu avec un statut autre que 2xx
+      console.log('Error response:', error.response.data);
+      if (error.response.data && error.response.data.type) {
+          const errorType = error.response.data.type;
+          if (errorType === "ResourceAlreadyExistsException") {
+              // Effectuer l'action en conséquence
+              console.log("L'utilisateur avec ce numéro Adeli existe déjà.");
+              // Par exemple, afficher un message à l'utilisateur
+              alert("Un utilisateur avec ce numéro Adeli existe déjà.");
+          }
+      }
+  } else if (error.request) {
+      // La requête a été faite mais aucune réponse n'a été reçue
+      console.log('No response received:', error.request);
+  } else {
+      // Une autre erreur est survenue lors de la création de la requête
+      console.log('Error setting up request:', error.message);
+  }
+}
   };
 
   return (
     <div>
+      <div><NavBar/></div>
+      <br /><br /><br /><br /><br />
+      <div className="col-6 mx-auto">
       <h3 style={{ textAlign: "center" }}>
         <b>Profil</b>
       </h3>
@@ -189,6 +240,7 @@ const Profil = ({ idAppUser }) => {
           </div>
         )}
       </form>
+      </div>
     </div>
   );
 };

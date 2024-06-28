@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ListPatient from "./components/modulePatient/ListPatient";
 import Accueil from "./components/Accueil/Accueil";
 import Deconnexion from "./components/module deconnexion/Deconnexion";
+import Profil from "./components/module profil/Profil";
 import Patient from "./components/modulePatient/Patient";
 import Error from "./components/module erreur/Error";
 import Login from "./components/Login/Login";
@@ -17,6 +18,8 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Accueil />} />
+            <Route path="/Profil" element={<Profil />} />
+
             <Route path="/List" element={<ListPatient />} />
             <Route path="/patient/:id" element={<Patient />} />
             <Route path="/Deconnexion" element={<Deconnexion />} />

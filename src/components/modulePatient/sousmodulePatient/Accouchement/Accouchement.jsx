@@ -67,8 +67,10 @@ const Accouchement = ({ idPatient }) => {
                     key={index}
                     className="list-group-item list-group-item-action"
                     onClick={() => {
+                      alert(acc.idAccouchement);
                       setIdAccouchementSelected(acc.idAccouchement);
                       resetDisplay();
+                      alert(idAccouchementSelected); 
                       setDisplayAccouchementDetail(true);
                     }}
                   >
@@ -92,7 +94,7 @@ const Accouchement = ({ idPatient }) => {
           </div>
         </div>
       )}
-      {displayAccouchementDetail && (
+      {idAccouchementSelected && ( 
         <AccouchementDetail idAccouchementSelected={idAccouchementSelected} />
       )}
       {displayAccouchementNew && <AccouchementNew />}
