@@ -143,6 +143,8 @@ const PatientUpdateForm = ({ idPatient }) => {
             type="text"
             className="form-control"
             id="dateNaissance"
+            placeholder="jj/mm/aaaa"
+            pattern="\d{2}/\d{2}/\d{4}"
             required
             value={dateNaissance}
             onChange={(e) => setDateNaissance(e.target.value)}
@@ -280,6 +282,8 @@ const PatientUpdateForm = ({ idPatient }) => {
             type="text"
             className="form-control"
             id="codePostal"
+            placeholder="5 chiffres"
+            pattern="\d{5}"
             value={codePostal}
             onChange={(e) => setCodePostal(e.target.value)}
           />
@@ -317,6 +321,8 @@ const PatientUpdateForm = ({ idPatient }) => {
             type="tel"
             className="form-control"
             id="tel"
+            placeholder="10 chiffres"
+            pattern="\d{10}"
             value={tel}
             onChange={(e) => setTel(e.target.value)}
           />
