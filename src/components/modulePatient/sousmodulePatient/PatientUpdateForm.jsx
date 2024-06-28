@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import AddMedTraitantModal from "../../module medecin traitant/AddMedTraitantMOdal";
+
 
 const PatientUpdateForm = ({ idPatient }) => {
   const token = localStorage.getItem("token");
+  const [listDoc, setListDoc] = useState([]);
   const navigate = useNavigate();
   const [dateNaissance, setDateNaissance] = useState("");
   const [nomGenre, setNomGenre] = useState("");
@@ -21,7 +24,29 @@ const PatientUpdateForm = ({ idPatient }) => {
 
   useEffect(() => {
     setDisplayUpdateMessageSuccess(false);
+  }, []);
 
+  useEffect(() => {
+    const loadAllDoc = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/medecintraitant/all",
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        setListDoc(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadAllDoc();
+  }, []);
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
@@ -61,7 +86,7 @@ const PatientUpdateForm = ({ idPatient }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const [medecinNom, medecinPrenom, medecinVille] =
+    const [prenomMedecinTraitant, nomMedecinTraitant, villeMededinTraitant] =
       medecinTraitantComplet.split(" ");
 
     const formData = {
@@ -72,9 +97,9 @@ const PatientUpdateForm = ({ idPatient }) => {
       nomProfession,
       nomTypePatient,
       MedecinTraitant: {
-        nom: medecinNom,
-        prenom: medecinPrenom,
-        ville: medecinVille,
+        nomMedecinTraitant: prenomMedecinTraitant,
+        prenomMedecinTraitant: nomMedecinTraitant,
+        villeMededinTraitant: villeMededinTraitant,
       },
       nomPatient,
       prenomPatient,
@@ -248,7 +273,7 @@ const PatientUpdateForm = ({ idPatient }) => {
 
         <div className="mb-3">
           <label htmlFor="MedecinTraitant" className="form-label">
-            Médecin Traitant
+            Médecin Traitant : <b>{medecinTraitantComplet}</b>
           </label>
           <select
             className="form-select"
@@ -256,11 +281,28 @@ const PatientUpdateForm = ({ idPatient }) => {
             value={medecinTraitantComplet}
             onChange={(e) => setMedecinTraitantComplet(e.target.value)}
           >
-            {/* Options à remplir dynamiquement */}
+            <option selected>Selectionner le mededin traitant</option>
+            {listDoc &&
+              listDoc.map((doc, index) => (
+                <option
+                  key={index}
+                  value={`${doc.prenomMedecinTraitant} ${doc.nomMedecinTraitant} ${doc.ville}`}
+                >
+                  {doc.prenomMedecinTraitant} {doc.nomMedecinTraitant},{" "}
+                  {doc.ville}
+                </option>
+              ))}
           </select>
-          <button type="button" className="btn btn-link">
+
+          <button
+            type="button"
+            className="btn btn-link"
+            data-bs-toggle="modal"
+            data-bs-target={`#Modal-${idModalDoc}`}
+          >
             Ajouter Médecin
           </button>
+          <AddMedTraitantModal idModalDoc={modalDoc} />
         </div>
         <div className="mb-3">
           <label htmlFor="nomVille" className="form-label">

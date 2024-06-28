@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
-
 const PatientForm = ({ idModal, count, setCount }) => {
   const token = localStorage.getItem("token");
+  const [listDoc, setListDoc] = useState([]);
   const [dateNaissance, setDateNaissance] = useState("");
   const [nomGenre, setNomGenre] = useState("");
   const [nomProfession, setNomProfession] = useState("");
@@ -23,12 +23,30 @@ const PatientForm = ({ idModal, count, setCount }) => {
     setDisplaySuccessMessage(false);
   }, []);
 
+  useEffect(() => {
+    const loadAllDoc = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/medecintraitant/all",
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        setListDoc(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
+    loadAllDoc();
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Diviser la valeur combinée du médecin traitant
-    const [medecinNom, medecinPrenom, medecinVille] =
+    const [prenomMedecinTraitant, nomMedecinTraitant, ville] =
       medecinTraitantComplet.split(" ");
     // Diviser la valeur combinée de la ville
 
@@ -39,11 +57,9 @@ const PatientForm = ({ idModal, count, setCount }) => {
       nomGenre,
       nomProfession,
       nomTypePatient,
-      MedecinTraitant: {
-        nom: medecinNom,
-        prenom: medecinPrenom,
-        ville: medecinVille,
-      },
+      nomMedecinTraitant: nomMedecinTraitant,
+      prenomMedecinTraitant: prenomMedecinTraitant,
+      villeMedecinTraitant: ville,
       nomPatient,
       prenomPatient,
       email,
@@ -51,20 +67,18 @@ const PatientForm = ({ idModal, count, setCount }) => {
     };
 
     try {
-      
-        const response = await axios.post(
-          `http://localhost:5000/api/patient/${idModal}`,
-          formData,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
-        setDisplaySuccessMessage(true);
-        console.log(response.data);
-        setCount(count + 1); //pour que liste s'actualise
-
+      const response = await axios.post(
+        `http://localhost:5000/api/patient/${idModal}`,
+        formData,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      setDisplaySuccessMessage(true);
+      console.log(response.data);
+      setCount(count + 1); //pour que liste s'actualise
     } catch (error) {
       console.error(error);
     }
@@ -247,7 +261,17 @@ const PatientForm = ({ idModal, count, setCount }) => {
                   value={medecinTraitantComplet}
                   onChange={(e) => setMedecinTraitantComplet(e.target.value)}
                 >
-                  {/* Options à remplir dynamiquement */}
+                  <option selected>Selectionner la ville</option>
+                  {listDoc &&
+                    listDoc.map((doc, index) => (
+                      <option
+                        key={index}
+                        value={`${doc.prenomMedecinTraitant} ${doc.nomMedecinTraitant} ${doc.ville}`}
+                      >
+                        {doc.prenomMedecinTraitant} {doc.nomMedecinTraitant},{" "}
+                        {doc.ville}
+                      </option>
+                    ))}
                 </select>
                 <button type="button" className="btn btn-link">
                   Ajouter Médecin

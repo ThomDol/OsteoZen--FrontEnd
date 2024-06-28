@@ -1,35 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { createPraticien, getPraticien, updatePraticien } from '../modulePraticien/PraticienService';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import {
+  createPraticien,
+  getPraticien,
+  updatePraticien,
+} from "../modulePraticien/PraticienService";
+import { useNavigate, useParams } from "react-router-dom";
 
 const PraticienComponent = () => {
-  const [nomPraticienConnecte, setNomPraticienConnecte] = useState('');
-  const [prenomPraticienConnecte, setPrenomPraticienConnecte] = useState('');
-  const [password, setPassword] = useState('');
-  const [nomRole, setNomRole] = useState('');
-  const [nomVille, setNomVille] = useState('');
-  const [codePostal, setCodePostal] = useState('');
-  const [numAdeli, setNumAdeli] = useState('');
-  const [email, setEmail] = useState('');
-  const [tel, setTel] = useState('');
+  const [nomAppUser, setNomAppUser] = useState("");
+  const [prenomAppUser, setPrenomAppUser] = useState("");
+  const [password, setPassword] = useState("");
+  const [nomRole, setNomRole] = useState("");
+  const [nomVille, setNomVille] = useState("");
+  const [codePostal, setCodePostal] = useState("");
+  const [numAdeli, setNumAdeli] = useState("");
+  const [email, setEmail] = useState("");
+  const [tel, setTel] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
-      getPraticien(id).then((response) => {
-        const data = response.data;
-        setNomPraticienConnecte(data.nomPraticienConnecte);
-        setPrenomPraticienConnecte(data.prenomPraticienConnecte);
-        setCodePostal(data.codePostal);
-        setEmail(data.email);
-        setNomRole(data.nomRole);
-        setNomVille(data.nomVille);
-        setNumAdeli(data.numAdeli);
-        setPassword(data.password);
-      }).catch(error => {
-        console.error("Erreur lors de la récupération du praticien :", error);
-      });
+      getPraticien(id)
+        .then((response) => {
+          const data = response.data;
+          setNomPraticienConnecte(data.nomAppUser);
+          setPrenomPraticienConnecte(data.prenomAppUser);
+          setCodePostal(data.codePostal);
+          setEmail(data.email);
+          setNomRole(data.nomRole);
+          setNomVille(data.nomVille);
+          setNumAdeli(data.numAdeli);
+          setPassword(data.password);
+        })
+        .catch((error) => {
+          console.error("Erreur lors de la récupération du praticien :", error);
+        });
     }
   }, [id]);
 
@@ -37,8 +43,8 @@ const PraticienComponent = () => {
     e.preventDefault();
 
     const praticien = {
-      nomPraticienConnecte,
-      prenomPraticienConnecte,
+      nomAppUser,
+      prenomAppUser,
       password,
       nomRole,
       nomVille,
@@ -50,30 +56,41 @@ const PraticienComponent = () => {
 
     if (id) {
       // Si id existe, on met à jour le praticien
-      updatePraticien(id, praticien).then((response) => {
-        console.log("Praticien mis à jour avec succès :", response.data);
-        navigate('/praticien');
-      }).catch(error => {
-        console.error("Erreur lors de la mise à jour du praticien :", error);
-      });
+      updatePraticien(id, praticien)
+        .then((response) => {
+          console.log("Praticien mis à jour avec succès :", response.data);
+          navigate("/praticien");
+        })
+        .catch((error) => {
+          console.error("Erreur lors de la mise à jour du praticien :", error);
+        });
     } else {
       // Sinon, on crée un nouveau praticien
-      createPraticien(praticien).then((response) => {
-        console.log("Praticien ajouté avec succès :", response.data);
-        navigate('/Admin');
-      }).catch(error => {
-        console.error("Erreur lors de la création du praticien :", error);
-      });
+      createPraticien(praticien)
+        .then((response) => {
+          console.log("Praticien ajouté avec succès :", response.data);
+          navigate("/Admin");
+        })
+        .catch((error) => {
+          console.error("Erreur lors de la création du praticien :", error);
+        });
     }
   };
 
   const pageTitle = () => {
-    return id ? <h5 className="card-title text-bold">MODIFIER PRATICIEN</h5> : <h5 className="card-title text-bold">AJOUT NOUVEAU PRATICIEN</h5>;
+    return id ? (
+      <h5 className="card-title text-bold">MODIFIER PRATICIEN</h5>
+    ) : (
+      <h5 className="card-title text-bold">AJOUT NOUVEAU PRATICIEN</h5>
+    );
   };
 
   return (
-    <div className='container'>
-      <div className="card col-md-6 offset-md-3 offset-md-3 bg-info" style={{ maxWidth: '600px', margin: '20px auto', padding: '20px' }}>
+    <div className="container">
+      <div
+        className="card col-md-6 offset-md-3 offset-md-3 bg-info"
+        style={{ maxWidth: "600px", margin: "20px auto", padding: "20px" }}
+      >
         <div className="card-body">
           {pageTitle()}
           <form onSubmit={savePraticien}>
@@ -82,8 +99,8 @@ const PraticienComponent = () => {
               <input
                 type="text"
                 className="form-control"
-                value={nomPraticienConnecte}
-                onChange={(e) => setNomPraticienConnecte(e.target.value)}
+                value={nomAppUser}
+                onChange={(e) => setNomAppUser(e.target.value)}
               />
             </div>
             <div className="form-group">
@@ -91,8 +108,8 @@ const PraticienComponent = () => {
               <input
                 type="text"
                 className="form-control"
-                value={prenomPraticienConnecte}
-                onChange={(e) => setPrenomPraticienConnecte(e.target.value)}
+                value={prenomAppUser}
+                onChange={(e) => setPrenomAppUser(e.target.value)}
               />
             </div>
             <div className="form-group">
@@ -159,7 +176,9 @@ const PraticienComponent = () => {
               />
             </div>
             <br />
-            <button className='btn btn-success' type="submit">ENREGISTRER</button>
+            <button className="btn btn-success" type="submit">
+              ENREGISTRER
+            </button>
           </form>
         </div>
       </div>
