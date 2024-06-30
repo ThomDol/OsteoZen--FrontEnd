@@ -1,28 +1,23 @@
-import React, { useState, useRef } from 'react';
-import axios from 'axios';
-import { Modal } from 'bootstrap';
+import React, { useState } from "react";
+import axios from "axios";
 
-const VilleForm = ({ idModal, resetListVille, setResetListVille }) => {
-  const [nomVille, setNomVille] = useState('');
-  const [codePostal, setCodePostal] = useState('');
-  const modalRef = useRef();
+const VilleForm = ({ idModalVille, countVille, setCountVille }) => {
+  const token = localStorage.getItem("token");
+  const [nomVille, setNomVille] = useState("");
+  const [displaySuccessMessage, setDisplaySuccessMessage] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const formData = {
-      nomVille,
-      codePostal,
-    };
+    const formData = { nom: nomVille };
 
     try {
-      const response = await axios.post(
-        `http://localhost:5000/api/lieu`,
-        formData
-      );
-      console.log(response.data);
-      setResetListVille(resetListVille + 1); // pour que la liste s'actualise
-
+      await axios.post(`http://localhost:5000/api/lieu`, formData, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      setCountVille(countVille + 1);
+      setDisplaySuccessMessage(true);
     } catch (error) {
       console.error(error);
     }
@@ -31,18 +26,17 @@ const VilleForm = ({ idModal, resetListVille, setResetListVille }) => {
   return (
     <div
       className="modal fade"
-      id={`Modal-${idModal}`}
+      id={`Modal-${idModalVille}`}
       tabIndex="-1"
-      aria-labelledby={`ModalLabel-${idModal}`}
+      aria-labelledby={`ModalLabel-${idModalVille}`}
       aria-hidden="true"
-      ref={modalRef}
     >
-      <div className="modal-dialog modal-lg">
+      <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id={`ModalLabel-${idModal}`}>
-              Créer Ville
-            </h5>
+            <h1 className="modal-title fs-5" id={`ModalLabel-${idModalVille}`}>
+              Ajouter une Ville
+            </h1>
             <button
               type="button"
               className="btn-close"
@@ -54,43 +48,27 @@ const VilleForm = ({ idModal, resetListVille, setResetListVille }) => {
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="nomVille" className="form-label">
-                  Ville
+                  Nom de la Ville
                 </label>
                 <input
                   type="text"
                   className="form-control"
                   id="nomVille"
-                  required
                   value={nomVille}
                   onChange={(e) => setNomVille(e.target.value)}
                 />
               </div>
-              <div className="mb-3">
-                <label htmlFor="codePostal" className="form-label">
-                  Code Postal
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="codePostal"
-                  required
-                  value={codePostal}
-                  onChange={(e) => setCodePostal(e.target.value)}
-                />
-              </div>
               <button type="submit" className="btn btn-primary">
-                Soumettre
+                Ajouter
               </button>
+              {displaySuccessMessage && (
+                <div className="text-center">
+                  <span style={{ fontWeight: "bold", color: "green" }}>
+                    Ville ajoutée avec succès
+                  </span>
+                </div>
+              )}
             </form>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-            </div>
           </div>
         </div>
       </div>

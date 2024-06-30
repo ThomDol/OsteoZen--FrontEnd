@@ -1,13 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import AddMedTaitantModal from "../module medecin traitant/AddMedTaitantModal";
+import VilleForm from "../ModuleVille/VilleForm";
 
-const AddMedTraitantModal = ({ idModalDoc }) => {
+const ModalMedecinForm = ({ idModalDoc,count,setCount }) => {
   const token = localStorage.getItem("token");
+  const [listVille, setListVille] = useState([]);
   const [nomMedecinTraitant, setNomMedecinTraitant] = useState("");
   const [prenomMedecinTraitant, setPrenomMedecinTraitant] = useState("");
-  const [ville, setVille] = useState("");
+  const [ville, setville] = useState("");
   const [displaySuccessMessage, setDisplaySuccessMessage] = useState(false);
+  const [countVille, setCountVille] = useState(0); //pour actualiser affichage de la liste de ville qd ajout
+
+  useEffect(() => {
+    const loadAllVille = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/lieu/all", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+        setListVille(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadAllVille();
+  }, [countVille]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -16,13 +35,13 @@ const AddMedTraitantModal = ({ idModalDoc }) => {
       prenomMedecinTraitant,
       ville,
     };
-
     try {
-      await axios.post(`http://localhost:5000/api/medecintraitant/`, formData, {
+      await axios.post(`http://localhost:5000/api/medecintraitant`, formData, {
         headers: {
           Authorization: "Bearer " + token,
         },
       });
+      setCount(count + 1);
       setDisplaySuccessMessage(true);
     } catch (error) {
       console.error(error);
@@ -41,7 +60,7 @@ const AddMedTraitantModal = ({ idModalDoc }) => {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id={`ModalLabel-${idModalDoc}`}>
-              Mettre à jour les informations du médecin
+              Création nouveau Medecin Traitant
             </h5>
             <button
               type="button"
@@ -51,6 +70,21 @@ const AddMedTraitantModal = ({ idModalDoc }) => {
             ></button>
           </div>
           <div className="modal-body">
+            <div>
+              <button
+                type="button"
+                className="btn btn-link"
+                data-bs-toggle="modal"
+                data-bs-target="#Modal-idModalVille"
+              >
+                Ajouter Ville
+              </button>
+              <VilleForm
+                idModalDoc="idModalVille"
+                countVille={countVille}
+                setCountVille={setCountVille}
+              />
+            </div>
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="nomMedecinTraitant" className="form-label">
@@ -80,16 +114,22 @@ const AddMedTraitantModal = ({ idModalDoc }) => {
               </div>
               <div className="mb-3">
                 <label htmlFor="ville" className="form-label">
-                  Ville
+                  Ville :
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="ville"
-                  required
+                <select
+                  className="form-select"
+                  id="MedecinTraitant"
                   value={ville}
-                  onChange={(e) => setVille(e.target.value)}
-                />
+                  onChange={(e) => setville(e.target.value)}
+                >
+                  <option value="">Selectionner la ville</option>
+                  {listVille &&
+                    listVille.map((ville, index) => (
+                      <option key={index} value={`${ville.nomville}`}>
+                        {ville.nomville}, {ville.codePostal}
+                      </option>
+                    ))}
+                </select>
               </div>
               <button type="submit" className="btn btn-primary">
                 Valider
@@ -118,4 +158,4 @@ const AddMedTraitantModal = ({ idModalDoc }) => {
   );
 };
 
-export default AddMedTraitantModal;
+export default ModalMedecinForm;

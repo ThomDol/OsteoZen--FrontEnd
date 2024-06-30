@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import ModalMedecinForm from "../../module medecin traitant/ModalMedecinForm";
 
 const PatientForm = ({ idModal, count, setCount }) => {
   const token = localStorage.getItem("token");
@@ -16,6 +17,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
   const [nomVille, setNomVille] = useState("");
   const [codePostal, setCodePostal] = useState("");
   const [displaySuccessMessage, setDisplaySuccessMessage] = useState(false);
+  const [countDoc, setCountDoc] = useState(0); //pour actualiser liste de medecin qd ajout
 
   const modalRef = useRef();
 
@@ -41,7 +43,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
     };
 
     loadAllDoc();
-  }, []);
+  }, [count]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -97,7 +99,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id={`ModalLabel-${idModal}`}>
-              Patient Form
+              Nouvelle Fiche Patient
             </h5>
             <button
               type="button"
@@ -107,6 +109,21 @@ const PatientForm = ({ idModal, count, setCount }) => {
             ></button>
           </div>
           <div className="modal-body">
+            <div>
+              <button
+                type="button"
+                className="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#Modal-idModalDoc"
+              >
+                Ajouter Médecin Traitant
+              </button>
+              <ModalMedecinForm
+                idModalDoc="idModalDoc"
+                count={countDoc}
+                setCount={setCountDoc}
+              />
+            </div>
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="nomPatient" className="form-label">
@@ -261,7 +278,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
                   value={medecinTraitantComplet}
                   onChange={(e) => setMedecinTraitantComplet(e.target.value)}
                 >
-                  <option selected>Selectionner la ville</option>
+                  <option value="">Selectionner le mededin traitant</option>
                   {listDoc &&
                     listDoc.map((doc, index) => (
                       <option
@@ -273,9 +290,6 @@ const PatientForm = ({ idModal, count, setCount }) => {
                       </option>
                     ))}
                 </select>
-                <button type="button" className="btn btn-link">
-                  Ajouter Médecin
-                </button>
               </div>
               <div className="mb-3">
                 <label htmlFor="nomVille" className="form-label">
@@ -335,6 +349,8 @@ const PatientForm = ({ idModal, count, setCount }) => {
                   className="form-control"
                   id="tel"
                   required
+                  placeholder="10 chiffres"
+                  pattern="\d{10}"
                   value={tel}
                   onChange={(e) => setTel(e.target.value)}
                 />

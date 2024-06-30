@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import AddMedTraitantModal from "../../module medecin traitant/AddMedTraitantMOdal";
-
+import ModalMedecinForm from "../../module medecin traitant/ModalMedecinForm";
 
 const PatientUpdateForm = ({ idPatient }) => {
   const token = localStorage.getItem("token");
@@ -21,6 +20,7 @@ const PatientUpdateForm = ({ idPatient }) => {
   const [codePostal, setCodePostal] = useState("");
   const [displayUpdateMessageSuccess, setDisplayUpdateMessageSuccess] =
     useState(false);
+  const [count, setCount] = useState(0); //pour actualiser liste de medecin qd ajout
 
   useEffect(() => {
     setDisplayUpdateMessageSuccess(false);
@@ -44,7 +44,7 @@ const PatientUpdateForm = ({ idPatient }) => {
     };
 
     loadAllDoc();
-  }, []);
+  }, [count]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,7 +86,7 @@ const PatientUpdateForm = ({ idPatient }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const [prenomMedecinTraitant, nomMedecinTraitant, villeMededinTraitant] =
+    const [prenomMedecinTraitant, nomMedecinTraitant, villeMedecinTraitant] =
       medecinTraitantComplet.split(" ");
 
     const formData = {
@@ -96,11 +96,9 @@ const PatientUpdateForm = ({ idPatient }) => {
       nomGenre,
       nomProfession,
       nomTypePatient,
-      MedecinTraitant: {
-        nomMedecinTraitant: prenomMedecinTraitant,
-        prenomMedecinTraitant: nomMedecinTraitant,
-        villeMededinTraitant: villeMededinTraitant,
-      },
+      nomMedecinTraitant: nomMedecinTraitant,
+      prenomMedecinTraitant: prenomMedecinTraitant,
+      villeMedecinTraitant: villeMedecinTraitant,
       nomPatient,
       prenomPatient,
       email,
@@ -131,9 +129,26 @@ const PatientUpdateForm = ({ idPatient }) => {
       <h3 style={{ textAlign: "center" }}>
         <b>Profil</b>
       </h3>
+      <div>
+        <button
+          type="button"
+          className="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#Modal-idModalDoc"
+        >
+          Ajouter Médecin Traitant
+        </button>
+        <ModalMedecinForm
+          idModalDoc="idModalDoc"
+          
+          count={count}
+          setCount={setCount}
+        />
+      </div>
       <br />
       <br />
       <form onSubmit={handleSubmit}>
+        {/* Reste du formulaire */}
         <div className="mb-3">
           <label htmlFor="nomPatient" className="form-label">
             Nom du Patient
@@ -175,7 +190,6 @@ const PatientUpdateForm = ({ idPatient }) => {
             onChange={(e) => setDateNaissance(e.target.value)}
           />
         </div>
-
         <div className="mb-3">
           <label className="form-label">Genre</label>
           <div>
@@ -270,7 +284,6 @@ const PatientUpdateForm = ({ idPatient }) => {
             </div>
           </div>
         </div>
-
         <div className="mb-3">
           <label htmlFor="MedecinTraitant" className="form-label">
             Médecin Traitant : <b>{medecinTraitantComplet}</b>
@@ -281,7 +294,7 @@ const PatientUpdateForm = ({ idPatient }) => {
             value={medecinTraitantComplet}
             onChange={(e) => setMedecinTraitantComplet(e.target.value)}
           >
-            <option selected>Selectionner le mededin traitant</option>
+            <option value="">Selectionner le mededin traitant</option>
             {listDoc &&
               listDoc.map((doc, index) => (
                 <option
@@ -293,17 +306,7 @@ const PatientUpdateForm = ({ idPatient }) => {
                 </option>
               ))}
           </select>
-
-          <button
-            type="button"
-            className="btn btn-link"
-            data-bs-toggle="modal"
-            data-bs-target={`#Modal-${idModalDoc}`}
-          >
-            Ajouter Médecin
-          </button>
-          <AddMedTraitantModal idModalDoc={modalDoc} />
-        </div>
+        </div>{" "}
         <div className="mb-3">
           <label htmlFor="nomVille" className="form-label">
             Ville
@@ -342,7 +345,6 @@ const PatientUpdateForm = ({ idPatient }) => {
             onChange={(e) => setNomProfession(e.target.value)}
           />
         </div>
-
         <div className="mb-3">
           <label htmlFor="email" className="form-label">
             Email
