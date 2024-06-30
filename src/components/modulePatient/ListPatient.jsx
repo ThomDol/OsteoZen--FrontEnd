@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import PatientForm from "./sousmodulePatient/PatientForm";
 import NavBar from "../header/NavBar";
 
 const SECRET_KEY = "q#4puta9!am4$fcl";
@@ -77,6 +76,10 @@ const ListPatient = () => {
       )
     );
   }, [searchItem, list]);
+
+  const CreateNewPatient = () => {
+    navigate("/CreateNewPatient");
+  };
 
   const deletePatient = (id) => {
     if (userId) {
@@ -174,14 +177,9 @@ const ListPatient = () => {
         </table>
       </div>
       <div className="col-2 mx-auto">
-        <button
-          data-bs-toggle="modal"
-          data-bs-target={`#Modal-${userId}`}
-          className="btn btn-primary "
-        >
+        <button onClick={CreateNewPatient} className="btn btn-primary ">
           Creer un nouveau patient
         </button>
-        <PatientForm idModal={userId} setCount={setCount} count={count} />
       </div>
     </div>
   );

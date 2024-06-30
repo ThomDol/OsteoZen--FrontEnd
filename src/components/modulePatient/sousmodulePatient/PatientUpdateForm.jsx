@@ -21,6 +21,7 @@ const PatientUpdateForm = ({ idPatient }) => {
   const [displayUpdateMessageSuccess, setDisplayUpdateMessageSuccess] =
     useState(false);
   const [count, setCount] = useState(0); //pour actualiser liste de medecin qd ajout
+  const idModalDoc = "idModalDoc";
 
   useEffect(() => {
     setDisplayUpdateMessageSuccess(false);
@@ -134,13 +135,12 @@ const PatientUpdateForm = ({ idPatient }) => {
           type="button"
           className="btn btn-primary"
           data-bs-toggle="modal"
-          data-bs-target="#Modal-idModalDoc"
+          data-bs-target={`#Modal-${idModalDoc}`}
         >
           Ajouter Médecin Traitant
         </button>
         <ModalMedecinForm
-          idModalDoc="idModalDoc"
-          
+          idModalDoc={idModalDoc}
           count={count}
           setCount={setCount}
         />
@@ -148,7 +148,6 @@ const PatientUpdateForm = ({ idPatient }) => {
       <br />
       <br />
       <form onSubmit={handleSubmit}>
-        {/* Reste du formulaire */}
         <div className="mb-3">
           <label htmlFor="nomPatient" className="form-label">
             Nom du Patient

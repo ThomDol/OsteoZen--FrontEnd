@@ -1,9 +1,31 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import ModalDocForm from "../../module medecin traitant/ModalDocForm";
+import ModalDocForm from "../module medecin traitant/ModalDocForm";
+import { useNavigate } from "react-router-dom";
+import NavBar from "../header/NavBar";
+import { jwtDecode } from "jwt-decode";
+import CryptoJS from "crypto-js";
 
-const PatientForm = ({ idModal, count, setCount }) => {
+const SECRET_KEY = "q#4puta9!am4$fcl";
+const INIT_VECTOR = "1zp6@y#ect4?5krx";
+
+const decryptToken = (encryptedToken) => {
+  const key = CryptoJS.enc.Utf8.parse(SECRET_KEY);
+  const iv = CryptoJS.enc.Utf8.parse(INIT_VECTOR);
+
+  const decrypted = CryptoJS.AES.decrypt(encryptedToken, key, {
+    iv: iv,
+    padding: CryptoJS.pad.Pkcs7,
+    mode: CryptoJS.mode.CBC,
+  });
+
+  return decrypted.toString(CryptoJS.enc.Utf8);
+};
+
+const PatientForm2 = () => {
+  const [userId, setUserId] = useState(null);
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
   const [listDoc, setListDoc] = useState([]);
   const [dateNaissance, setDateNaissance] = useState("");
   const [nomGenre, setNomGenre] = useState("");
@@ -17,10 +39,20 @@ const PatientForm = ({ idModal, count, setCount }) => {
   const [nomVille, setNomVille] = useState("");
   const [codePostal, setCodePostal] = useState("");
   const [displaySuccessMessage, setDisplaySuccessMessage] = useState(false);
-  const [countDoc, setCountDoc] = useState(0); //pour actualiser liste de medecin qd ajout
+  const [count, setCount] = useState(0); //pour actualiser liste de medecin qd ajout
   const idModalDocAdd = "idModalDocAdd";
 
   const modalRef = useRef();
+
+  useEffect(() => {
+    try {
+      const decryptedToken = decryptToken(token);
+      const decodedToken = jwtDecode(decryptedToken);
+      setUserId(decodedToken.id);
+    } catch (error) {
+      console.error("Erreur de décryptage ou de décodage du token:", error);
+    }
+  }, []);
 
   useEffect(() => {
     setDisplaySuccessMessage(false);
@@ -71,7 +103,7 @@ const PatientForm = ({ idModal, count, setCount }) => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/patient/${idModal}`,
+        `http://localhost:5000/api/patient/${userId}`,
         formData,
         {
           headers: {
@@ -81,34 +113,28 @@ const PatientForm = ({ idModal, count, setCount }) => {
       );
       setDisplaySuccessMessage(true);
       console.log(response.data);
-      setCount(count + 1); //pour que liste s'actualise
+      navigate("/List");
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div
-      className="modal fade"
-      id={`Modal-${idModal}`}
-      tabIndex="-1"
-      aria-labelledby={`ModalLabel-${idModal}`}
-      aria-hidden="true"
-      ref={modalRef}
-    >
-      <div className="modal-dialog modal-lg">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title" id={`ModalLabel-${idModal}`}>
-              Nouvelle Fiche Patient
-            </h5>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
+    <div>
+      <div>
+        <NavBar />
+      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <div className="col-6 mx-auto">
+        <div className="text-center">
+          <h5>Nouvelle Fiche Patient</h5>
+        </div>
+        <br />
+        <div>
           <div className="modal-body">
             <div>
               <button
@@ -121,8 +147,8 @@ const PatientForm = ({ idModal, count, setCount }) => {
               </button>
               <ModalDocForm
                 idModalDoc={idModalDocAdd}
-                count={countDoc}
-                setCount={setCountDoc}
+                count={count}
+                setCount={setCount}
               />
             </div>
             <form onSubmit={handleSubmit}>
@@ -368,15 +394,6 @@ const PatientForm = ({ idModal, count, setCount }) => {
                 </span>
               </div>
             )}
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -384,4 +401,4 @@ const PatientForm = ({ idModal, count, setCount }) => {
   );
 };
 
-export default PatientForm;
+export default PatientForm2;
