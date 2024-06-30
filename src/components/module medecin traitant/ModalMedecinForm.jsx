@@ -137,7 +137,7 @@ const ModalMedecinForm = ({ idModalDoc,count,setCount }) => {
               {displaySuccessMessage && (
                 <div className="text-center">
                   <span style={{ fontWeight: "bold", color: "green" }}>
-                    Informations mises à jour avec succès
+                    Medecin crée
                   </span>
                 </div>
               )}

@@ -136,7 +136,7 @@ const PatientForm2 = () => {
         <br />
         <div>
           <div className="modal-body">
-            <div>
+            <div className="d-flex justify-content-end">
               <button
                 type="button"
                 className="btn btn-primary"
