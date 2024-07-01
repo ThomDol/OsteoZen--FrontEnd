@@ -144,7 +144,7 @@ const Profil = () => {
           <b>Profil</b>
         </h3>
         <br />
-        <br />
+        
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="nomAppUser" className="form-label">
@@ -247,9 +247,10 @@ const Profil = () => {
               onChange={(e) => setTel(e.target.value)}
             />
           </div>
+          <br />
           <div className="row">
             <div className="col d-flex justify-content-start">
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-secondary">
                 Mettre à jour
               </button>
             </div>
@@ -258,7 +259,7 @@ const Profil = () => {
                 type="button"
                 data-bs-toggle="modal"
                 data-bs-target={`#Modal-${userId}`}
-                className="btn btn-primary"
+                className="btn btn-secondary"
               >
                 Modifier Mot de passe
               </button>

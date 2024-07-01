@@ -456,7 +456,9 @@ const AccouchementDetail = ({idAccouchementSelected}) => {
             onChange={(e) => setAgeDateAccouchement(e.target.value)} 
           />
         </div>
-        <button type="button" className="btn btn-primary" onClick={handleSubmit}>Soumettre</button>
+        <div className="col-5 mx-auto">
+        <button type="button" className="btn btn-secondary" onClick={handleSubmit}>Soumettre</button>
+        </div>
       </form>
     </div>
   );

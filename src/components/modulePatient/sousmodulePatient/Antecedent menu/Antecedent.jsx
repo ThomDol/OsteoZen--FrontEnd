@@ -128,15 +128,20 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
     <div className="col-9 mx-auto">
       <div className="row">
         <div className="col-11">
-      <h3 style={{ textAlign: "center", paddingTop: "10px" }}>
-        <b>Antecedent</b>
-      </h3>
-      </div>
-      <div className="col-1">
-      <span onClick={() => {
-                        deleteAnt(idAntecedent);
-                      }}> &#10060;</span>
-      </div>
+          <h3 style={{ textAlign: "center", paddingTop: "10px" }}>
+            <b>Antecedent</b>
+          </h3>
+        </div>
+        <div className="col-1">
+          <span
+            onClick={() => {
+              deleteAnt(idAntecedent);
+            }}
+          >
+            {" "}
+            &#10060;
+          </span>
+        </div>
       </div>
       <br />
       <br />
@@ -346,9 +351,12 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
             onChange={(e) => setAntNotesDiverses(e.target.value)}
           ></textarea>
         </div>
-        <button type="submit" className="btn btn-primary">
-          Soumettre
-        </button>
+        <br />
+        <div className="col-5 mx-auto">
+          <button type="submit" className="btn btn-secondary">
+            Mettre à jour
+          </button>
+        </div>
       </form>
       {displayUpdateSuccessMessage && (
         <div className="text-center">

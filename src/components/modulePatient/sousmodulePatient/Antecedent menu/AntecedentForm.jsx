@@ -278,16 +278,22 @@ const AntecedentForm = ({idPatient}) => {
             onChange={(e) => setAntNotesDiverses(e.target.value)}
           ></textarea>
         </div>
-        <button type="submit" className="btn btn-primary">
-          Créer
-        </button>
+        <br />
+        <div className="col-5 mx-auto">
+          <button type="submit" className="btn btn-secondary">
+            Créer
+          </button>
+        </div>
       </form>
-      {displayCreationSuccessMessage && 
+      <br />
+      <div className="col-5 mx-auto"></div>
+      {displayCreationSuccessMessage && (
         <div className="text-center">
           <span style={{ fontWeight: "bold", color: "green" }}>
             Creation faite
           </span>
-        </div>}
+        </div>
+      )}
     </div>
   );
 };

@@ -144,7 +144,7 @@ const PatientForm = () => {
             <div className="d-flex justify-content-end">
               <button
                 type="button"
-                className="btn btn-primary"
+                className="btn btn-secondary"
                 data-bs-toggle="modal"
                 data-bs-target={`#Modal-${idModalDocAdd}`}
               >
@@ -387,7 +387,8 @@ const PatientForm = () => {
                   onChange={(e) => setTel(e.target.value)}
                 />
               </div>
-              <button type="submit" className="btn btn-primary">
+              <br />
+              <button type="submit" className="btn btn-secondary">
                 Créer
               </button>
             </form>

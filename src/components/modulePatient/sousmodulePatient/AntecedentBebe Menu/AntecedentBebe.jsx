@@ -985,9 +985,11 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
             </div>
           </div>
         </div>
-        <button type="submit" className="btn btn-primary">
-          Soumettre
+        <div className="col-5 mx-auto">
+        <button type="submit" className="btn btn-secondary">
+          Mettre à jour
         </button>
+        </div>
       </form>
       {displayUpdateSuccessMessage && (
         <div className="text-center">

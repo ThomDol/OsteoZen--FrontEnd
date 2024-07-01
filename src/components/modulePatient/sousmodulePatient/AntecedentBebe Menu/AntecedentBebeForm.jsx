@@ -855,9 +855,11 @@ const AntecedentBebeForm = ({ idPatient }) => {
             </div>
           </div>
         </div>
-        <button type="submit" className="btn btn-primary">
+        <div className="col-5 mx-auto">
+        <button type="submit" className="btn btn-secondary">
           Créer
         </button>
+        </div>
       </form>
       {displayCreationSuccessMessage && (
         <div className="text-center">

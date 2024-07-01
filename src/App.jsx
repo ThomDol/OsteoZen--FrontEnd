@@ -1,15 +1,17 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Patient from "./components/modulePatient/Patient";
 import ListPatient from "./components/modulePatient/ListPatient";
 import Accueil from "./components/Accueil/Accueil";
 import Deconnexion from "./components/module deconnexion/Deconnexion";
 import Profil from "./components/module profil/Profil";
-import Patient from "./components/modulePatient/Patient";
 import Error from "./components/module erreur/Error";
 import Login from "./components/Login/Login";
 import { StorageProvider } from "./components/StorageContext";
-import ListePraticienComponent from "./components/modulePraticien/ListePraticienComponent";
-import PraticienComponent from "./components/modulePraticien/PraticienComponent";
 import PatientForm from "./components/modulePatient/PatientForm";
+import ListPraticien from "./components/modulePraticien/ListPraticien";
+import ReadPraticien from "./components/modulePraticien/ReadPraticien";
+import CreatePraticien from "./components/modulePraticien/CreatePraticien";
+import UpdatePraticien from "./components/modulePraticien/UpdatePraticien";
 
 function App() {
   return (
@@ -23,13 +25,11 @@ function App() {
             <Route path="/CreateNewPatient" element={<PatientForm />} />
             <Route path="/List" element={<ListPatient />} />
             <Route path="/patient/:id" element={<Patient />} />
+            <Route path="/Admin" element={<ListPraticien />} />
+            <Route path="/read/:id" element={<ReadPraticien />} />
+            <Route path="/create" element={<CreatePraticien />} />
+            <Route path="/update/:id" element={<UpdatePraticien />} />
             <Route path="/Deconnexion" element={<Deconnexion />} />
-            <Route path="/Admin" element={<ListePraticienComponent />} />
-            <Route path="/ajouter-praticien" element={<PraticienComponent />} />
-            <Route
-              path="/modifier-praticien"
-              element={<PraticienComponent />}
-            />
             <Route path="/error" element={<Error />} />
             <Route path="/*" element={<Login />} />
           </Routes>

@@ -176,8 +176,9 @@ const ListPatient = () => {
           </tbody>
         </table>
       </div>
+      <br />
       <div className="col-2 mx-auto">
-        <button onClick={CreateNewPatient} className="btn btn-primary ">
+        <button onClick={CreateNewPatient} className="btn btn-secondary ">
           Creer un nouveau patient
         </button>
       </div>
