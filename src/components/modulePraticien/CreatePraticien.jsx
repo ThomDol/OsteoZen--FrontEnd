@@ -53,6 +53,7 @@ function CreatePraticien() {
               <input
                 type="text"
                 name="nom"
+                required
                 className="form-control"
                 onChange={(e) =>
                   setValues({ ...values, nomAppUser: e.target.value })
@@ -64,6 +65,7 @@ function CreatePraticien() {
               <input
                 type="text"
                 name="prenom"
+                required
                 className="form-control"
                 onChange={(e) =>
                   setValues({
@@ -78,6 +80,7 @@ function CreatePraticien() {
               <input
                 type="password"
                 name="password"
+                required
                 className="form-control"
                 onChange={(e) =>
                   setValues({ ...values, password: e.target.value })
@@ -93,6 +96,7 @@ function CreatePraticien() {
                     type="radio"
                     name="nomRole"
                     id="role"
+                    required
                     value="PRATICIEN"
                     checked={values.nomRole === "PRATICIEN"}
                     onChange={(e) =>
@@ -112,6 +116,7 @@ function CreatePraticien() {
                     type="radio"
                     name="nomRole"
                     id="role"
+                    required
                     value="ADMIN"
                     checked={values.nomRole === "ADMIN"}
                     onChange={(e) =>
@@ -129,6 +134,7 @@ function CreatePraticien() {
               <input
                 type="text"
                 name="ville"
+                required
                 className="form-control"
                 onChange={(e) =>
                   setValues({ ...values, nomVille: e.target.value })
@@ -140,6 +146,7 @@ function CreatePraticien() {
               <input
                 type="text"
                 name="codePostal"
+                required
                 className="form-control"
                 onChange={(e) =>
                   setValues({ ...values, codePostal: e.target.value })
@@ -151,6 +158,7 @@ function CreatePraticien() {
               <input
                 type="text"
                 name="numAdeli"
+                required
                 className="form-control"
                 onChange={(e) =>
                   setValues({ ...values, numAdeli: e.target.value })
@@ -162,6 +170,7 @@ function CreatePraticien() {
               <input
                 type="email"
                 name="email"
+                required
                 className="form-control"
                 onChange={(e) =>
                   setValues({ ...values, email: e.target.value })
@@ -173,10 +182,12 @@ function CreatePraticien() {
               <input
                 type="text"
                 name="tel"
+                required
                 className="form-control"
                 onChange={(e) => setValues({ ...values, tel: e.target.value })}
               />
             </div>
+            <br />
             <div className="d-flex justify-content-start">
               <button type="submit" className="btn btn-success">
                 Submit

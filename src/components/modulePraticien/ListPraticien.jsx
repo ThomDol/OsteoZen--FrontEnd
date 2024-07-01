@@ -58,7 +58,7 @@ function ListPraticien() {
             to="/create"
             className="btn btn-success d-flex-auto justify-content-left"
           >
-            Add{" "}
+            Ajouter nouvel utilisateur{" "}
           </Link>
         </div>
         <br />
