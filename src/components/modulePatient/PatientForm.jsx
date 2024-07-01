@@ -22,7 +22,7 @@ const decryptToken = (encryptedToken) => {
   return decrypted.toString(CryptoJS.enc.Utf8);
 };
 
-const PatientForm2 = () => {
+const PatientForm = () => {
   const [userId, setUserId] = useState(null);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -401,4 +401,4 @@ const PatientForm2 = () => {
   );
 };
 
-export default PatientForm2;
+export default PatientForm;

@@ -9,7 +9,7 @@ import Login from "./components/Login/Login";
 import { StorageProvider } from "./components/StorageContext";
 import ListePraticienComponent from "./components/modulePraticien/ListePraticienComponent";
 import PraticienComponent from "./components/modulePraticien/PraticienComponent";
-import PatientForm2 from "./components/modulePatient/PatientForm2";
+import PatientForm from "./components/modulePatient/PatientForm";
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Accueil />} />
             <Route path="/Profil" element={<Profil />} />
-            <Route path="/CreateNewPatient" element={<PatientForm2 />} />
+            <Route path="/CreateNewPatient" element={<PatientForm />} />
             <Route path="/List" element={<ListPatient />} />
             <Route path="/patient/:id" element={<Patient />} />
             <Route path="/Deconnexion" element={<Deconnexion />} />
