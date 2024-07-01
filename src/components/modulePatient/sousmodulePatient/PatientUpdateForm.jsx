@@ -69,9 +69,9 @@ const PatientUpdateForm = ({ idPatient }) => {
         setEmail(data.email || "");
         setTel(data.tel || "");
         setMedecinTraitantComplet(
-          `${data.prenomMedecinTraitant || ""} ${
+          `${data.prenomMedecinTraitant || ""} - ${
             data.nomMedecinTraitant || ""
-          } ${data.villeMedecinTraitant || ""} ${
+          } - ${data.villeMedecinTraitant || ""} -  ${
             data.codePostalMedecinTraitant || ""
           }`
         );
@@ -94,7 +94,7 @@ const PatientUpdateForm = ({ idPatient }) => {
       nomMedecinTraitant,
       villeMedecinTraitant,
       codePostalMedecinTraitant,
-    ] = medecinTraitantComplet.split("&");
+    ] = medecinTraitantComplet.split(" - ");
 
     const formData = {
       dateNaissance,
@@ -306,10 +306,10 @@ const PatientUpdateForm = ({ idPatient }) => {
               listDoc.map((doc, index) => (
                 <option
                   key={index}
-                  value={`${doc.prenomMedecinTraitant}&${doc.nomMedecinTraitant}&${doc.villeMedecinTraitant}&${doc.codePostalMedecinTraitant}`}
+                  value={`${doc.prenomMedecinTraitant} - ${doc.nomMedecinTraitant} - ${doc.villeMedecinTraitant} - ${doc.codePostalMedecinTraitant}`}
                 >
                   {doc.prenomMedecinTraitant} {doc.nomMedecinTraitant},{" "}
-                  {doc.ville}
+                  {doc.villeMedecinTraitant}
                 </option>
               ))}
           </select>

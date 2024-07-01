@@ -310,7 +310,7 @@ const PatientForm = () => {
                   value={medecinTraitantComplet}
                   onChange={(e) => setMedecinTraitantComplet(e.target.value)}
                 >
-                  <option value="">Selectionner le mededin traitant</option>
+                  <option value="">Selectionner le medecin traitant</option>
                   {listDoc &&
                     listDoc.map((doc, index) => (
                       <option

@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import VilleForm from "../ModuleVille/VilleForm";
 
 const ModalMedecinForm = ({ idModalDoc, count, setCount }) => {
   const token = localStorage.getItem("token");
   const [nomMedecinTraitant, setNomMedecinTraitant] = useState("");
   const [prenomMedecinTraitant, setPrenomMedecinTraitant] = useState("");
-  const [ville, setVille] = useState("");
-  const [codePostal, setCodePostal] = useState("");
+  const [villeMedecinTraitant, setVilleMedecinTraitant] = useState("");
+  const [codePostalMedecinTraitant, setCodePostalTraitant] = useState("");
   const [displaySuccessMessage, setDisplaySuccessMessage] = useState(false);
 
   const handleSubmit = async (event) => {
@@ -15,8 +14,8 @@ const ModalMedecinForm = ({ idModalDoc, count, setCount }) => {
     const formData = {
       nomMedecinTraitant,
       prenomMedecinTraitant,
-      ville,
-      codePostal,
+      villeMedecinTraitant,
+      codePostalMedecinTraitant,
     };
     try {
       await axios.post(`http://localhost:5000/api/medecintraitant`, formData, {
@@ -89,8 +88,8 @@ const ModalMedecinForm = ({ idModalDoc, count, setCount }) => {
                   className="form-control"
                   id="ville"
                   required
-                  value={ville}
-                  onChange={(e) => setVille(e.target.value)}
+                  value={villeMedecinTraitant}
+                  onChange={(e) => setVilleMedecinTraitant(e.target.value)}
                 />
               </div>
               <div className="mb-3">
@@ -102,8 +101,8 @@ const ModalMedecinForm = ({ idModalDoc, count, setCount }) => {
                   className="form-control"
                   id="codePostal"
                   required
-                  value={codePostal}
-                  onChange={(e) => setCodePostal(e.target.value)}
+                  value={codePostalMedecinTraitant}
+                  onChange={(e) => setCodePostalTraitant(e.target.value)}
                 />
               </div>
               <button type="submit" className="btn btn-primary">
