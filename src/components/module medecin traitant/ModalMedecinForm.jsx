@@ -2,31 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import VilleForm from "../ModuleVille/VilleForm";
 
-const ModalMedecinForm = ({ idModalDoc,count,setCount }) => {
+const ModalMedecinForm = ({ idModalDoc, count, setCount }) => {
   const token = localStorage.getItem("token");
-  const [listVille, setListVille] = useState([]);
   const [nomMedecinTraitant, setNomMedecinTraitant] = useState("");
   const [prenomMedecinTraitant, setPrenomMedecinTraitant] = useState("");
-  const [ville, setville] = useState("");
+  const [ville, setVille] = useState("");
+  const [codePostal, setCodePostal] = useState("");
   const [displaySuccessMessage, setDisplaySuccessMessage] = useState(false);
-  const [countVille, setCountVille] = useState(0); //pour actualiser affichage de la liste de ville qd ajout
-
-  useEffect(() => {
-    const loadAllVille = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/api/lieu/all", {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
-        setListVille(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    loadAllVille();
-  }, [countVille]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -34,6 +16,7 @@ const ModalMedecinForm = ({ idModalDoc,count,setCount }) => {
       nomMedecinTraitant,
       prenomMedecinTraitant,
       ville,
+      codePostal,
     };
     try {
       await axios.post(`http://localhost:5000/api/medecintraitant`, formData, {
@@ -99,22 +82,29 @@ const ModalMedecinForm = ({ idModalDoc,count,setCount }) => {
               </div>
               <div className="mb-3">
                 <label htmlFor="ville" className="form-label">
-                  Ville :
+                  Ville
                 </label>
-                <select
-                  className="form-select"
-                  id="MedecinTraitant"
+                <input
+                  type="text"
+                  className="form-control"
+                  id="ville"
+                  required
                   value={ville}
-                  onChange={(e) => setville(e.target.value)}
-                >
-                  <option value="">Selectionner la ville</option>
-                  {listVille &&
-                    listVille.map((ville, index) => (
-                      <option key={index} value={`${ville.nomville}`}>
-                        {ville.nomville}, {ville.codePostal}
-                      </option>
-                    ))}
-                </select>
+                  onChange={(e) => setVille(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="codePostal" className="form-label">
+                  Code Postal
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="codePostal"
+                  required
+                  value={codePostal}
+                  onChange={(e) => setCodePostal(e.target.value)}
+                />
               </div>
               <button type="submit" className="btn btn-primary">
                 Valider

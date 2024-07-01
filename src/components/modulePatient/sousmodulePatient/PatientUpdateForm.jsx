@@ -69,9 +69,11 @@ const PatientUpdateForm = ({ idPatient }) => {
         setEmail(data.email || "");
         setTel(data.tel || "");
         setMedecinTraitantComplet(
-          `${data.nomMedecinTraitant || ""} ${
-            data.prenomMedecinTraitant || ""
-          } ${data.villeMedecinTraitant || ""}`
+          `${data.prenomMedecinTraitant || ""} ${
+            data.nomMedecinTraitant || ""
+          } ${data.villeMedecinTraitant || ""} ${
+            data.codePostalMedecinTraitant || ""
+          }`
         );
         setNomVille(data.nomVille || "");
         setCodePostal(data.codePostal || "");
@@ -87,8 +89,12 @@ const PatientUpdateForm = ({ idPatient }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const [prenomMedecinTraitant, nomMedecinTraitant, villeMedecinTraitant] =
-      medecinTraitantComplet.split(" ");
+    const [
+      prenomMedecinTraitant,
+      nomMedecinTraitant,
+      villeMedecinTraitant,
+      codePostalMedecinTraitant,
+    ] = medecinTraitantComplet.split("&");
 
     const formData = {
       dateNaissance,
@@ -100,6 +106,7 @@ const PatientUpdateForm = ({ idPatient }) => {
       nomMedecinTraitant: nomMedecinTraitant,
       prenomMedecinTraitant: prenomMedecinTraitant,
       villeMedecinTraitant: villeMedecinTraitant,
+      codePostalMedecinTraitant: codePostalMedecinTraitant,
       nomPatient,
       prenomPatient,
       email,
@@ -130,7 +137,8 @@ const PatientUpdateForm = ({ idPatient }) => {
       <h3 style={{ textAlign: "center" }}>
         <b>Profil</b>
       </h3>
-      <br /><br />
+      <br />
+      <br />
       <div className="d-flex justify-content-end">
         <button
           type="button"
@@ -298,7 +306,7 @@ const PatientUpdateForm = ({ idPatient }) => {
               listDoc.map((doc, index) => (
                 <option
                   key={index}
-                  value={`${doc.prenomMedecinTraitant} ${doc.nomMedecinTraitant} ${doc.ville}`}
+                  value={`${doc.prenomMedecinTraitant}&${doc.nomMedecinTraitant}&${doc.villeMedecinTraitant}&${doc.codePostalMedecinTraitant}`}
                 >
                   {doc.prenomMedecinTraitant} {doc.nomMedecinTraitant},{" "}
                   {doc.ville}

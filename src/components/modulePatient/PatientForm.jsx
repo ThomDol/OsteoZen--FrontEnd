@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import ModalDocForm from "../module medecin traitant/ModalDocForm";
+import ModalMedecinForm from "../module medecin traitant/ModalMedecinForm";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../header/NavBar";
 import { jwtDecode } from "jwt-decode";
@@ -81,8 +81,12 @@ const PatientForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Diviser la valeur combinée du médecin traitant
-    const [prenomMedecinTraitant, nomMedecinTraitant, ville] =
-      medecinTraitantComplet.split(" ");
+    const [
+      prenomMedecinTraitant,
+      nomMedecinTraitant,
+      villeMedecinTraitant,
+      codePostalMedecinTraitant,
+    ] = medecinTraitantComplet.split(" ");
     // Diviser la valeur combinée de la ville
 
     const formData = {
@@ -94,7 +98,8 @@ const PatientForm = () => {
       nomTypePatient,
       nomMedecinTraitant: nomMedecinTraitant,
       prenomMedecinTraitant: prenomMedecinTraitant,
-      villeMedecinTraitant: ville,
+      villeMedecinTraitant: villeMedecinTraitant,
+      codePostalMedecinTraitant: codePostalMedecinTraitant,
       nomPatient,
       prenomPatient,
       email,
@@ -145,7 +150,7 @@ const PatientForm = () => {
               >
                 Ajouter Médecin Traitant
               </button>
-              <ModalDocForm
+              <ModalMedecinForm
                 idModalDoc={idModalDocAdd}
                 count={count}
                 setCount={setCount}
@@ -310,10 +315,10 @@ const PatientForm = () => {
                     listDoc.map((doc, index) => (
                       <option
                         key={index}
-                        value={`${doc.prenomMedecinTraitant} ${doc.nomMedecinTraitant} ${doc.ville}`}
+                        value={`${doc.prenomMedecinTraitant} ${doc.nomMedecinTraitant} ${doc.villeMedecinTraitant} ${doc.codePostalMedecinTraitant}`}
                       >
                         {doc.prenomMedecinTraitant} {doc.nomMedecinTraitant},{" "}
-                        {doc.ville}
+                        {doc.villeMedecinTraitant}
                       </option>
                     ))}
                 </select>
