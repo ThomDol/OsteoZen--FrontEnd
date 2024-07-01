@@ -119,7 +119,7 @@ const Patient = () => {
               <br />
               <br />
               <br />
-              <ul className="flex-column ">
+             {patient && <ul className="flex-column ">
                 <div className=" pb-5" style={{ fontWeight: "bold" }}>
                   <span>
                     &#128100; {patient.prenomPatient} {patient.nomPatient}
@@ -143,7 +143,7 @@ const Patient = () => {
                 >
                   &#11162; Antecedent
                 </div>
-                <div
+               {patient.nomTypePatient==="Bebe" && <div
                   className="pt-5"
                   onClick={() => {
                     resetDisplay();
@@ -151,8 +151,8 @@ const Patient = () => {
                   }}
                 >
                   &#11162; Antecedent Bébé
-                </div>
-                <div
+                </div> }
+              {patient.nomGenre==="Femme" && patient.nomTypePatient==="Adulte" && <div
                   className="pt-5"
                   onClick={() => {
                     resetDisplay();
@@ -160,8 +160,8 @@ const Patient = () => {
                   }}
                 >
                   &#11162; Accouchement
-                </div>
-                <div
+                </div>}
+               {patient.nomGenre==="Femme" && patient.nomTypePatient==="Adulte" && <div
                   className="pt-5"
                   onClick={() => {
                     resetDisplay();
@@ -169,7 +169,7 @@ const Patient = () => {
                   }}
                 >
                   &#11162; Grossesse
-                </div>
+                </div>}
                 <div
                   className="pt-5"
                   onClick={() => {
@@ -179,7 +179,7 @@ const Patient = () => {
                 >
                   &#11162; Consultation
                 </div>
-              </ul>
+              </ul>}
             </div>
             <div className="patient-content-wrapper">
               <div className="patient-content col-8 mx-auto">

@@ -2,7 +2,7 @@ import React from 'react';
 import '../../style/NavBar.css';
 import logoMassage from '../../assets/logoMassage.png';
 
-const NavBar = () => {
+const NavBar = ({role}) => {
     return (
         <div>
             <nav className="navbar navbar-expand-lg fixed-top">
@@ -35,12 +35,12 @@ const NavBar = () => {
                         <li className="nav-item">
                             <a className="nav-link mx-lg-2" href="/Profil">Profil</a>
                         </li>
-                        <li className="nav-item">
+                       {role==="USER" && <li className="nav-item">
                             <a className="nav-link mx-lg-2" href="/List">List Patient</a>
-                        </li>
-                        <li className="nav-item">
+                        </li>}
+                        {role==="ADMIN" && <li className="nav-item">
                             <a className="nav-link mx-lg-2" href="/Admin">List Praticien</a>
-                        </li>
+                        </li> }
                     </ul>
                 </div>
             </div>

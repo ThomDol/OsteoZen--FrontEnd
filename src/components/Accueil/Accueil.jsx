@@ -38,7 +38,7 @@ const Accueil = () => {
     return (
       <div>
         <div>
-          <NavBar />
+        {user && <NavBar role={user.nomRole}/>}
         </div>
 
         <div className="col-5 mx-auto">
