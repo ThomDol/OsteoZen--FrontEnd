@@ -130,7 +130,8 @@ const PatientUpdateForm = ({ idPatient }) => {
       <h3 style={{ textAlign: "center" }}>
         <b>Profil</b>
       </h3>
-      <div>
+      <br /><br />
+      <div className="d-flex justify-content-end">
         <button
           type="button"
           className="btn btn-primary"
@@ -145,7 +146,6 @@ const PatientUpdateForm = ({ idPatient }) => {
           setCount={setCount}
         />
       </div>
-      <br />
       <br />
       <form onSubmit={handleSubmit}>
         <div className="mb-3">

@@ -70,21 +70,6 @@ const ModalMedecinForm = ({ idModalDoc,count,setCount }) => {
             ></button>
           </div>
           <div className="modal-body">
-            <div>
-              <button
-                type="button"
-                className="btn btn-link"
-                data-bs-toggle="modal"
-                data-bs-target="#Modal-idModalVille"
-              >
-                Ajouter Ville
-              </button>
-              <VilleForm
-                idModalDoc="idModalVille"
-                countVille={countVille}
-                setCountVille={setCountVille}
-              />
-            </div>
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="nomMedecinTraitant" className="form-label">
