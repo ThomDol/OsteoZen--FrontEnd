@@ -53,28 +53,34 @@ const Accouchement = ({ idPatient }) => {
 
   return (
     <div>
+      <br />
+      <h1 className="text-center">Accouchement</h1>
+      <div className="row">
+      <div className="col-4">
       {displayAccouchement && (
         <div>
-          <h3 className="col-4 mx-auto pt-5">Accouchement List :</h3>
+          <h4 className="col-4 mx-auto pt-5">List :</h4>
           <br />
           <br />
           <br />
-          <div className="col-4 mx-auto">
-            <div className="list-group">
+          <div className="col-2 mx-auto">
+            <div >
+              <ul>
               {accouchementList &&
                 accouchementList.map((acc, index) => (
-                  <span
+                  <li
                     key={index}
                     className="list-group-item list-group-item-action"
                     onClick={() => {
                       setIdAccouchementSelected(acc.idAccouchement);
-                      resetDisplay();
+                      setDisplayAccouchementNew(false);
                       setDisplayAccouchementDetail(true);
                     }}
                   >
                     {acc.dateAccouchement}
-                  </span>
+                  </li>
                 ))}
+                </ul>
             </div>
             <br />
             <br />
@@ -82,20 +88,25 @@ const Accouchement = ({ idPatient }) => {
               <div
                 className="btn btn-primary"
                 onClick={() => {
-                  resetDisplay();
+                  setDisplayAccouchementDetail(false);
                   setDisplayAccouchementNew(true);
                 }}
               >
-                Creer accouchement
+                &#x2B; Nouveau
               </div>
             </div>
           </div>
         </div>
+       
       )}
-      {idAccouchementSelected && displayAccouchementDetail && ( 
+      </div>
+       <div className="col-8">
+      {displayAccouchementDetail && ( 
         <div><AccouchementDetail idAccouchementSelected={idAccouchementSelected} /></div>
       )}
       {displayAccouchementNew && <div><AccouchementNew /></div>}
+      </div>
+      </div>
     </div>
   );
 };

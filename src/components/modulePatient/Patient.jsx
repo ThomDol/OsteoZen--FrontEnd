@@ -53,7 +53,9 @@ const Patient = () => {
     displayConsultation,
     setDisplayConsultation,
     displayAntecedentBebe,
-    setDisplayAntecedentBebe
+    setDisplayAntecedentBebe,
+    setDisplayAccouchementDetail,
+    setDisplayAccouchementNew,
   } = useStorage();
 
   // Fonction pour réinitialiser l'affichage des sections
@@ -64,6 +66,8 @@ const Patient = () => {
     setDisplayGrossesse(false);
     setDisplayConsultation(false);
     setDisplayAntecedentBebe(false);
+    setDisplayAccouchementDetail(false);
+    setDisplayAccouchementNew(false);
   };
 
   // Effet pour déchiffrer et décoder le token au chargement du composant
@@ -200,7 +204,7 @@ const Patient = () => {
               )}
             </div>
             <div className="patient-content-wrapper">
-              <div className="patient-content col-8 mx-auto">
+              <div className="patient-content col-10 mx-auto">
                 {displayProfil && (
                   <PatientUpdateForm idPatient={patient.idPatient} />
                 )}
