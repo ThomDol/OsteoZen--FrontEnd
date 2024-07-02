@@ -11,7 +11,8 @@ const Accouchement = ({ idPatient }) => {
     "http://localhost:5000/api/accouchement/all/" + idPatient;
   const [accouchementList, setAccouchementList] = useState([]);
 
-  const [idAccouchementSelected, setIdAccouchementSelected] = useState(null);
+  const [idAccouchementSelected, setIdAccouchementSelected] = useState("");
+  const [countAccouchement, setCountAccouchement] = useState(0);
 
   const {
     setDisplayAccouchement,
@@ -19,7 +20,7 @@ const Accouchement = ({ idPatient }) => {
     displayAccouchementDetail,
     setDisplayAccouchementDetail,
     displayAccouchementNew,
-    setDisplayAccouchementNew
+    setDisplayAccouchementNew,
   } = useStorage();
 
   useEffect(() => {
@@ -42,11 +43,10 @@ const Accouchement = ({ idPatient }) => {
     };
 
     fetchData();
-  }, []);
+  }, [countAccouchement]);
 
   //Fonction pour remettre tous les affichages des composants susceptibles d'être affichés, à false, pour que celui désiré puisse s'afficher
   const resetDisplay = () => {
-    setDisplayAccouchement(false);
     setDisplayAccouchementDetail(false);
     setDisplayAccouchementNew(false);
   };
@@ -55,57 +55,68 @@ const Accouchement = ({ idPatient }) => {
     <div>
       <br />
       <h1 className="text-center">Accouchement</h1>
+      <hr />
       <div className="row">
-      <div className="col-4">
-      {displayAccouchement && (
-        <div>
-          <h4 className="col-4 mx-auto pt-5">List :</h4>
-          <br />
-          <br />
-          <br />
-          <div className="col-2 mx-auto">
-            <div >
-              <ul>
-              {accouchementList &&
-                accouchementList.map((acc, index) => (
-                  <li
-                    key={index}
-                    className="list-group-item list-group-item-action"
+        <div className="col-1">
+          {displayAccouchement && (
+            <div>
+              <h5>Liste :</h5>
+              <br />
+              <br />
+              <br />
+              <div className="col-2 mx-1">
+                {accouchementList &&
+                  accouchementList.map((acc, index) => (
+                    <span
+                      className="badge text-bg-secondary"
+                      key={index}
+                      onClick={() => {
+                        resetDisplay();
+                        setIdAccouchementSelected(acc.idAccouchement);
+                        setDisplayAccouchementDetail(true);
+                      }}
+                    >
+                      {acc.dateAccouchement}
+                    </span>
+                  ))}
+
+                <br />
+                <br />
+                <div>
+                  <div
+                    className="btn btn-info"
                     onClick={() => {
-                      setIdAccouchementSelected(acc.idAccouchement);
-                      setDisplayAccouchementNew(false);
-                      setDisplayAccouchementDetail(true);
+                      setDisplayAccouchementDetail(false);
+                      setDisplayAccouchementNew(true);
                     }}
                   >
-                    {acc.dateAccouchement}
-                  </li>
-                ))}
-                </ul>
-            </div>
-            <br />
-            <br />
-            <div>
-              <div
-                className="btn btn-primary"
-                onClick={() => {
-                  setDisplayAccouchementDetail(false);
-                  setDisplayAccouchementNew(true);
-                }}
-              >
-                &#x2B; Nouveau
+                    Créer
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
-       
-      )}
-      </div>
-       <div className="col-8">
-      {displayAccouchementDetail && ( 
-        <div><AccouchementDetail idAccouchementSelected={idAccouchementSelected} /></div>
-      )}
-      {displayAccouchementNew && <div><AccouchementNew /></div>}
-      </div>
+        <div className="col-11">
+          {displayAccouchementDetail && (
+            <div>
+              <AccouchementDetail
+                idAccouchementSelected={idAccouchementSelected}
+                countAccouchement={countAccouchement}
+                setCountAccouchement={setCountAccouchement}
+              />
+            </div>
+          )}
+          {displayAccouchementNew && (
+            <div>
+              <AccouchementNew
+                idPatient={idPatient}
+                countAccouchement={countAccouchement}
+                setCountAccouchement={setCountAccouchement}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -24,9 +24,8 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
   const [antPsy, setAntPsy] = useState("");
   const [antNotesDiverses, setAntNotesDiverses] = useState("");
   const urlGetAnt = `http://localhost:5000/api/antecedent/${idPatient}`;
-  
 
-  const{setDisplayAntecedent} = useStorage();
+  const { setDisplayAntecedent } = useStorage();
 
   const assign = (elem) => {
     if (elem !== null) {
@@ -60,7 +59,7 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
       } catch (error) {
         console.error(error);
         localStorage.clear();
-        navigate('/login');
+        navigate("/login");
       }
     };
 
@@ -103,11 +102,11 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
     } catch (error) {
       console.error(error);
       localStorage.clear();
-      navigate('/login');
+      navigate("/login");
     }
   };
 
-  const deleteAnt =async(id)=>{
+  const deleteAnt = async (id) => {
     Swal.fire({
       title: "Etes vous sûr de vouloir supprimer cette fiche antecedent ?",
       showDenyButton: true,
@@ -118,25 +117,26 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
       if (result.isConfirmed) {
         const deleteData = async () => {
           try {
-    const response = await axios.delete(
-      `http://localhost:5000/api/antecedent/${id}`,
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
+            const response = await axios.delete(
+              `http://localhost:5000/api/antecedent/${id}`,
+              {
+                headers: {
+                  Authorization: "Bearer " + token,
+                },
+              }
+            );
+            setDisplayAntecedent(false);
+          } catch (error) {
+            console.error(error);
+          }
+        };
+        deleteData();
+        Swal.fire("Supprimé", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Suppression annulée", "", "info");
       }
-    );
-    setDisplayAntecedent(false);
-  } catch (error) {
-    console.error(error);
-  }};
-  deleteData();
-  Swal.fire("Supprimé", "", "success");
-        } else if (result.isDenied) {
-          Swal.fire("Suppression annulée", "", "info");
-        }
-      });
-};
+    });
+  };
 
   return (
     <div className="col-9 mx-auto">
@@ -148,7 +148,7 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
         </div>
         <div className="col-1">
           <div
-          className="btn btn-warning"
+            className="btn btn-warning"
             onClick={() => {
               deleteAnt(idAntecedent);
             }}
