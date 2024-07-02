@@ -2,9 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ModalMedecinForm from "../../module medecin traitant/ModalMedecinForm";
+import Swal from "sweetalert2";
 
+// Composant pour mettre à jour les informations d'un patient
 const PatientUpdateForm = ({ idPatient }) => {
+  // Récupération du token depuis le localStorage
   const token = localStorage.getItem("token");
+
+  // Déclaration des états pour gérer les différentes informations du patient
   const [listDoc, setListDoc] = useState([]);
   const navigate = useNavigate();
   const [dateNaissance, setDateNaissance] = useState("");
@@ -18,15 +23,12 @@ const PatientUpdateForm = ({ idPatient }) => {
   const [medecinTraitantComplet, setMedecinTraitantComplet] = useState("");
   const [nomVille, setNomVille] = useState("");
   const [codePostal, setCodePostal] = useState("");
-  const [displayUpdateMessageSuccess, setDisplayUpdateMessageSuccess] =
-    useState(false);
-  const [count, setCount] = useState(0); //pour actualiser liste de medecin qd ajout
+  const [count, setCount] = useState(0); // pour actualiser la liste des médecins quand un ajout est fait
   const idModalDoc = "idModalDoc";
 
-  useEffect(() => {
-    setDisplayUpdateMessageSuccess(false);
-  }, []);
 
+
+  // Effet pour charger la liste des médecins traitants quand le count change
   useEffect(() => {
     const loadAllDoc = async () => {
       try {
@@ -47,6 +49,7 @@ const PatientUpdateForm = ({ idPatient }) => {
     loadAllDoc();
   }, [count]);
 
+  // Effet pour charger les informations du patient quand le composant est monté
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -60,6 +63,7 @@ const PatientUpdateForm = ({ idPatient }) => {
         );
 
         const data = response.data;
+        // Mise à jour des états avec les données récupérées
         setDateNaissance(data.dateNaissance || "");
         setNomGenre(data.nomGenre || "");
         setNomProfession(data.nomProfession || "");
@@ -87,8 +91,10 @@ const PatientUpdateForm = ({ idPatient }) => {
     fetchData();
   }, []);
 
+  // Fonction pour gérer la soumission du formulaire
   const handleSubmit = async (event) => {
     event.preventDefault();
+    // Extraction des informations du médecin traitant
     const [
       prenomMedecinTraitant,
       nomMedecinTraitant,
@@ -96,6 +102,7 @@ const PatientUpdateForm = ({ idPatient }) => {
       codePostalMedecinTraitant,
     ] = medecinTraitantComplet.split(" - ");
 
+    // Création de l'objet contenant les données du formulaire
     const formData = {
       dateNaissance,
       nomVille,
@@ -123,7 +130,7 @@ const PatientUpdateForm = ({ idPatient }) => {
           },
         }
       );
-      setDisplayUpdateMessageSuccess(true);
+      Swal.fire("Mise à jour effectuée!");
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -303,7 +310,7 @@ const PatientUpdateForm = ({ idPatient }) => {
               value={medecinTraitantComplet}
               onChange={(e) => setMedecinTraitantComplet(e.target.value)}
             >
-              <option value="">Selectionner le mededin traitant</option>
+              <option value="">Selectionner le medecin traitant</option>
               {listDoc &&
                 listDoc.map((doc, index) => (
                   <option
@@ -381,18 +388,11 @@ const PatientUpdateForm = ({ idPatient }) => {
             />
           </div>
           <br />
-          <div className="col-5 mx-auto">
+          <div className="col-5">
             <button type="submit" className="btn btn-secondary">
               Mettre à jour
             </button>
           </div>
-          {displayUpdateMessageSuccess && (
-            <div className="text-center">
-              <span style={{ fontWeight: "bold", color: "green" }}>
-                Mise à jour faite
-              </span>
-            </div>
-          )}
         </form>
       </div>
     </div>

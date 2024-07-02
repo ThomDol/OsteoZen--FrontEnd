@@ -17,6 +17,7 @@ export const StorageProvider = ({ children }) => {
     useState(false);
   const [displayAccouchementNew, setDisplayAccouchementNew] = useState(false);
   const [displayAntecedentBebe, setDisplayAntecedentBebe] = useState(false);
+ 
 
   return (
     <StorageContext.Provider
@@ -44,7 +45,7 @@ export const StorageProvider = ({ children }) => {
         displayAntecedentBebe,
         setDisplayAntecedentBebe,
         displayAntecedentBebe,
-        setDisplayAntecedentBebe,
+        setDisplayAntecedentBebe
       }}
     >
       {children}

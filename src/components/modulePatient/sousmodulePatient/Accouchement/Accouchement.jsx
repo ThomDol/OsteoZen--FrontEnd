@@ -19,7 +19,7 @@ const Accouchement = ({ idPatient }) => {
     displayAccouchementDetail,
     setDisplayAccouchementDetail,
     displayAccouchementNew,
-    setDisplayAccouchementNew,
+    setDisplayAccouchementNew
   } = useStorage();
 
   useEffect(() => {
@@ -67,10 +67,8 @@ const Accouchement = ({ idPatient }) => {
                     key={index}
                     className="list-group-item list-group-item-action"
                     onClick={() => {
-                      alert(acc.idAccouchement);
                       setIdAccouchementSelected(acc.idAccouchement);
                       resetDisplay();
-                      alert(idAccouchementSelected); 
                       setDisplayAccouchementDetail(true);
                     }}
                   >
@@ -94,10 +92,10 @@ const Accouchement = ({ idPatient }) => {
           </div>
         </div>
       )}
-      {idAccouchementSelected && ( 
-        <AccouchementDetail idAccouchementSelected={idAccouchementSelected} />
+      {idAccouchementSelected && displayAccouchementDetail && ( 
+        <div><AccouchementDetail idAccouchementSelected={idAccouchementSelected} /></div>
       )}
-      {displayAccouchementNew && <AccouchementNew />}
+      {displayAccouchementNew && <div><AccouchementNew /></div>}
     </div>
   );
 };

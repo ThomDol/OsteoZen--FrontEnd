@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useStorage } from "../../../StorageContext";
+import Swal from "sweetalert2";
 
 const Antecedent = ({ idAntecedent, idPatient }) => {
   const token = localStorage.getItem("token");
@@ -23,7 +24,7 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
   const [antPsy, setAntPsy] = useState("");
   const [antNotesDiverses, setAntNotesDiverses] = useState("");
   const urlGetAnt = `http://localhost:5000/api/antecedent/${idPatient}`;
-  const[displayUpdateSuccessMessage, setDisplayUpdateSuccessMessage] = useState(false);
+  
 
   const{setDisplayAntecedent} = useStorage();
 
@@ -48,7 +49,6 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
   };
 
   useEffect(() => {
-    setDisplayUpdateSuccessMessage(false);
     const fetchData = async () => {
       try {
         const response = await axios.get(urlGetAnt, {
@@ -98,7 +98,7 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
           },
         }
       );
-      setDisplayUpdateSuccessMessage(true);
+      Swal.fire("Mise à jour effectuée!");
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -108,7 +108,16 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
   };
 
   const deleteAnt =async(id)=>{
-    try{
+    Swal.fire({
+      title: "Etes vous sûr de vouloir supprimer cette fiche antecedent ?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Oui",
+      denyButtonText: `Non`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const deleteData = async () => {
+          try {
     const response = await axios.delete(
       `http://localhost:5000/api/antecedent/${id}`,
       {
@@ -117,11 +126,16 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
         },
       }
     );
-    alert("suppression ok !");
     setDisplayAntecedent(false);
   } catch (error) {
     console.error(error);
-  }
+  }};
+  deleteData();
+  Swal.fire("Supprimé", "", "success");
+        } else if (result.isDenied) {
+          Swal.fire("Suppression annulée", "", "info");
+        }
+      });
 };
 
   return (
@@ -133,14 +147,15 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
           </h3>
         </div>
         <div className="col-1">
-          <span
+          <div
+          className="btn btn-warning"
             onClick={() => {
               deleteAnt(idAntecedent);
             }}
           >
             {" "}
-            &#10060;
-          </span>
+            Supprimer
+          </div>
         </div>
       </div>
       <br />
@@ -352,19 +367,12 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
           ></textarea>
         </div>
         <br />
-        <div className="col-5 mx-auto">
+        <div className="col-5">
           <button type="submit" className="btn btn-secondary">
             Mettre à jour
           </button>
         </div>
       </form>
-      {displayUpdateSuccessMessage && (
-        <div className="text-center">
-          <span style={{ fontWeight: "bold", color: "green" }}>
-            Mise à jour faite
-          </span>
-        </div>
-      )}
     </div>
   );
 };

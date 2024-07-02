@@ -6,9 +6,11 @@ import NavBar from "../header/NavBar";
 import { jwtDecode } from "jwt-decode";
 import CryptoJS from "crypto-js";
 
+// Clé secrète et vecteur d'initialisation pour le décryptage
 const SECRET_KEY = "q#4puta9!am4$fcl";
 const INIT_VECTOR = "1zp6@y#ect4?5krx";
 
+// Fonction de décryptage du token
 const decryptToken = (encryptedToken) => {
   const key = CryptoJS.enc.Utf8.parse(SECRET_KEY);
   const iv = CryptoJS.enc.Utf8.parse(INIT_VECTOR);
@@ -23,6 +25,7 @@ const decryptToken = (encryptedToken) => {
 };
 
 const PatientForm = () => {
+  // États pour gérer les données du formulaire
   const [userId, setUserId] = useState(null);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -39,11 +42,13 @@ const PatientForm = () => {
   const [nomVille, setNomVille] = useState("");
   const [codePostal, setCodePostal] = useState("");
   const [displaySuccessMessage, setDisplaySuccessMessage] = useState(false);
-  const [count, setCount] = useState(0); //pour actualiser liste de medecin qd ajout
+  const [count, setCount] = useState(0); // Pour actualiser la liste des médecins lors d'un ajout
   const idModalDocAdd = "idModalDocAdd";
 
+  // Référence pour le modal
   const modalRef = useRef();
 
+  // Effet pour déchiffrer et décoder le token au chargement du composant
   useEffect(() => {
     try {
       const decryptedToken = decryptToken(token);
@@ -54,10 +59,12 @@ const PatientForm = () => {
     }
   }, []);
 
+  // Effet pour masquer le message de succès lors du chargement du composant
   useEffect(() => {
     setDisplaySuccessMessage(false);
   }, []);
 
+  // Effet pour charger la liste des médecins traitants
   useEffect(() => {
     const loadAllDoc = async () => {
       try {
@@ -78,8 +85,10 @@ const PatientForm = () => {
     loadAllDoc();
   }, [count]);
 
+  // Gestionnaire de soumission du formulaire
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     // Diviser la valeur combinée du médecin traitant
     const [
       prenomMedecinTraitant,
@@ -87,8 +96,8 @@ const PatientForm = () => {
       villeMedecinTraitant,
       codePostalMedecinTraitant,
     ] = medecinTraitantComplet.split(" ");
-    // Diviser la valeur combinée de la ville
 
+    // Créer un objet de données du formulaire
     const formData = {
       dateNaissance,
       nomVille,
@@ -107,6 +116,7 @@ const PatientForm = () => {
     };
 
     try {
+      // Envoyer les données du formulaire à l'API
       const response = await axios.post(
         `http://localhost:5000/api/patient/${userId}`,
         formData,
@@ -116,9 +126,9 @@ const PatientForm = () => {
           },
         }
       );
-      setDisplaySuccessMessage(true);
+      setDisplaySuccessMessage(true); // Afficher le message de succès
       console.log(response.data);
-      navigate("/List");
+      navigate("/List"); // Rediriger vers la liste des patients
     } catch (error) {
       console.error(error);
     }
@@ -127,7 +137,7 @@ const PatientForm = () => {
   return (
     <div>
       <div>
-        <NavBar />
+        <NavBar /> {/* Barre de navigation */}
       </div>
       <br />
       <br />
@@ -136,7 +146,7 @@ const PatientForm = () => {
       <br />
       <div className="col-6 mx-auto">
         <div className="text-center">
-          <h5>Nouvelle Fiche Patient</h5>
+          <h5>Nouvelle Fiche Patient</h5> {/* Titre du formulaire */}
         </div>
         <br />
         <div>
@@ -148,7 +158,7 @@ const PatientForm = () => {
                 data-bs-toggle="modal"
                 data-bs-target={`#Modal-${idModalDocAdd}`}
               >
-                Ajouter Médecin Traitant
+                Ajouter Médecin Traitant {/* Bouton pour ajouter un médecin traitant */}
               </button>
               <ModalMedecinForm
                 idModalDoc={idModalDocAdd}
@@ -396,7 +406,7 @@ const PatientForm = () => {
             {displaySuccessMessage && (
               <div className="text-center">
                 <span style={{ fontWeight: "bold", color: "green" }}>
-                  Patient crée
+                  Patient crée {/* Message de succès */}
                 </span>
               </div>
             )}

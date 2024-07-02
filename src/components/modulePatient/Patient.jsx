@@ -3,7 +3,7 @@ import NavBar from "../header/NavBar";
 import { jwtDecode } from "jwt-decode";
 import CryptoJS from "crypto-js";
 import { useStorage } from "../StorageContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AntecedentAccueil from "./sousmodulePatient/Antecedent menu/AntecedentAccueil";
 import AntecedentBebeAccueil from "./sousmodulePatient/AntecedentBebe Menu/AntecedentBebeAccueil";
 import Accouchement from "./sousmodulePatient/Accouchement/Accouchement";
@@ -11,12 +11,14 @@ import Grossesse from "./sousmodulePatient/Grossesse";
 import Consultation from "./sousmodulePatient/Consutation";
 import "../../style/Patient.css";
 import PatientUpdateForm from "./sousmodulePatient/PatientUpdateForm";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 
+
+// Clé secrète et vecteur d'initialisation pour le décryptage
 const SECRET_KEY = "q#4puta9!am4$fcl";
 const INIT_VECTOR = "1zp6@y#ect4?5krx";
 
+// Fonction de décryptage du token
 const decryptToken = (encryptedToken) => {
   const key = CryptoJS.enc.Utf8.parse(SECRET_KEY);
   const iv = CryptoJS.enc.Utf8.parse(INIT_VECTOR);
@@ -34,9 +36,11 @@ const Patient = () => {
   const { id } = useParams();
   const [patient, setPatient] = useState();
   const [user, setUser] = useState(null);
+  const [role,setRole]=useState();
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
+  // Récupération des états et fonctions de mise à jour depuis le contexte de stockage
   const {
     displayProfil,
     setDisplayProfil,
@@ -52,6 +56,7 @@ const Patient = () => {
     setDisplayAntecedentBebe
   } = useStorage();
 
+  // Fonction pour réinitialiser l'affichage des sections
   const resetDisplay = () => {
     setDisplayProfil(false);
     setDisplayAntecedent(false);
@@ -61,16 +66,19 @@ const Patient = () => {
     setDisplayAntecedentBebe(false);
   };
 
+  // Effet pour déchiffrer et décoder le token au chargement du composant
   useEffect(() => {
     try {
       const decryptedToken = decryptToken(token);
       const decodedToken = jwtDecode(decryptedToken);
       setUser(decodedToken.id);
+      setRole(decodedToken.roles[0]);
     } catch (error) {
       console.error("Erreur de décryptage ou de décodage du token:", error);
     }
   }, []);
 
+  // Effet pour charger les données du patient
   useEffect(() => {
     if (user) {
       const fetchPatient = async () => {
@@ -90,7 +98,6 @@ const Patient = () => {
           console.error(error);
           localStorage.clear();
           navigate("/login");
-
         }
       };
 
@@ -102,15 +109,15 @@ const Patient = () => {
     <div>
       {patient && (
         <div>
-          <div className="header col-4 mx-auto">
-            <NavBar />
-          </div>
+         {role && <div className="header col-4 mx-auto">
+            <NavBar role={role} /> {/* Barre de navigation */}
+          </div>}
 
           <br />
           <br />
-          <div className="row ">
+          <div className="row">
             <div
-              className="col-2 lateral "
+              className="col-2 lateral"
               style={{
                 backgroundColor: "rgba(49, 210, 242, 0.7)",
                 height: "100vh",
@@ -119,67 +126,78 @@ const Patient = () => {
               <br />
               <br />
               <br />
-             {patient && <ul className="flex-column ">
-                <div className=" pb-5" style={{ fontWeight: "bold" }}>
-                  <span>
-                    &#128100; {patient.prenomPatient} {patient.nomPatient}
-                  </span>
-                </div>
-                <div
-                  className="pt-5"
-                  onClick={() => {
-                    resetDisplay();
-                    setDisplayProfil(true);
-                  }}
-                >
-                  &#11162; Profil
-                </div>
-                <div
-                  className="pt-5"
-                  onClick={() => {
-                    resetDisplay();
-                    setDisplayAntecedent(true);
-                  }}
-                >
-                  &#11162; Antecedent
-                </div>
-               {patient.nomTypePatient==="Bebe" && <div
-                  className="pt-5"
-                  onClick={() => {
-                    resetDisplay();
-                    setDisplayAntecedentBebe(true);
-                  }}
-                >
-                  &#11162; Antecedent Bébé
-                </div> }
-              {patient.nomGenre==="Femme" && patient.nomTypePatient==="Adulte" && <div
-                  className="pt-5"
-                  onClick={() => {
-                    resetDisplay();
-                    setDisplayAccouchement(true);
-                  }}
-                >
-                  &#11162; Accouchement
-                </div>}
-               {patient.nomGenre==="Femme" && patient.nomTypePatient==="Adulte" && <div
-                  className="pt-5"
-                  onClick={() => {
-                    resetDisplay();
-                    setDisplayGrossesse(true);
-                  }}
-                >
-                  &#11162; Grossesse
-                </div>}
-                <div
-                  className="pt-5"
-                  onClick={() => {
-                    resetDisplay();
-                    setDisplayConsultation(true);
-                  }}
-                >
-                  &#11162; Consultation
-                </div>
-              </ul>}
+              {patient && (
+                <ul className="flex-column">
+                  <div className="pb-5" style={{ fontWeight: "bold" }}>
+                    <span>
+                      &#128100; {patient.prenomPatient} {patient.nomPatient}
+                    </span>
+                  </div>
+                  <div
+                    className="pt-5"
+                    onClick={() => {
+                      resetDisplay();
+                      setDisplayProfil(true);
+                    }}
+                  >
+                    &#11162; Profil
+                  </div>
+                  {patient.nomTypePatient !== "Bebe" && (
+                    <div
+                      className="pt-5"
+                      onClick={() => {
+                        resetDisplay();
+                        setDisplayAntecedent(true);
+                      }}
+                    >
+                      &#11162; Antecedent
+                    </div>
+                  )}
+                  {patient.nomTypePatient === "Bebe" && (
+                    <div
+                      className="pt-5"
+                      onClick={() => {
+                        resetDisplay();
+                        setDisplayAntecedentBebe(true);
+                      }}
+                    >
+                      &#11162; Antecedent Bébé
+                    </div>
+                  )}
+                  {patient.nomGenre === "Femme" &&
+                    patient.nomTypePatient === "Adulte" && (
+                      <>
+                        <div
+                          className="pt-5"
+                          onClick={() => {
+                            resetDisplay();
+                            setDisplayAccouchement(true);
+                          }}
+                        >
+                          &#11162; Accouchement
+                        </div>
+                        <div
+                          className="pt-5"
+                          onClick={() => {
+                            resetDisplay();
+                            setDisplayGrossesse(true);
+                          }}
+                        >
+                          &#11162; Grossesse
+                        </div>
+                      </>
+                    )}
+                  <div
+                    className="pt-5"
+                    onClick={() => {
+                      resetDisplay();
+                      setDisplayConsultation(true);
+                    }}
+                  >
+                    &#11162; Consultation
+                  </div>
+                </ul>
+              )}
             </div>
             <div className="patient-content-wrapper">
               <div className="patient-content col-8 mx-auto">
@@ -195,9 +213,7 @@ const Patient = () => {
                 {displayAccouchement && (
                   <Accouchement idPatient={patient.idPatient} />
                 )}
-                {displayGrossesse && (
-                  <Grossesse idPatient={patient.idPatient} />
-                )}
+                {displayGrossesse && <Grossesse idPatient={patient.idPatient} />}
                 {displayConsultation && (
                   <Consultation idPatient={patient.idPatient} />
                 )}

@@ -214,14 +214,15 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
           </h3>
         </div>
         <div className="col-1">
-          <span
+          <div
+          className="btn btn-warning"
             onClick={() => {
               deleteAntBebe(idAntecedentBebe);
             }}
           >
             {" "}
-            &#10060;
-          </span>
+            Supprimer
+          </div>
         </div>
       </div>
       <br />

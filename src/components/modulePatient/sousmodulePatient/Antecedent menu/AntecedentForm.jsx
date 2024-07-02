@@ -1,6 +1,7 @@
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const AntecedentForm = ({idPatient}) => {
   const token = localStorage.getItem("token");
@@ -19,10 +20,7 @@ const AntecedentForm = ({idPatient}) => {
   const [antUroGynecaux, setAntUroGynecaux] = useState("");
   const [antPsy, setAntPsy] = useState("");
   const [antNotesDiverses, setAntNotesDiverses] = useState("");
-  const [displayCreationSuccessMessage,setDisplayCreationSuccessMessage]=useState(false);
   
-  useEffect(()=>{setDisplayCreationSuccessMessage(false);},[]);
-
     
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -54,7 +52,7 @@ const AntecedentForm = ({idPatient}) => {
           },
         }
       );
-      setDisplayCreationSuccessMessage(true);
+      Swal.fire("Création effectuée!");
       console.log(response.data);
       // Handle success response
     } catch (error) {
@@ -279,21 +277,14 @@ const AntecedentForm = ({idPatient}) => {
           ></textarea>
         </div>
         <br />
-        <div className="col-5 mx-auto">
+        <div className="col-5">
           <button type="submit" className="btn btn-secondary">
             Créer
           </button>
         </div>
       </form>
       <br />
-      <div className="col-5 mx-auto"></div>
-      {displayCreationSuccessMessage && (
-        <div className="text-center">
-          <span style={{ fontWeight: "bold", color: "green" }}>
-            Creation faite
-          </span>
-        </div>
-      )}
+      <div className="col-5 "></div>
     </div>
   );
 };

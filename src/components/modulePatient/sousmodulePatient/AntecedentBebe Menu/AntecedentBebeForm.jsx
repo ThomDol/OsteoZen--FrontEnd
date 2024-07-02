@@ -1,6 +1,7 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const AntecedentBebeForm = ({ idPatient }) => {
   const token = localStorage.getItem("token");
@@ -33,12 +34,7 @@ const AntecedentBebeForm = ({ idPatient }) => {
   const [presenceBruitsArticulaires, setPresenceBruitsArticulaires] =
     useState(null);
   const [tics, setTics] = useState(null);
-  const [displayCreationSuccessMessage, setDisplayCreationSuccessMessage] =
-    useState(null);
-
-  useEffect(() => {
-    setDisplayCreationSuccessMessage(false);
-  }, []);
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -81,7 +77,7 @@ const AntecedentBebeForm = ({ idPatient }) => {
           },
         }
       );
-      setDisplayCreationSuccessMessage(true);
+      Swal.fire("Création effectuée!");
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -855,19 +851,12 @@ const AntecedentBebeForm = ({ idPatient }) => {
             </div>
           </div>
         </div>
-        <div className="col-5 mx-auto">
+        <div className="col-5">
         <button type="submit" className="btn btn-secondary">
           Créer
         </button>
         </div>
       </form>
-      {displayCreationSuccessMessage && (
-        <div className="text-center">
-          <span style={{ fontWeight: "bold", color: "green" }}>
-            Création réussie !
-          </span>
-        </div>
-      )}
     </div>
   );
 };
