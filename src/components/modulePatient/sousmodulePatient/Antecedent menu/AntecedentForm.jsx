@@ -63,11 +63,11 @@ const AntecedentForm = ({idPatient}) => {
 
   return (
     <div className="col-9 mx-auto">
-      <h3 style={{ textAlign: "center", paddingTop: "10px" }}>
+      <h1 style={{ textAlign: "center", paddingTop: "10px" }}>
         <b>Créer Antecedent</b>
-      </h3>
-      <br />
-      <br />
+      </h1>
+      <hr />
+      <div className="col-9 mx-auto"></div>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="dateCreation" className="form-label">

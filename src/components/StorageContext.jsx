@@ -12,6 +12,9 @@ export const StorageProvider = ({ children }) => {
   const [displayAntecedent, setDisplayAntecedent] = useState(false);
   const [displayAccouchement, setDisplayAccouchement] = useState(false);
   const [displayGrossesse, setDisplayGrossesse] = useState(false);
+  const [displayGrossesseNew, setDisplayGrossesseNew] = useState(false);
+  const [displayGrossesseDetail, setDisplayGrossesseDetail] = useState(false);
+
   const [displayConsultation, setDisplayConsultation] = useState(false);
   const [displayAccouchementDetail, setDisplayAccouchementDetail] =
     useState(false);
@@ -45,7 +48,11 @@ export const StorageProvider = ({ children }) => {
         displayAntecedentBebe,
         setDisplayAntecedentBebe,
         displayAntecedentBebe,
-        setDisplayAntecedentBebe
+        setDisplayAntecedentBebe,
+        displayGrossesseNew,
+        setDisplayGrossesseNew,
+        displayGrossesseDetail,
+        setDisplayGrossesseDetail
       }}
     >
       {children}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const ChangePassword = ({ idModalChangePassword }) => {
@@ -6,6 +6,12 @@ const ChangePassword = ({ idModalChangePassword }) => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [displaySuccessMessage, setDisplaySuccessMessage] = useState(false);
+  const [displayErrorMessage, setDisplayErrorMessage] = useState(false);
+
+  useEffect(() => {
+    setDisplaySuccessMessage(false);
+    setDisplayErrorMessage(false);
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -24,8 +30,10 @@ const ChangePassword = ({ idModalChangePassword }) => {
           },
         }
       );
+      setDisplayErrorMessage(false);
       setDisplaySuccessMessage(true);
     } catch (error) {
+      setDisplayErrorMessage(true);
       console.error(error);
     }
   };
@@ -89,6 +97,13 @@ const ChangePassword = ({ idModalChangePassword }) => {
                 <div className="text-center">
                   <span style={{ fontWeight: "bold", color: "green" }}>
                     Mot de passe mis à jour avec succès
+                  </span>
+                </div>
+              )}
+              {displayErrorMessage && (
+                <div className="text-center">
+                  <span style={{ fontWeight: "bold", color: "red" }}>
+                    Ancien mot de passe incorrect
                   </span>
                 </div>
               )}

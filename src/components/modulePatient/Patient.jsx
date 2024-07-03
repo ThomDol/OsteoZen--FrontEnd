@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import AntecedentAccueil from "./sousmodulePatient/Antecedent menu/AntecedentAccueil";
 import AntecedentBebeAccueil from "./sousmodulePatient/AntecedentBebe Menu/AntecedentBebeAccueil";
 import Accouchement from "./sousmodulePatient/Accouchement/Accouchement";
-import Grossesse from "./sousmodulePatient/Grossesse";
+import Grossesse from "./sousmodulePatient/Grossesse/Grossesse";
 import Consultation from "./sousmodulePatient/Consutation";
 import "../../style/Patient.css";
 import PatientUpdateForm from "./sousmodulePatient/PatientUpdateForm";

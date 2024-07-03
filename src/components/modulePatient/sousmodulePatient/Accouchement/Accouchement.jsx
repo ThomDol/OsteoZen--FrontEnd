@@ -15,7 +15,6 @@ const Accouchement = ({ idPatient }) => {
   const [countAccouchement, setCountAccouchement] = useState(0);
 
   const {
-    setDisplayAccouchement,
     displayAccouchement,
     displayAccouchementDetail,
     setDisplayAccouchementDetail,
@@ -25,9 +24,8 @@ const Accouchement = ({ idPatient }) => {
 
   useEffect(() => {
     setIdAccouchementSelected(null); // reset si un accouchement avait été selectionné précédemment
-    setDisplayAccouchementDetail(false); //reset de l'affichage du menu general Accouchement
-    setDisplayAccouchementNew(false); //reset de l'affichage du menu general Accouchement
-
+    resetDisplay(); //reset de l'affichage du menu general Accouchement
+    
     //Chargement de la liste d'accouchement déjà enregistré au chargement du composant
     const fetchData = async () => {
       try {
@@ -62,8 +60,6 @@ const Accouchement = ({ idPatient }) => {
             <div>
               <h5>Liste :</h5>
               <br />
-              <br />
-              <br />
               <div className="col-2 mx-1">
                 {accouchementList &&
                   accouchementList.map((acc, index) => (
@@ -72,6 +68,7 @@ const Accouchement = ({ idPatient }) => {
                       key={index}
                       onClick={() => {
                         resetDisplay();
+                        setIdAccouchementSelected(null);
                         setIdAccouchementSelected(acc.idAccouchement);
                         setDisplayAccouchementDetail(true);
                       }}
@@ -86,6 +83,7 @@ const Accouchement = ({ idPatient }) => {
                   <div
                     className="btn btn-info"
                     onClick={() => {
+                      setIdAccouchementSelected(null);
                       setDisplayAccouchementDetail(false);
                       setDisplayAccouchementNew(true);
                     }}
@@ -98,7 +96,7 @@ const Accouchement = ({ idPatient }) => {
           )}
         </div>
         <div className="col-11">
-          {displayAccouchementDetail && (
+          {displayAccouchementDetail && idAccouchementSelected && (
             <div>
               <AccouchementDetail
                 idAccouchementSelected={idAccouchementSelected}
