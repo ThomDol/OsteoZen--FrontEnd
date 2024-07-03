@@ -102,6 +102,7 @@ const Accouchement = ({ idPatient }) => {
                 idAccouchementSelected={idAccouchementSelected}
                 countAccouchement={countAccouchement}
                 setCountAccouchement={setCountAccouchement}
+                setDisplayAccouchementDetail={setDisplayAccouchementDetail}
               />
             </div>
           )}

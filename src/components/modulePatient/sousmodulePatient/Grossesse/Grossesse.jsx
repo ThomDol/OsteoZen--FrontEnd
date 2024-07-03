@@ -69,11 +69,11 @@ const Grossesse = ({ idPatient }) => {
                       onClick={() => {
                         resetDisplay();
                         setIdGrossesseSelected(null);
-                        setIdAccouchementSelected(grossesse.idGrossesse);
+                        setIdGrossesseSelected(grossesse.idGrossesse);
                         setDisplayGrossesseDetail(true);
                       }}
                     >
-                      {grossesse.idGrossesse}
+                      {grossesse.dateCreation}
                     </span>
                   ))}
 
@@ -102,6 +102,7 @@ const Grossesse = ({ idPatient }) => {
                 idGrossesseSelected={idGrossesseSelected}
                 countGrossesse={countGrossesse}
                 setCountGrossesse={setCountGrossesse}
+                setDisplayGrossesseDetail={setDisplayGrossesseDetail}
               />
             </div>
           )}

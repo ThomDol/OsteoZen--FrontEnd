@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const GrossesseNew = ({
-  idPatient,
-  setCountGrossesse,
-  countGrossesse
-}) => {
+const GrossesseNew = ({ idPatient, setCountGrossesse, countGrossesse }) => {
   const token = localStorage.getItem("token");
 
   // Initialisation des états pour les nouvelles données
@@ -559,7 +555,7 @@ const GrossesseNew = ({
           </div>
         </div>
         <div className="mb-3">
-          <label className="form-label">Incontinence</label>
+          <label className="form-label">Tension mammaire</label>
           <div>
             <div className="form-check form-check-inline">
               <input
@@ -592,7 +588,7 @@ const GrossesseNew = ({
           </div>
         </div>
         <div className="mb-3">
-          <label className="form-label">Incontinence</label>
+          <label className="form-label">Mastose</label>
           <div>
             <div className="form-check form-check-inline">
               <input
@@ -624,6 +620,9 @@ const GrossesseNew = ({
             </div>
           </div>
         </div>
+        <button type="submit" className="btn btn-secondary">
+          Créer
+        </button>
       </form>
     </div>
   );

@@ -6,6 +6,7 @@ const AccouchementDetail = ({
   idAccouchementSelected,
   setCountAccouchement,
   countAccouchement,
+  setDisplayAccouchementDetail,
 }) => {
   const token = localStorage.getItem("token");
   const [dateAccouchement, setDateAccouchement] = useState("");
@@ -105,9 +106,56 @@ const AccouchementDetail = ({
     putData();
   };
 
+  const deleteAccouchement = async (id) => {
+    Swal.fire({
+      title: "Etes vous sûr de vouloir supprimer cette fiche Accouchement ?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Oui",
+      denyButtonText: `Non`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const deleteData = async () => {
+          try {
+            const response = await axios.delete(
+              `http://localhost:5000/api/accouchement/${id}`,
+              {
+                headers: {
+                  Authorization: "Bearer " + token,
+                },
+              }
+            );
+            setCountAccouchement(countAccouchement + 1);
+            setDisplayAccouchementDetail(false);
+          } catch (error) {
+            console.error(error);
+          }
+        };
+        deleteData();
+        Swal.fire("Supprimé", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Suppression annulée", "", "info");
+      }
+    });
+  };
+
   return (
     <div className="col-9 mx-auto">
-      <h3 style={{ textAlign: "center", paddingTop: "10px" }}>Détail</h3>
+      <div className="row">
+        <div className="col-8 mx-auto">
+          <h3 style={{ textAlign: "center", paddingTop: "10px" }}>Détail</h3>
+        </div>
+        <div className="col-1">
+          <div
+            className="btn btn-warning"
+            onClick={() => {
+              deleteAccouchement(idAccouchementSelected);
+            }}
+          >
+            Supprimer
+          </div>
+        </div>
+      </div>
       <br />
       <br />
       <form onSubmit={handleSubmit}>

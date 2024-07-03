@@ -505,8 +505,8 @@ const AccouchementNew = ({
             onChange={(e) => setAgeDateAccouchement(e.target.value)}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
-          Soumettre
+        <button type="submit" className="btn btn-secondary">
+          Créer
         </button>
       </form>
     </div>

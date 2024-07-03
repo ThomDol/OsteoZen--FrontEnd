@@ -24,10 +24,7 @@ const Accueil = () => {
            })
            const data= await response.data;
            setUser(data);
-           console.log(data);
-           
-          
-        }
+                   }
         catch(error){
             console.error(error);
             localStorage.clear();
