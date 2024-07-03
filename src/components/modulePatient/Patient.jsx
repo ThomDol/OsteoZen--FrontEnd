@@ -12,7 +12,7 @@ import Consultation from "./sousmodulePatient/Consutation";
 import "../../style/Patient.css";
 import PatientUpdateForm from "./sousmodulePatient/PatientUpdateForm";
 import axios from "axios";
-
+import Physique from "./sousmodulePatient/Caracteristques physiques/Physique";
 
 // Clé secrète et vecteur d'initialisation pour le décryptage
 const SECRET_KEY = "q#4puta9!am4$fcl";
@@ -36,7 +36,7 @@ const Patient = () => {
   const { id } = useParams();
   const [patient, setPatient] = useState();
   const [user, setUser] = useState(null);
-  const [role,setRole]=useState();
+  const [role, setRole] = useState();
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
@@ -56,6 +56,8 @@ const Patient = () => {
     setDisplayAntecedentBebe,
     setDisplayAccouchementDetail,
     setDisplayAccouchementNew,
+    displayCaracteristiquesPhysiques,
+    setDisplayCaracteristiquesPhysiques,
   } = useStorage();
 
   // Fonction pour réinitialiser l'affichage des sections
@@ -68,6 +70,7 @@ const Patient = () => {
     setDisplayAntecedentBebe(false);
     setDisplayAccouchementDetail(false);
     setDisplayAccouchementNew(false);
+    setDisplayCaracteristiquesPhysiques(false);
   };
 
   // Effet pour déchiffrer et décoder le token au chargement du composant
@@ -113,9 +116,11 @@ const Patient = () => {
     <div>
       {patient && (
         <div>
-         {role && <div className="header col-4 mx-auto">
-            <NavBar role={role} /> {/* Barre de navigation */}
-          </div>}
+          {role && (
+            <div className="header col-4 mx-auto">
+              <NavBar role={role} /> {/* Barre de navigation */}
+            </div>
+          )}
 
           <br />
           <br />
@@ -145,6 +150,16 @@ const Patient = () => {
                     }}
                   >
                     &#11162; Profil
+                  </div>
+                  <div
+                    className="pt-5"
+                    onClick={() => {
+                      resetDisplay();
+                      setDisplayCaracteristiquesPhysiques(true);
+                    }}
+                  >
+                    &#11162; Caractéristiques <br />
+                    physiques
                   </div>
                   {patient.nomTypePatient !== "Bebe" && (
                     <div
@@ -208,6 +223,9 @@ const Patient = () => {
                 {displayProfil && (
                   <PatientUpdateForm idPatient={patient.idPatient} />
                 )}
+                {displayCaracteristiquesPhysiques && (
+                  <Physique idPatient={patient.idPatient} />
+                )}
                 {displayAntecedent && (
                   <AntecedentAccueil idPatient={patient.idPatient} />
                 )}
@@ -217,7 +235,9 @@ const Patient = () => {
                 {displayAccouchement && (
                   <Accouchement idPatient={patient.idPatient} />
                 )}
-                {displayGrossesse && <Grossesse idPatient={patient.idPatient} />}
+                {displayGrossesse && (
+                  <Grossesse idPatient={patient.idPatient} />
+                )}
                 {displayConsultation && (
                   <Consultation idPatient={patient.idPatient} />
                 )}

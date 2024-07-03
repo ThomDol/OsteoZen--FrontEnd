@@ -8,10 +8,10 @@ import Error from "./components/module erreur/Error";
 import Login from "./components/Login/Login";
 import { StorageProvider } from "./components/StorageContext";
 import PatientForm from "./components/modulePatient/PatientForm";
-import ListPraticien from "./components/modulePraticien/ListPraticien";
-import ReadPraticien from "./components/modulePraticien/ReadPraticien";
-import CreatePraticien from "./components/modulePraticien/CreatePraticien";
-import UpdatePraticien from "./components/modulePraticien/UpdatePraticien";
+import ListPraticien from "./components/module Admin/ListPraticien";
+import ReadPraticien from "./components/module Admin/ReadPraticien";
+import CreatePraticien from "./components/module Admin/CreatePraticien";
+import UpdatePraticien from "./components/module Admin/UpdatePraticien";
 
 function App() {
   return (

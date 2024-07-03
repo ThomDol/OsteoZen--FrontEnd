@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../header/NavBar";
+import Swal from "sweetalert2";
 
 import axios from "axios";
 
@@ -30,7 +31,7 @@ function CreatePraticien() {
         },
       })
       .then((res) => {
-        console.log(res);
+        Swal.fire("Creation faite");
         navigate("/Admin");
       })
       .catch((error) => console.log(error));

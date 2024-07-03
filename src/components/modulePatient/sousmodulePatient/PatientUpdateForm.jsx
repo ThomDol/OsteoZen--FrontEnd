@@ -142,7 +142,7 @@ const PatientUpdateForm = ({ idPatient }) => {
   return (
     <div>
       <h1 style={{ textAlign: "center" }}>
-        <b>Profil</b>
+        Profil
       </h1>
       <hr />
       <div className="col-9 mx-auto">

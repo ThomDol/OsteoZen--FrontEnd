@@ -168,6 +168,8 @@ const AccouchementDetail = ({
             className="form-control"
             id="dateAccouchement"
             required
+            placeholder="jj/mm/aaaa"
+            pattern="\d{2}/\d{2}/\d{4}"
             value={dateAccouchement}
             onChange={(e) => setDateAccouchement(e.target.value)}
           />

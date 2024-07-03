@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "../header/NavBar";
+import Swal from "sweetalert2";
 
 function ListPraticien() {
   const token = localStorage.getItem("token");
@@ -20,11 +21,15 @@ function ListPraticien() {
   }, []);
 
   const handleDelete = (id) => {
-    const confirm = window.confirm(
-      "Voulez-vous vraiment supprimer ce praticien ?"
-    );
-
-    if (confirm) {
+    Swal.fire({
+      title: "Etes vous sûr de vouloir supprimer cette fiche antecedent ?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Oui",
+      denyButtonText: `Non`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+    
       axios
         .delete(`http://localhost:5000/api/praticien/${id}`, {
           headers: {
@@ -32,15 +37,22 @@ function ListPraticien() {
           },
         })
         .then((res) => {
+          Swal.fire("Supprimé", "", "success");
           location.reload();
           setPraticien(
             praticien.filter((praticien) => praticien.idPraticien !== id)
           );
         })
-        .catch((error) => console.log(error));
-      alert("Suppression impossible");
-    }
+        .catch((error) => {
+          console.log(error);
+          Swal.fire("Suppression impossible");
+        });
+    } else if (result.isDenied) {
+        Swal.fire("Suppression annulée", "", "info");
+      }
+    });
   };
+  
 
   return (
     <div>
