@@ -77,7 +77,7 @@ const AntecedentBebeForm = ({ idPatient }) => {
           },
         }
       );
-      Swal.fire("Création effectuée!");
+      Swal.fire("Création effectuée");
       console.log(response.data);
     } catch (error) {
       console.error(error);

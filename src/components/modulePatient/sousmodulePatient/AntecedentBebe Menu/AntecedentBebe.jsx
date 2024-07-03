@@ -37,8 +37,6 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
     useState(null);
   const [tics, setTics] = useState(null);
   const urlGetAnt = `http://localhost:5000/api/antecedentbebe/${idPatient}`;
-  const [displayUpdateSuccessMessage, setDisplayUpdateSuccessMessage] =
-    useState(false);
   const { setDisplayAntecedentBebe } = useStorage();
 
   const assign = (elem) => {
@@ -102,7 +100,6 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
   };
 
   useEffect(() => {
-    setDisplayUpdateSuccessMessage(false);
     const fetchData = async () => {
       try {
         const response = await axios.get(urlGetAnt, {
@@ -162,7 +159,7 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
           },
         }
       );
-      setDisplayUpdateSuccessMessage(true);
+      Swal.fire("Mise à jour effectuée");
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -992,13 +989,6 @@ const AntecedentBebe = ({ idAntecedentBebe, idPatient }) => {
         </button>
         </div>
       </form>
-      {displayUpdateSuccessMessage && (
-        <div className="text-center">
-          <span style={{ fontWeight: "bold", color: "green" }}>
-            Mise à jour faite
-          </span>
-        </div>
-      )}
     </div>
   );
 };
