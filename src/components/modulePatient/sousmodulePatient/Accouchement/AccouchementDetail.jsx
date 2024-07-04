@@ -65,7 +65,7 @@ const AccouchementDetail = ({
     };
 
     fetchData();
-  }, []);
+  }, [idAccouchementSelected]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -147,7 +147,7 @@ const AccouchementDetail = ({
         </div>
         <div className="col-1">
           <div
-            className="btn btn-warning"
+            className="btn btn-danger"
             onClick={() => {
               deleteAccouchement(idAccouchementSelected);
             }}

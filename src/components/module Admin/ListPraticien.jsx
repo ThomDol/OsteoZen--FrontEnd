@@ -3,11 +3,14 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "../header/NavBar";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 function ListPraticien() {
   const token = localStorage.getItem("token");
-
+  const navigate = useNavigate();
+  const [isActive,setIsActive]=useState(true);
   const [praticien, setPraticien] = useState([]);
+  const [reloacCount,setReloadCount]=useState(0);
 
   useEffect(() => {
     axios
@@ -17,8 +20,13 @@ function ListPraticien() {
         },
       })
       .then((res) => setPraticien(res.data))
-      .catch((error) => console.log(error));
-  }, []);
+      .catch((error) => {
+        console.log(error);
+        if (error.response) {
+          if(error.response.status===403){navigate('/Deconnexion')};
+        }
+      });
+  }, [reloacCount]);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -51,6 +59,35 @@ function ListPraticien() {
         Swal.fire("Suppression annulée", "", "info");
       }
     });
+  };
+
+
+
+
+  const handleblock = (id) => {
+    // Basculez l'état de isActive avec un délai
+    setIsActive(!isActive);
+  
+    // Utilisation d'un setTimeout pour s'assurer que l'état est mis à jour
+    setTimeout(async () => {
+      try {
+        // Effectuez la requête PUT avec la valeur mise à jour de isActive
+        const response = await axios.put(
+          `http://localhost:5000/api/praticien/${id}`,
+          { isActive: !isActive },
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        console.log(response.data);
+        setReloadCount(reloacCount+1);
+  
+      } catch (error) {
+        console.error(error);
+      }
+    }, 20); 
   };
   
 
@@ -116,10 +153,12 @@ function ListPraticien() {
                   </button>
 
                   <button
-                    onClick={() => handleblock(d.idAppUser)}
+                    onClick={() => {
+                      handleblock(d.idAppUser);
+                    }}
                     className="btn btn-warning me-2"
                   >
-                    Bloquer
+                    {d.isActive ? "Bloquer" : "Debloquer" }
                   </button>
                 </td>
               </tr>

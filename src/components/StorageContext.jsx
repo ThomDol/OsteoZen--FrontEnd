@@ -15,6 +15,7 @@ export const StorageProvider = ({ children }) => {
   const [displayGrossesseNew, setDisplayGrossesseNew] = useState(false);
   const [displayGrossesseDetail, setDisplayGrossesseDetail] = useState(false);
   const [displayCaracteristiquesPhysiques,setDisplayCaracteristiquesPhysiques]=useState(false);
+  const [displayCaracteristiquesPhysiquesDetail,setDisplayCaracteristiquesPhysiquesDetail]=useState(false);
   const [displayConsultation, setDisplayConsultation] = useState(false);
   const [displayAccouchementDetail, setDisplayAccouchementDetail] =
     useState(false);
@@ -54,7 +55,10 @@ export const StorageProvider = ({ children }) => {
         displayGrossesseDetail,
         setDisplayGrossesseDetail,
         displayCaracteristiquesPhysiques,
-        setDisplayCaracteristiquesPhysiques
+        setDisplayCaracteristiquesPhysiques,
+        displayCaracteristiquesPhysiquesDetail,setDisplayCaracteristiquesPhysiquesDetail
+       
+
 
       }}
     >

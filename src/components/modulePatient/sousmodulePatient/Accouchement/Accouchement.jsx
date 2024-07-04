@@ -25,7 +25,7 @@ const Accouchement = ({ idPatient }) => {
   useEffect(() => {
     setIdAccouchementSelected(null); // reset si un accouchement avait été selectionné précédemment
     resetDisplay(); //reset de l'affichage du menu general Accouchement
-    
+
     //Chargement de la liste d'accouchement déjà enregistré au chargement du composant
     const fetchData = async () => {
       try {
@@ -68,7 +68,6 @@ const Accouchement = ({ idPatient }) => {
                       key={index}
                       onClick={() => {
                         resetDisplay();
-                        setIdAccouchementSelected(null);
                         setIdAccouchementSelected(acc.idAccouchement);
                         setDisplayAccouchementDetail(true);
                       }}
@@ -84,7 +83,7 @@ const Accouchement = ({ idPatient }) => {
                     className="btn btn-info"
                     onClick={() => {
                       setIdAccouchementSelected(null);
-                      setDisplayAccouchementDetail(false);
+                      resetDisplay();
                       setDisplayAccouchementNew(true);
                     }}
                   >

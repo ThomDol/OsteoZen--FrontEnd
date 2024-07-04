@@ -13,6 +13,7 @@ import ReadPraticien from "./components/module Admin/ReadPraticien";
 import CreatePraticien from "./components/module Admin/CreatePraticien";
 import UpdatePraticien from "./components/module Admin/UpdatePraticien";
 
+
 function App() {
   return (
     <StorageProvider>
@@ -31,7 +32,7 @@ function App() {
             <Route path="/update/:id" element={<UpdatePraticien />} />
             <Route path="/Deconnexion" element={<Deconnexion />} />
             <Route path="/error" element={<Error />} />
-            <Route path="/*" element={<Login />} />
+            <Route path="/*" element={<Login />} />       
           </Routes>
         </Router>
       </div>

@@ -74,7 +74,7 @@ const GrossesseDetail = ({
     if (idGrossesseSelected) {
       fetchData();
     }
-  }, []);
+  }, [idGrossesseSelected]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -163,7 +163,7 @@ const GrossesseDetail = ({
         </div>
         <div className="col-1">
           <div
-            className="btn btn-warning"
+            className="btn btn-danger"
             onClick={() => {
               deleteGrossesse(idGrossesseSelected);
             }}

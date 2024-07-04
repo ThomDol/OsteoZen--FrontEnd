@@ -2,10 +2,10 @@ import React from "react";
 import "../../style/NavBar.css";
 import logoMassage from "../../assets/logoMassage.png";
 
-const NavBar = ({ role }) => {
+const NavBar = ({ role,isActive }) => {
   return (
     <div>
-      <nav className="navbar navbar-expand-lg fixed-top">
+       <nav className="navbar navbar-expand-lg fixed-top">
         <div className="container-fluid">
           <a className="navbar-brand me-auto" href="#">
             <img alt="" style={{ width: "8%", height: "8%" }} />

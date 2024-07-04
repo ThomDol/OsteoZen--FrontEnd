@@ -3,6 +3,7 @@ import NavBar from '../header/NavBar';
 import axios from'axios';
 import { useNavigate } from 'react-router-dom';
 import logoMassage from '../../assets/logoMassage.png';
+import { Link } from 'react-router-dom';
 
 
 const Accueil = () => {
@@ -35,13 +36,14 @@ const Accueil = () => {
     return (
       <div>
         <div>
-        {user && <NavBar role={user.nomRole}/>}
+        {user && user.isActive && <NavBar role={user.nomRole} />}
         </div>
 
         <div className="col-5 mx-auto">
           <br />
           <br />
           <br />
+          {user && !user.isActive && <span>Votre compte est temporairement bloqué. Contacter l'adminitrateur</span>}
           <br />
           <br />
           <br />

@@ -152,7 +152,7 @@ const Antecedent = ({ idAntecedent, idPatient }) => {
         <div className="col-9 mx-auto">
           <div className="d-flex justify-content-end mb-3">
             <div
-              className="btn btn-warning"
+              className="btn btn-danger"
               onClick={() => {
                 deleteAnt(idAntecedent);
               }}
