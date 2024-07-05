@@ -65,12 +65,17 @@ const PhysiqueNew = ({
     e.preventDefault();
     if (mesureSelected) {
       axios
-        .put(`http://localhost:5000/api/physique/${idPatient}`, formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        .put(
+          `http://localhost:5000/api/physique/${idPhysiqueSelected}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
         .then((res) => {
+          Swal.fire("Mise à jour effectuée");
           console.log(res.data);
           setCountMesure(countMesure + 1);
         })
@@ -83,6 +88,7 @@ const PhysiqueNew = ({
           },
         })
         .then((res) => {
+          Swal.fire("Creation faite");
           console.log(res.data);
           setCountMesure(countMesure + 1);
         })

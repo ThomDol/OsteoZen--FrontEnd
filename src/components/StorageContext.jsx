@@ -48,8 +48,6 @@ export const StorageProvider = ({ children }) => {
         setDisplayAccouchementNew,
         displayAntecedentBebe,
         setDisplayAntecedentBebe,
-        displayAntecedentBebe,
-        setDisplayAntecedentBebe,
         displayGrossesseNew,
         setDisplayGrossesseNew,
         displayGrossesseDetail,
