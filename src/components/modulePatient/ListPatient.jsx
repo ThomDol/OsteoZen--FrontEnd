@@ -109,13 +109,14 @@ const ListPatient = () => {
                   Authorization: "Bearer " + token,
                 },
               });
+              Swal.fire("Supprimé", "", "success");
               setCount(count + 1); // Met à jour la liste des patients après suppression
             } catch (error) {
+              Swal.fire("Suppression impossible");
               console.error(error);
             }
           };
           deleteData();
-          Swal.fire("Supprimé", "", "success");
         } else if (result.isDenied) {
           Swal.fire("Suppression annulée", "", "info");
         }

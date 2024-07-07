@@ -22,6 +22,8 @@ export const StorageProvider = ({ children }) => {
   const [displayAccouchementNew, setDisplayAccouchementNew] = useState(false);
   const [displayAntecedentBebe, setDisplayAntecedentBebe] = useState(false);
   const [displayPostPartum,setDisplayPostPartum]=useState(false);
+  const [displayRendezVousDetail,
+    setDisplayRendezVousDetail]=useState(false);
 
   return (
     <StorageContext.Provider
@@ -54,8 +56,12 @@ export const StorageProvider = ({ children }) => {
         setDisplayGrossesseDetail,
         displayCaracteristiquesPhysiques,
         setDisplayCaracteristiquesPhysiques,
-        displayCaracteristiquesPhysiquesDetail,setDisplayCaracteristiquesPhysiquesDetail,
-        displayPostPartum,setDisplayPostPartum
+        displayCaracteristiquesPhysiquesDetail,
+        setDisplayCaracteristiquesPhysiquesDetail,
+        displayPostPartum,
+        setDisplayPostPartum,
+        displayRendezVousDetail,
+        setDisplayRendezVousDetail,
       }}
     >
       {children}

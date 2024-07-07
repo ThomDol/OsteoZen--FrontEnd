@@ -75,7 +75,7 @@ const Accouchement = ({ idPatient }) => {
                   accouchementList.map((acc, index) => (
                     <div>
                       <span
-                        className="btn text-bg-secondary"
+                        className="btn text-bg-secondary mt-3"
                         key={index}
                         onClick={() => {
                           resetDisplay();
@@ -88,13 +88,15 @@ const Accouchement = ({ idPatient }) => {
                       {acc.idPostAccouchement ? (
                         <span
                           key={`detail-${acc.idPostAccouchement}`}
-                          className="badge text-bg-success"
+                          className="badge text-bg-warning"
                           onClick={() => {
                             resetDisplay();
                             setIdPostAccouchementSelected(
                               acc.idPostAccouchement
                             );
-                            setDisplayPostPartum(true);
+                            setTimeout(() => {
+                              setDisplayPostPartum(true);
+                            }, 10);
                           }}
                         >
                           Détail fiche PostPartum
@@ -102,12 +104,14 @@ const Accouchement = ({ idPatient }) => {
                       ) : (
                         <span
                           key={`create-${acc.idPostAccouchement}`}
-                          className="badge text-bg-success"
+                          className="badge text-bg-warning"
                           onClick={() => {
                             setIdPostAccouchementSelected(null);
                             resetDisplay();
                             setIdAccouchementSelected(acc.idAccouchement);
-                            setDisplayPostPartum(true);
+                            setTimeout(() => {
+                              setDisplayPostPartum(true);
+                            }, 10);
                           }}
                         >
                           Créer fiche Postpartum
@@ -163,13 +167,15 @@ const Accouchement = ({ idPatient }) => {
               />
             </div>
           )}
-          {displayPostPartum && idAccouchementSelected && (
-            <PostAccouchementForm
-              idAccouchementSelected={idAccouchementSelected}
-              setCountPostAccouchement={setCountPostAccouchement}
-              countPostAccouchement={countPostAccouchement}
-            />
-          )}
+          {displayPostPartum &&
+            idAccouchementSelected &&
+            idPostAccouchementSelected===null && (
+              <PostAccouchementForm
+                idAccouchementSelected={idAccouchementSelected}
+                setCountPostAccouchement={setCountPostAccouchement}
+                countPostAccouchement={countPostAccouchement}
+              />
+            )}
         </div>
       </div>
     </div>

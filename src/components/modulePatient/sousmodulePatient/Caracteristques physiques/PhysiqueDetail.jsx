@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
-const PhysiqueNew = ({
+const PhysiqueDetail = ({
   idPatient,
   idPhysiqueSelected,
   countMesure,
@@ -292,4 +292,4 @@ const PhysiqueNew = ({
   );
 };
 
-export default PhysiqueNew;
+export default PhysiqueDetail;

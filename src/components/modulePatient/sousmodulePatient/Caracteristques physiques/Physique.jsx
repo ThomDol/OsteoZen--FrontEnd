@@ -2,7 +2,8 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useStorage } from "../../../StorageContext";
-import PhysiqueNew from "./PhysiqueNew";
+import PhysiqueDetail from "./PhysiqueDetail";
+
 
 const Physique = ({ idPatient }) => {
   const [physiques, setPhysiques] = useState([]);
@@ -43,7 +44,7 @@ const Physique = ({ idPatient }) => {
     // Utilisation d'un timeout pour s'assurer que l'état est mis à jour avant de continuer
     setTimeout(() => {
       setDisplayCaracteristiquesPhysiquesDetail(true);
-    }, 0);
+    }, 10);
   };
 
   return (
@@ -60,7 +61,7 @@ const Physique = ({ idPatient }) => {
                 {physiques &&
                   physiques.map((physique, index) => (
                     <span
-                      className="badge text-bg-secondary"
+                      className="btn text-bg-secondary mt-3"
                       key={index}
                       onClick={() => {
                         resetDisplay();
@@ -75,10 +76,7 @@ const Physique = ({ idPatient }) => {
                 <br />
                 <br />
                 <div>
-                  <div
-                    className="btn btn-info"
-                    onClick={handleCreateClick}
-                  >
+                  <div className="btn btn-info" onClick={handleCreateClick}>
                     Créer
                   </div>
                 </div>
@@ -87,15 +85,16 @@ const Physique = ({ idPatient }) => {
           )}
         </div>
         <div className="col-11">
-      
           {displayCaracteristiquesPhysiquesDetail && (
             <div>
-              <PhysiqueNew
+              <PhysiqueDetail
                 idPatient={idPatient}
                 idPhysiqueSelected={idPhysiqueSelected}
                 countMesure={countMesure}
                 setCountMesure={setCountMesure}
-                setDisplayCaracteristiquesPhysiquesDetail ={setDisplayCaracteristiquesPhysiquesDetail }
+                setDisplayCaracteristiquesPhysiquesDetail={
+                  setDisplayCaracteristiquesPhysiquesDetail
+                }
               />
             </div>
           )}

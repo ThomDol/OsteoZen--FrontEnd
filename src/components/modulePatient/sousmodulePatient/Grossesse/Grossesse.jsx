@@ -64,7 +64,7 @@ const Grossesse = ({ idPatient }) => {
                 {grossesseList &&
                   grossesseList.map((grossesse, index) => (
                     <span
-                      className="badge text-bg-secondary"
+                      className="btn text-bg-secondary mt-3"
                       key={index}
                       onClick={() => {
                         resetDisplay();
