@@ -158,7 +158,7 @@ const GrossesseDetail = ({
       <div className="row">
         <div className="col-8 mx-auto">
           <h3 style={{ textAlign: "center", paddingTop: "10px" }}>
-            Détail
+            DETAIL FICHE GROSSESSE
           </h3>
         </div>
         <div className="col-1">

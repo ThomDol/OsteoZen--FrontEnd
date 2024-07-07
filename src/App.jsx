@@ -17,7 +17,7 @@ import UpdatePraticien from "./components/module Admin/UpdatePraticien";
 function App() {
   return (
     <StorageProvider>
-      <div className="container p-2">
+      <div className="container-fluid" style={{marginLeft:"10%"}}>
         <Router>
           <Routes>
             <Route path="/login" element={<Login />} />

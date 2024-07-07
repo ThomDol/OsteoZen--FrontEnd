@@ -133,7 +133,7 @@ const PhysiqueNew = ({
     <div className="col-9 mx-auto">
       <div className="row">
         <div className="col-8 mx-auto">
-          <h3 style={{ textAlign: "center", paddingTop: "10px" }}>Créer</h3>
+          <h3 style={{ textAlign: "center", paddingTop: "10px" }}>{idPhysiqueSelected?"DETAIL FICHE CARACTERISTIQUES PHYSIQUES":"Créer"}</h3>
         </div>
         <div className="col-1">
           {idPhysiqueSelected && (
