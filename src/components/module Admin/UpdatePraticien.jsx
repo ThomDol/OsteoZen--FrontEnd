@@ -96,6 +96,8 @@ function UpdatePraticien() {
                 type="email"
                 name="email"
                 className="form-control"
+                placeholder="example@domain.com"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 value={values.email}
                 onChange={(e) =>
                   setValues({ ...values, email: e.target.value })
@@ -107,6 +109,8 @@ function UpdatePraticien() {
               <input
                 type="tel"
                 name="tel"
+                placeholder="10 chiffres"
+                pattern="\d{10}"
                 className="form-control"
                 value={values.tel}
                 onChange={(e) => setValues({ ...values, tel: e.target.value })}
@@ -130,6 +134,8 @@ function UpdatePraticien() {
                   type="text"
                   name="code postal"
                   className="form-control"
+                  placeholder="5 chiffres"
+                  pattern="\d{5}"
                   value={values.codePostal}
                   onChange={(e) =>
                     setValues({ ...values, codePostal: e.target.value })
@@ -142,6 +148,8 @@ function UpdatePraticien() {
                   type="text"
                   name="numAdeli"
                   className="form-control"
+                  placeholder="9 chiffres"
+                  pattern="\d{9}"
                   value={values.numAdeli}
                   onChange={(e) =>
                     setValues({ ...values, numAdeli: e.target.value })

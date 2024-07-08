@@ -148,6 +148,8 @@ function CreatePraticien() {
                 type="text"
                 name="codePostal"
                 required
+                placeholder="5 chiffres"
+                pattern="\d{5}"
                 className="form-control"
                 onChange={(e) =>
                   setValues({ ...values, codePostal: e.target.value })
@@ -160,6 +162,8 @@ function CreatePraticien() {
                 type="text"
                 name="numAdeli"
                 required
+                placeholder="9 chiffres"
+                pattern="\d{9}"
                 className="form-control"
                 onChange={(e) =>
                   setValues({ ...values, numAdeli: e.target.value })
@@ -172,6 +176,8 @@ function CreatePraticien() {
                 type="email"
                 name="email"
                 required
+                placeholder="example@domain.com"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 className="form-control"
                 onChange={(e) =>
                   setValues({ ...values, email: e.target.value })
@@ -184,6 +190,8 @@ function CreatePraticien() {
                 type="text"
                 name="tel"
                 required
+                placeholder="10 chiffres"
+                pattern="\d{10}"
                 className="form-control"
                 onChange={(e) => setValues({ ...values, tel: e.target.value })}
               />

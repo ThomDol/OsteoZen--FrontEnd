@@ -27,6 +27,7 @@ const Forgot = () => {
         navigate("/login");
       }
     } catch (error) {
+      Swal.fire("email invalide")
       console.error(error);
     }
   };
