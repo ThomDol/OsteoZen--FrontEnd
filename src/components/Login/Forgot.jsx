@@ -1,40 +1,31 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import "../../style/Login.css";
 import logoMassage from "../../assets/logoMassage.png";
 import userregular24 from "../../assets/userregular24.png";
 import user24 from "../../assets/user24.png";
-import lock from "../../assets/lock.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
-const Login = () => {
+const Forgot = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    localStorage.clear();
-  }, []);
-
-  const connect = async () => {
+  
+  
+  const sendCode = async()=> {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/login",
-        {
-          email: email,
-          password: password,
+      const response = await axios.post("http://localhost:5000/api/password/forgot", new URLSearchParams({
+        email: email
+      }), {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const data = response.data;
-      console.log(data);
-      localStorage.setItem("token", data.accessToken);
-      navigate("/");
+      });
+      if (response.status === 200) {
+        Swal.fire("Un email vous a été envoyé");
+        navigate("/login");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -56,7 +47,7 @@ const Login = () => {
 
             <div className="text-center mt-5 mb-4">
               <img src={user24} alt="user" />
-              <h5 className="mt-3 text-secondary">Acceder à votre compte</h5>
+              <h5 className="mt-3 text-secondary">Mot de passe oublié</h5>
             </div>
             <form action="#">
               <div className="input-group mt-4 mb-3">
@@ -73,34 +64,13 @@ const Login = () => {
                   }}
                 />
               </div>
-              <div className="input-group mb-3">
-                <span className="input-group-text">
-                  <img src={lock} alt="lock" />
-                </span>
-                <input
-                  type="password"
-                  className="form-control form-control-lg fs-6"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                />
-              </div>
-              <div className="input-group mb-3 d-flex justify-content-between">
-                <div>
-                  <small>
-                    <a onClick={()=>navigate("/forgot")}>Mot de passe oublié ?</a>
-                  </small>
-                </div>
-              </div>
               <div>
                 <button
                   type="button"
                   className="btn btn-info btn-lg text-white w-100"
-                  onClick={connect}
+                  onClick={sendCode}
                 >
-                  Login
+                  Recevoir un code
                 </button>
               </div>
             </form>
@@ -111,4 +81,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Forgot;

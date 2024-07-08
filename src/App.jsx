@@ -12,6 +12,8 @@ import ListPraticien from "./components/module Admin/ListPraticien";
 import ReadPraticien from "./components/module Admin/ReadPraticien";
 import CreatePraticien from "./components/module Admin/CreatePraticien";
 import UpdatePraticien from "./components/module Admin/UpdatePraticien";
+import ResetPassword from "./components/Login/ResetPassword";
+import Forgot from "./components/Login/Forgot";
 
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
         <Router>
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/forgot" element={<Forgot />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/" element={<Accueil />} />
             <Route path="/Profil" element={<Profil />} />
             <Route path="/CreateNewPatient" element={<PatientForm />} />

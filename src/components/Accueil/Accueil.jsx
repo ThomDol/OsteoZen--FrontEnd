@@ -43,7 +43,7 @@ const Accueil = () => {
           <br />
           <br />
           <br />
-          {user && !user.isActive && <span>Votre compte est temporairement bloqué. Contacter l'adminitrateur</span>}
+          {user && !user.isActive && <span>Votre compte est temporairement bloqué. Contacter l'adminitrateur par email sur <a>administrateur@patientmanager.com</a></span>}
           <br />
           <br />
           <br />
