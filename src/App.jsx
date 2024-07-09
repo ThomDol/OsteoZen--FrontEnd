@@ -13,6 +13,7 @@ import CreatePraticien from "./components/module Admin/CreatePraticien";
 import UpdatePraticien from "./components/module Admin/UpdatePraticien";
 import ResetPassword from "./components/Login/ResetPassword";
 import Forgot from "./components/Login/Forgot";
+import Contact from "./components/Contact/Contact";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/forgot" element={<Forgot />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/" element={<Accueil />} />
@@ -34,6 +36,7 @@ function App() {
             <Route path="/update/:id" element={<UpdatePraticien />} />
             <Route path="/Deconnexion" element={<Deconnexion />} />
             <Route path="/error" element={<Error />} />
+        
             <Route path="/*" element={<Login />} />       
           </Routes>
         </Router>
