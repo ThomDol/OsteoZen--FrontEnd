@@ -9,7 +9,6 @@ import Login from "./components/Login/Login";
 import { StorageProvider } from "./components/StorageContext";
 import PatientForm from "./components/modulePatient/PatientForm";
 import ListPraticien from "./components/module Admin/ListPraticien";
-import ReadPraticien from "./components/module Admin/ReadPraticien";
 import CreatePraticien from "./components/module Admin/CreatePraticien";
 import UpdatePraticien from "./components/module Admin/UpdatePraticien";
 import ResetPassword from "./components/Login/ResetPassword";
@@ -31,7 +30,6 @@ function App() {
             <Route path="/List" element={<ListPatient />} />
             <Route path="/patient/:id" element={<Patient />} />
             <Route path="/Admin" element={<ListPraticien />} />
-            <Route path="/read/:id" element={<ReadPraticien />} />
             <Route path="/create" element={<CreatePraticien />} />
             <Route path="/update/:id" element={<UpdatePraticien />} />
             <Route path="/Deconnexion" element={<Deconnexion />} />
