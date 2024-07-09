@@ -76,18 +76,7 @@ function CreatePraticien() {
                 }
               />
             </div>
-            <div className="mb-2">
-              <label htmlFor="password">Mot de passe</label>
-              <input
-                type="password"
-                name="password"
-                required
-                className="form-control"
-                onChange={(e) =>
-                  setValues({ ...values, password: e.target.value })
-                }
-              />
-            </div>
+          
             <div className="mb-2">
               <label className="form-label">Role</label>
               <div>
