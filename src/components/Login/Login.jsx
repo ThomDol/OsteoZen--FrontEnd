@@ -12,12 +12,14 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [displayErrorMessage, setDisplayErrorMessage] = useState(false);
 
   useEffect(() => {
     localStorage.clear();
   }, []);
 
   const connect = async () => {
+    setDisplayErrorMessage(false);
     try {
       const response = await axios.post(
         "http://localhost:5000/login",
@@ -36,11 +38,10 @@ const Login = () => {
       localStorage.setItem("token", data.accessToken);
       navigate("/");
     } catch (error) {
+      setDisplayErrorMessage(true);
       console.error(error);
     }
   };
-
-
 
   return (
     <div className="row vh-100 g-0">
@@ -66,7 +67,8 @@ const Login = () => {
                 <input
                   type="text"
                   className="form-control form-control-lg fs-6"
-                  placeholder="Email"
+                  placeholder="example@domain.com"
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
@@ -90,7 +92,9 @@ const Login = () => {
               <div className="input-group mb-3 d-flex justify-content-between">
                 <div>
                   <small>
-                    <a onClick={()=>navigate("/forgot")}>Mot de passe oublié ?</a>
+                    <a onClick={() => navigate("/forgot")}>
+                      Mot de passe oublié ?
+                    </a>
                   </small>
                 </div>
               </div>
@@ -103,6 +107,13 @@ const Login = () => {
                   Login
                 </button>
               </div>
+              {displayErrorMessage && (
+                <div className="text-center">
+                  <span style={{ fontWeight: "bold", color: "red" }}>
+                    Email ou mot de passe incorrect
+                  </span>
+                </div>
+              )}
             </form>
           </div>
         </div>

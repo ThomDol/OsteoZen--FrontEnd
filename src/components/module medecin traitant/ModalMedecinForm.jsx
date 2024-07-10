@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const ModalMedecinForm = ({ idModalDoc, count, setCount }) => {
@@ -8,25 +8,46 @@ const ModalMedecinForm = ({ idModalDoc, count, setCount }) => {
   const [villeMedecinTraitant, setVilleMedecinTraitant] = useState("");
   const [codePostalMedecinTraitant, setCodePostalTraitant] = useState("");
   const [displaySuccessMessage, setDisplaySuccessMessage] = useState(false);
+  const [displayErrorMessage, setDisplayErrorMessage] = useState(false);
+
+  useEffect(() => {
+    setDisplayErrorMessage(false);
+    setDisplaySuccessMessage(false);
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Reset error and success messages
+    setDisplaySuccessMessage(false);
+    setDisplayErrorMessage(false);
+
     const formData = {
       nomMedecinTraitant,
       prenomMedecinTraitant,
       villeMedecinTraitant,
       codePostalMedecinTraitant,
     };
+
     try {
       await axios.post(`http://localhost:5000/api/medecintraitant`, formData, {
         headers: {
           Authorization: "Bearer " + token,
         },
       });
-      setCount(count + 1);
-      setDisplaySuccessMessage(true);
+
+      
+        setCount(count + 1);
+        setDisplaySuccessMessage(true);
+      
     } catch (error) {
-      console.error(error);
+      if (error.response) {
+        if (error.response.status === 403) {
+          setDisplayErrorMessage(true);
+        } 
+      } else {
+        console.error("Error:", error.message);
+      }
     }
   };
 
@@ -112,6 +133,13 @@ const ModalMedecinForm = ({ idModalDoc, count, setCount }) => {
                 <div className="text-center">
                   <span style={{ fontWeight: "bold", color: "green" }}>
                     Medecin crée
+                  </span>
+                </div>
+              )}
+              {displayErrorMessage && (
+                <div className="text-center">
+                  <span style={{ fontWeight: "bold", color: "red" }}>
+                    Medecin déjà existant
                   </span>
                 </div>
               )}
