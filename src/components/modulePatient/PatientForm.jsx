@@ -142,6 +142,7 @@ const PatientForm = () => {
       }
     }
   };
+};
 
   return (
     <div>
