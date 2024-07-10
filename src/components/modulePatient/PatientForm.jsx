@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import NavBar from "../header/NavBar";
 import { jwtDecode } from "jwt-decode";
 import CryptoJS from "crypto-js";
+import Swal from "sweetalert2";
 
 // Clé secrète et vecteur d'initialisation pour le décryptage
 const SECRET_KEY = "q#4puta9!am4$fcl";
@@ -130,7 +131,15 @@ const PatientForm = () => {
       console.log(response.data);
       navigate("/List"); // Rediriger vers la liste des patients
     } catch (error) {
-      console.error(error);
+      if (error.response) {
+        const errorMessage = error.response.headers["error-message"];
+
+        if (errorMessage.includes("Patient already exists for this AppUser")) {
+          Swal.fire("Patient déjà existant");
+      } else {
+        Swal.fire("Erreur réseau. Veuillez réessayer.");
+        console.error("Error:", error.message);
+      }
     }
   };
 

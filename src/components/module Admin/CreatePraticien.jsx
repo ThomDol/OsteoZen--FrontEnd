@@ -34,7 +34,24 @@ function CreatePraticien() {
         Swal.fire("Creation faite");
         navigate("/Admin");
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        if (error.response) {
+          const errorMessage = error.response.headers["error-message"];
+
+          if (errorMessage.includes("AppUser already exist with this email")) {
+            Swal.fire("Praticien déjà existant avec cet email");
+          } else if (
+            errorMessage.includes("Info Pro already exist with another user")
+          ) {
+            Swal.fire("Numéro Adeli déjà utilisé");
+          } else {
+            Swal.fire("Une erreur s'est produite");
+          }
+        } else {
+          Swal.fire("Erreur réseau. Veuillez réessayer.");
+          console.error("Error:", error.message);
+        }
+      });
   };
 
   return (
@@ -76,7 +93,7 @@ function CreatePraticien() {
                 }
               />
             </div>
-          
+
             <div className="mb-2">
               <label className="form-label">Role</label>
               <div>
@@ -166,7 +183,7 @@ function CreatePraticien() {
                 name="email"
                 required
                 placeholder="example@domain.com"
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                pattern=".+@.+\..+"
                 className="form-control"
                 onChange={(e) =>
                   setValues({ ...values, email: e.target.value })
@@ -188,7 +205,7 @@ function CreatePraticien() {
             <br />
             <div className="d-flex justify-content-start">
               <button type="submit" className="btn btn-success">
-                Submit
+                Créer
               </button>
               <Link to="/" className="btn btn-primary ms-3">
                 Retour
