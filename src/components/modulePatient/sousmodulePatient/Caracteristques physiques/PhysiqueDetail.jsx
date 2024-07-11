@@ -3,7 +3,13 @@ import axios from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
-const PhysiqueNew = ({ idPatient,idPhysiqueSelected, countMesure, setCountMesure,setDisplayCaracteristiquesPhysiquesDetail  }) => {
+const PhysiqueDetail = ({
+  idPatient,
+  idPhysiqueSelected,
+  countMesure,
+  setCountMesure,
+  setDisplayCaracteristiquesPhysiquesDetail,
+}) => {
   const token = localStorage.getItem("token");
   const [dateMesure, setDateMesure] = useState("");
   const [taille, setTaille] = useState("");
@@ -11,7 +17,7 @@ const PhysiqueNew = ({ idPatient,idPhysiqueSelected, countMesure, setCountMesure
   const [lunettes, setlunettes] = useState("");
   const [dentaire, setdentaire] = useState("");
   const [droitier, setdroitier] = useState("");
-  const [mesureSelected,setMesureSelected]=useState(null);
+  const [mesureSelected, setMesureSelected] = useState(null);
 
   const formData = {
     dateMesure,
@@ -24,27 +30,27 @@ const PhysiqueNew = ({ idPatient,idPhysiqueSelected, countMesure, setCountMesure
 
   const assign = (elem) => {
     if (elem !== null) {
-        setDateMesure(elem.dateMesure);
-        setPoids(elem.poids || "");
-        setTaille(elem.taille || "");
-        setdentaire(elem.dentaire || null );
-        setdroitier(elem.droitier || null);
-        setlunettes(elem.lunettes || null);
+      setDateMesure(elem.dateMesure);
+      setPoids(elem.poids || "");
+      setTaille(elem.taille || "");
+      setdentaire(elem.dentaire || null);
+      setdroitier(elem.droitier || null);
+      setlunettes(elem.lunettes || null);
     }
   };
 
-
-
   useEffect(() => {
-    
     const fetchData = async () => {
       if (idPhysiqueSelected) {
         try {
-          const response = await axios.get(`http://localhost:5000/api/physique/${idPhysiqueSelected}`, {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          });
+          const response = await axios.get(
+            `http://localhost:5000/api/physique/${idPhysiqueSelected}`,
+            {
+              headers: {
+                Authorization: "Bearer " + token,
+              },
+            }
+          );
           setMesureSelected(response.data);
           assign(response.data);
         } catch (error) {
@@ -57,34 +63,40 @@ const PhysiqueNew = ({ idPatient,idPhysiqueSelected, countMesure, setCountMesure
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(mesureSelected){
-        axios
-        .put(`http://localhost:5000/api/physique/${idPatient}`, formData, {
+    if (mesureSelected) {
+      axios
+        .put(
+          `http://localhost:5000/api/physique/${idPhysiqueSelected}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          Swal.fire("Mise à jour effectuée");
+          console.log(res.data);
+          setCountMesure(countMesure + 1);
+        })
+        .catch((error) => console.log(error));
+    } else {
+      axios
+        .post(`http://localhost:5000/api/physique/${idPatient}`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then((res) => {
+          Swal.fire("Creation faite");
           console.log(res.data);
           setCountMesure(countMesure + 1);
         })
         .catch((error) => console.log(error));
     }
-    else{
-    axios
-      .post(`http://localhost:5000/api/physique/${idPatient}`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setCountMesure(countMesure + 1);
-      })
-      .catch((error) => console.log(error));
-  }};
+  };
 
-  const deleteMesure = ()=>{
+  const deleteMesure = () => {
     Swal.fire({
       title: "Etes vous sûr de vouloir supprimer cette fiche Mesure ?",
       showDenyButton: true,
@@ -115,25 +127,27 @@ const PhysiqueNew = ({ idPatient,idPhysiqueSelected, countMesure, setCountMesure
         Swal.fire("Suppression annulée", "", "info");
       }
     });
-  }
+  };
 
   return (
-     <div className="col-9 mx-auto">
+    <div className="col-9 mx-auto">
       <div className="row">
-      <div className="col-8 mx-auto">
-      <h3 style={{ textAlign: "center", paddingTop: "10px" }}>Créer</h3>
+        <div className="col-8 mx-auto">
+          <h3 style={{ textAlign: "center", paddingTop: "10px" }}>{idPhysiqueSelected?"DETAIL FICHE CARACTERISTIQUES PHYSIQUES":"Créer"}</h3>
+        </div>
+        <div className="col-1">
+          {idPhysiqueSelected && (
+            <div
+              className="btn btn-danger"
+              onClick={() => {
+                deleteMesure(idPhysiqueSelected);
+              }}
+            >
+              Supprimer
+            </div>
+          )}
+        </div>
       </div>
-      <div className="col-1">
-          <div
-            className="btn btn-danger"
-            onClick={() => {
-              deleteMesure(idPhysiqueSelected);
-            }}
-          >
-            Supprimer
-          </div>
-        </div>
-        </div>
       <br />
       <br />
       <form onSubmit={handleSubmit}>
@@ -274,8 +288,8 @@ const PhysiqueNew = ({ idPatient,idPhysiqueSelected, countMesure, setCountMesure
           {mesureSelected ? "Mettre à jour" : "Créer"}
         </button>
       </form>
-    </div> 
+    </div>
   );
 };
 
-export default PhysiqueNew;
+export default PhysiqueDetail;

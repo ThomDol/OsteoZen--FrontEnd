@@ -34,7 +34,24 @@ function CreatePraticien() {
         Swal.fire("Creation faite");
         navigate("/Admin");
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        if (error.response) {
+          const errorMessage = error.response.headers["error-message"];
+
+          if (errorMessage.includes("AppUser already exist with this email")) {
+            Swal.fire("Praticien déjà existant avec cet email");
+          } else if (
+            errorMessage.includes("Info Pro already exist with another user")
+          ) {
+            Swal.fire("Numéro Adeli déjà utilisé");
+          } else {
+            Swal.fire("Une erreur s'est produite");
+          }
+        } else {
+          Swal.fire("Erreur réseau. Veuillez réessayer.");
+          console.error("Error:", error.message);
+        }
+      });
   };
 
   return (
@@ -76,18 +93,7 @@ function CreatePraticien() {
                 }
               />
             </div>
-            <div className="mb-2">
-              <label htmlFor="password">Mot de passe</label>
-              <input
-                type="password"
-                name="password"
-                required
-                className="form-control"
-                onChange={(e) =>
-                  setValues({ ...values, password: e.target.value })
-                }
-              />
-            </div>
+
             <div className="mb-2">
               <label className="form-label">Role</label>
               <div>
@@ -148,6 +154,8 @@ function CreatePraticien() {
                 type="text"
                 name="codePostal"
                 required
+                placeholder="5 chiffres"
+                pattern="\d{5}"
                 className="form-control"
                 onChange={(e) =>
                   setValues({ ...values, codePostal: e.target.value })
@@ -160,6 +168,8 @@ function CreatePraticien() {
                 type="text"
                 name="numAdeli"
                 required
+                placeholder="9 chiffres"
+                pattern="\d{9}"
                 className="form-control"
                 onChange={(e) =>
                   setValues({ ...values, numAdeli: e.target.value })
@@ -172,6 +182,8 @@ function CreatePraticien() {
                 type="email"
                 name="email"
                 required
+                placeholder="example@domain.com"
+                pattern=".+@.+\..+"
                 className="form-control"
                 onChange={(e) =>
                   setValues({ ...values, email: e.target.value })
@@ -184,6 +196,8 @@ function CreatePraticien() {
                 type="text"
                 name="tel"
                 required
+                placeholder="10 chiffres"
+                pattern="\d{10}"
                 className="form-control"
                 onChange={(e) => setValues({ ...values, tel: e.target.value })}
               />
@@ -191,7 +205,7 @@ function CreatePraticien() {
             <br />
             <div className="d-flex justify-content-start">
               <button type="submit" className="btn btn-success">
-                Submit
+                Créer
               </button>
               <Link to="/" className="btn btn-primary ms-3">
                 Retour

@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useStorage } from "../../../StorageContext";
 import { useEffect, useState } from "react";
+import PostAccouchementForm from "./postAccouchement/PostAccouchementForm";
 import AccouchementDetail from "./AccouchementDetail";
 import AccouchementNew from "./AccouchementNew";
 
@@ -9,10 +10,14 @@ const Accouchement = ({ idPatient }) => {
   const token = localStorage.getItem("token");
   const accouchementListUrl =
     "http://localhost:5000/api/accouchement/all/" + idPatient;
+
   const [accouchementList, setAccouchementList] = useState([]);
 
   const [idAccouchementSelected, setIdAccouchementSelected] = useState("");
   const [countAccouchement, setCountAccouchement] = useState(0);
+  const [idPostAccouchementSelected, setIdPostAccouchementSelected] =
+    useState("");
+  const [countPostAccouchement, setCountPostAccouchement] = useState(0);
 
   const {
     displayAccouchement,
@@ -20,6 +25,8 @@ const Accouchement = ({ idPatient }) => {
     setDisplayAccouchementDetail,
     displayAccouchementNew,
     setDisplayAccouchementNew,
+    displayPostPartum,
+    setDisplayPostPartum,
   } = useStorage();
 
   useEffect(() => {
@@ -41,12 +48,15 @@ const Accouchement = ({ idPatient }) => {
     };
 
     fetchData();
-  }, [countAccouchement]);
+  }, [countAccouchement, countPostAccouchement]);
+
+  const createPostAcc = (id) => {};
 
   //Fonction pour remettre tous les affichages des composants susceptibles d'être affichés, à false, pour que celui désiré puisse s'afficher
   const resetDisplay = () => {
     setDisplayAccouchementDetail(false);
     setDisplayAccouchementNew(false);
+    setDisplayPostPartum(false);
   };
 
   return (
@@ -63,17 +73,51 @@ const Accouchement = ({ idPatient }) => {
               <div className="col-2 mx-1">
                 {accouchementList &&
                   accouchementList.map((acc, index) => (
-                    <span
-                      className="badge text-bg-secondary"
-                      key={index}
-                      onClick={() => {
-                        resetDisplay();
-                        setIdAccouchementSelected(acc.idAccouchement);
-                        setDisplayAccouchementDetail(true);
-                      }}
-                    >
-                      {acc.dateAccouchement}
-                    </span>
+                    <div>
+                      <span
+                        className="btn text-bg-secondary mt-3"
+                        key={index}
+                        onClick={() => {
+                          resetDisplay();
+                          setIdAccouchementSelected(acc.idAccouchement);
+                          setDisplayAccouchementDetail(true);
+                        }}
+                      >
+                        {acc.dateAccouchement}
+                      </span>
+                      {acc.idPostAccouchement ? (
+                        <span
+                          key={`detail-${acc.idPostAccouchement}`}
+                          className="badge text-bg-warning"
+                          onClick={() => {
+                            resetDisplay();
+                            setIdPostAccouchementSelected(
+                              acc.idPostAccouchement
+                            );
+                            setTimeout(() => {
+                              setDisplayPostPartum(true);
+                            }, 10);
+                          }}
+                        >
+                          Détail fiche PostPartum
+                        </span>
+                      ) : (
+                        <span
+                          key={`create-${acc.idPostAccouchement}`}
+                          className="badge text-bg-warning"
+                          onClick={() => {
+                            setIdPostAccouchementSelected(null);
+                            resetDisplay();
+                            setIdAccouchementSelected(acc.idAccouchement);
+                            setTimeout(() => {
+                              setDisplayPostPartum(true);
+                            }, 10);
+                          }}
+                        >
+                          Créer fiche Postpartum
+                        </span>
+                      )}
+                    </div>
                   ))}
 
                 <br />
@@ -114,6 +158,24 @@ const Accouchement = ({ idPatient }) => {
               />
             </div>
           )}
+          {displayPostPartum && idPostAccouchementSelected && (
+            <div>
+              <PostAccouchementForm
+                idPostAccouchementSelected={idPostAccouchementSelected}
+                setCountPostAccouchement={setCountPostAccouchement}
+                countPostAccouchement={countPostAccouchement}
+              />
+            </div>
+          )}
+          {displayPostPartum &&
+            idAccouchementSelected &&
+            idPostAccouchementSelected===null && (
+              <PostAccouchementForm
+                idAccouchementSelected={idAccouchementSelected}
+                setCountPostAccouchement={setCountPostAccouchement}
+                countPostAccouchement={countPostAccouchement}
+              />
+            )}
         </div>
       </div>
     </div>

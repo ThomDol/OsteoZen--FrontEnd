@@ -68,7 +68,7 @@ const AccouchementNew = ({
 
   return (
     <div className="col-9 mx-auto">
-      <h3 style={{ textAlign: "center", paddingTop: "10px" }}>Détail</h3>
+      <h3 style={{ textAlign: "center", paddingTop: "10px" }}>CREER FICHE ACCOUCHEMENT</h3>
       <br />
       <br />
       <form onSubmit={handleSubmit}>

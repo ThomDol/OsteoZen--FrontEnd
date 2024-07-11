@@ -105,7 +105,7 @@ function ListPraticien() {
 
           <Link
             to="/create"
-            className="btn btn-success d-flex-auto justify-content-left"
+            className="btn btn-secondary d-flex-auto justify-content-left"
           >
             Ajouter nouvel utilisateur{" "}
           </Link>
@@ -132,14 +132,8 @@ function ListPraticien() {
                 <td>{d.nomRole}</td>
                 <td>
                   <Link
-                    to={`/read/${d.idAppUser}`}
-                    className="btn btn-primary me-2"
-                  >
-                    Information
-                  </Link>
-                  <Link
                     to={`/update/${d.idAppUser}`}
-                    className="btn btn-success me-2"
+                    className="btn btn-secondary me-2"
                   >
                     {" "}
                     Modifier

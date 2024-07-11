@@ -8,11 +8,12 @@ import AntecedentAccueil from "./sousmodulePatient/Antecedent menu/AntecedentAcc
 import AntecedentBebeAccueil from "./sousmodulePatient/AntecedentBebe Menu/AntecedentBebeAccueil";
 import Accouchement from "./sousmodulePatient/Accouchement/Accouchement";
 import Grossesse from "./sousmodulePatient/Grossesse/Grossesse";
-import Consultation from "./sousmodulePatient/Consutation";
+import Consultation from './sousmodulePatient/Consultation/Consutation';
 import "../../style/Patient.css";
 import PatientUpdateForm from "./sousmodulePatient/PatientUpdateForm";
 import axios from "axios";
 import Physique from "./sousmodulePatient/Caracteristques physiques/Physique";
+
 
 // Clé secrète et vecteur d'initialisation pour le décryptage
 const SECRET_KEY = "q#4puta9!am4$fcl";
@@ -71,6 +72,7 @@ const Patient = () => {
     setDisplayAccouchementDetail(false);
     setDisplayAccouchementNew(false);
     setDisplayCaracteristiquesPhysiques(false);
+    
   };
 
   // Effet pour déchiffrer et décoder le token au chargement du composant

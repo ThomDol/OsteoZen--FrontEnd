@@ -143,7 +143,7 @@ const AccouchementDetail = ({
     <div className="col-9 mx-auto">
       <div className="row">
         <div className="col-8 mx-auto">
-          <h3 style={{ textAlign: "center", paddingTop: "10px" }}>Détail</h3>
+          <h3 style={{ textAlign: "center", paddingTop: "10px" }}>DETAIL FICHE ACCOUCHEMENT</h3>
         </div>
         <div className="col-1">
           <div
@@ -596,7 +596,7 @@ const AccouchementDetail = ({
         </div>
         <div className="col-5 mx-auto">
           <button type="submit" className="btn btn-secondary">
-            Soumettre
+            Mettre à jour
           </button>
         </div>
       </form>

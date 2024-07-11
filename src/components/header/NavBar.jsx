@@ -2,7 +2,7 @@ import React from "react";
 import "../../style/NavBar.css";
 import logoMassage from "../../assets/logoMassage.png";
 
-const NavBar = ({ role,isActive }) => {
+const NavBar = ({ role }) => {
   return (
     <div>
        <nav className="navbar navbar-expand-lg fixed-top">
@@ -54,6 +54,13 @@ const NavBar = ({ role,isActive }) => {
                   <li className="nav-item">
                     <a className="nav-link mx-lg-2" href="/Admin">
                       Liste Praticiens
+                    </a>
+                  </li>
+                )}
+                {role === "PRATICIEN" && (
+                  <li className="nav-item">
+                    <a className="nav-link mx-lg-2" href="/contact">
+                      Contact
                     </a>
                   </li>
                 )}
