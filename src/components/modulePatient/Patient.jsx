@@ -8,21 +8,22 @@ import AntecedentAccueil from "./sousmodulePatient/Antecedent menu/AntecedentAcc
 import AntecedentBebeAccueil from "./sousmodulePatient/AntecedentBebe Menu/AntecedentBebeAccueil";
 import Accouchement from "./sousmodulePatient/Accouchement/Accouchement";
 import Grossesse from "./sousmodulePatient/Grossesse/Grossesse";
-import Consultation from './sousmodulePatient/Consultation/Consutation';
+import Consultation from "./sousmodulePatient/Consultation/Consutation";
 import "../../style/Patient.css";
 import PatientUpdateForm from "./sousmodulePatient/PatientUpdateForm";
 import axios from "axios";
 import Physique from "./sousmodulePatient/Caracteristques physiques/Physique";
 
-
 // Clé secrète et vecteur d'initialisation pour le décryptage
-const SECRET_KEY = "q#4puta9!am4$fcl";
-const INIT_VECTOR = "1zp6@y#ect4?5krx";
+const apiKey = import.meta.env.VITE_KEY;
+const apiIV = import.meta.env.VITE_IV;
 
 // Fonction de décryptage du token
 const decryptToken = (encryptedToken) => {
-  const key = CryptoJS.enc.Utf8.parse(SECRET_KEY);
-  const iv = CryptoJS.enc.Utf8.parse(INIT_VECTOR);
+  console.log(apiKey);
+  console.log(apiIV);
+  const key = CryptoJS.enc.Utf8.parse(apiKey);
+  const iv = CryptoJS.enc.Utf8.parse(apiIV);
 
   const decrypted = CryptoJS.AES.decrypt(encryptedToken, key, {
     iv: iv,
@@ -72,7 +73,6 @@ const Patient = () => {
     setDisplayAccouchementDetail(false);
     setDisplayAccouchementNew(false);
     setDisplayCaracteristiquesPhysiques(false);
-    
   };
 
   // Effet pour déchiffrer et décoder le token au chargement du composant
