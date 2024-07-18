@@ -33,9 +33,9 @@ const PhysiqueDetail = ({
       setDateMesure(elem.dateMesure);
       setPoids(elem.poids || "");
       setTaille(elem.taille || "");
-      setdentaire(elem.dentaire || null);
-      setdroitier(elem.droitier || null);
-      setlunettes(elem.lunettes || null);
+      setdentaire(elem.dentaire);
+      setdroitier(elem.droitier);
+      setlunettes(elem.lunettes);
     }
   };
 

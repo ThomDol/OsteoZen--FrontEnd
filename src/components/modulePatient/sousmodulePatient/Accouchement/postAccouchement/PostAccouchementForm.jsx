@@ -39,9 +39,9 @@ const PostAccouchementForm = ({
       setQualiteSommeil(elem.qualiteSommeil || "");
       setInstabiliteVesicale(elem.instabiliteVesicale || "");
       setEcoulementsVaginaux(elem.ecoulementsVaginaux || "");
-      setRetourDeCouche(elem.retourDeCouche || null);
-      setDouleurAbdominales(elem.douleurAbdominales || null);
-      setFievre(elem.fievre || null);
+      setRetourDeCouche(elem.retourDeCouche);
+      setDouleurAbdominales(elem.douleurAbdominales);
+      setFievre(elem.fievre);
       setInfosComplementaires(elem.infosComplementaires || "");
     }
   };
