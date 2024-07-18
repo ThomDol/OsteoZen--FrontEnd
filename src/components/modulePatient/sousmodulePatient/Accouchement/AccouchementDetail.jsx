@@ -38,7 +38,7 @@ const AccouchementDetail = ({
       setCesarienne(elem.cesarienne);
       setPeridurale(elem.peridurale);
       setExtractionInstrumentale(elem.extractionInstrumentale);
-      setOcytocine(elem.ocytocinell);
+      setOcytocine(elem.ocytocine);
       setCirculaireDuCordonOmbilical(elem.circulaireDuCordonOmbilical);
       setAideManuellePoussee(elem.aideManuellePoussee);
       setComplication(elem.complication);
