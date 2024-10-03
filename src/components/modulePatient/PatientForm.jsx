@@ -8,8 +8,8 @@ import CryptoJS from "crypto-js";
 import Swal from "sweetalert2";
 
 // Clé secrète et vecteur d'initialisation pour le décryptage
-const SECRET_KEY = "q#4puta9!am4$fcl";
-const INIT_VECTOR = "1zp6@y#ect4?5krx";
+const apiKey = import.meta.env.VITE_KEY;
+const apiIV = import.meta.env.VITE_IV;
 
 // Fonction de décryptage du token
 const decryptToken = (encryptedToken) => {
