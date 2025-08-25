@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Connexion API</title>
+</head>
+<body>
+    <h1>Test de Connexion API</h1>
+    <button onclick="testBackend()">Tester Backend</button>
+    <button onclick="testCors()">Tester CORS</button>
+    <div id="result"></div>
+
+    <script>
+        async function testBackend() {
+            try {
+                const response = await fetch('http://localhost:8083/api/auth/health');
+                const data = await response.text();
+                document.getElementById('result').innerHTML = `<p><strong>Backend:</strong> ${data}</p>`;
+            } catch (error) {
+                document.getElementById('result').innerHTML = `<p><strong>Erreur Backend:</strong> ${error.message}</p>`;
+            }
+        }
+
+        async function testCors() {
+            try {
+                const response = await fetch('http://localhost:8083/api/test/health', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                const data = await response.text();
+                document.getElementById('result').innerHTML += `<p><strong>CORS:</strong> ${data}</p>`;
+            } catch (error) {
+                document.getElementById('result').innerHTML += `<p><strong>Erreur CORS:</strong> ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
